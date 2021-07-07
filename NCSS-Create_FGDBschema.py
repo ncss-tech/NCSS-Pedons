@@ -17,6 +17,7 @@
 #                  2) Add field Aliases
 #                  3) Add domain from GitHub\NASIS-Pedons\Metadata_Tables.gdb\NCSS_Lab_Table_Domain table
 #                  4) Associate domain to any field that ends with 'method'
+#                  5) Establish Relationships
 #
 # Author:      Adolfo.Diaz (Python Script)
 # Author:      Jason Nemecek (NASIS report)
