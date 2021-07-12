@@ -1,5 +1,5 @@
 #-------------------------------------------------------------------------------
-# Name:  NASISpedons_Extract_Pedons_from_NASIS
+# Name:  NASISpedons_Extract_Pedons_from_NASIS_Multithreading_ArcGISPro_SQL.py
 #
 # Author: Adolfo.Diaz
 # e-mail: adolfo.diaz@wi.usda.gov
@@ -10,7 +10,7 @@
 # phone: 608.662.4422 ext. 190
 #
 # Created:     7/04/2016
-# Last Modified: 5/18/2017
+# Last Modified: 7/12/2021
 # Copyright:   (c) Adolfo.Diaz 2016
 
 # https://alexwlchan.net/2019/10/adventures-with-concurrent-futures/
@@ -31,6 +31,10 @@
 # ==========================================================================================
 # Updated  6/16/2021 - Adolfo Diaz
 # - Added functionality to output an SQLite Database Format
+
+# ==========================================================================================
+# Updated  7/12/2021 - Adolfo Diaz
+# - Added field within pedon layer to store pedon description hyperlink report
 
 #-------------------------------------------------------------------------------
 
@@ -882,7 +886,7 @@ def parsePedonsIntoLists():
 
 ## ================================================================================================================
 def organizeFutureInstanceIntoPedonDict(futureObject):
-    # Description
+    # Description:
     # This function will take in a "future" object representing the execution of the
     # ThreadPoolExecutor callable.  In this case, the future object represents
     # the content of pedon Horizon information for a list of pedon IDs.  The content
@@ -1343,6 +1347,49 @@ def openURL(url):
     except errorMsg():
         return None
 
+## ===================================================================================
+def addPedonReportHyperlink(pedonFC):
+    # Description:
+    # This function will add a field called 'pedondescriptionreport' to the pedon layer to
+    # to store a hyperlink to the pedon description report for every user pedon ID.
+
+    # Parameters
+    # path to the 'pedon' layer within the output database
+
+    # Returns
+    # True if the data was organized correctly
+    # False if the object was empty or there was an error.
+
+    # 2 similar reports to choose from
+    #pedonDescLink = r'https://nasis.sc.egov.usda.gov/NasisReportsWebSite/limsreport.aspx?report_name=Pedon%20Description%20html%20(userpedid)&pedon_id='
+    #pedonDescLink = r'https://nasis.sc.egov.usda.gov/NasisReportsWebSite/limsreport.aspx?report_name=Pedon_Site_Description_usepedonid&pedon_id='
+
+    try:
+        arcpy.SetProgressorLabel("Adding Pedon Description Hyperlink to Pedon layer")
+
+        # New field that will be added to PedonFC
+        fieldName = "pedondescriptionreport"
+        arcpy.AddField_management(pedonFC, fieldName,'TEXT',field_length=215, field_alias="Pedon Description Report", field_is_nullable="NULLABLE")
+
+        expression = "createPedonDescLink(!upedonid!)"
+
+        codeblock = """
+def createPedonDescLink(pedonID):
+
+    pedonDescLink = r'https://nasis.sc.egov.usda.gov/NasisReportsWebSite/limsreport.aspx?report_name=Pedon_Site_Description_usepedonid&pedon_id=' + pedonID
+    #hyperLinkName = pedonID + r' Pedon Description Report'
+    hyperLinkName = r'Pedon Description Report'
+    arcGISProHyperLink = r'<a href="' + pedonDescLink + r'" target="_top">' + hyperLinkName + r'</a>'
+
+    return arcGISProHyperLink"""
+
+        # Execute CalculateField
+        arcpy.CalculateField_management(pedonFC, fieldName, expression, "PYTHON3",codeblock)
+        return True
+
+    except:
+        errorMsg()
+        return False
 
 #===================================================================================================================================
 """ ----------------------------------------My Notes -------------------------------------------------"""
@@ -1564,8 +1611,16 @@ if __name__ == '__main__':
             if not importPedonData(tableFldDict,verbose=(True if i==numOfPedonStrings else False)):
                 exit()
 
-        """ ------------------------------------ Report Summary of results -----------------------------------"""
+        # Pedon FGDB path
         pedonDBfc = os.path.join(pedonDB,prefix + 'pedon')
+
+        # Add Hyperlink to Pedon Description Report
+        if addPedonReportHyperlink(pedonDBfc):
+            AddMsgAndPrint("Successfully added Pedon Description Report Hyperlink")
+        else:
+            AddMsgAndPrint("Pedon Description Report Hyperlink Could not be added",2)
+
+        """ ------------------------------------ Report Summary of results -----------------------------------"""
         pedonCount = int(arcpy.GetCount_management(pedonDBfc).getOutput(0))
 
         # Text file that will be created with pedonIDs that did not get collected
