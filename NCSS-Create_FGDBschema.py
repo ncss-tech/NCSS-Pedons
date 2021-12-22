@@ -112,20 +112,20 @@ def FindField(layer,chkField):
 
 # =========================================================== Main Body =============================================================================
 # Import modules
-import sys, string, os, traceback, urllib, re, arcpy
+import sys, string, os, traceback, arcpy
 from arcpy import env
 
 if __name__ == '__main__':
 
     try:
 
-        schemaTable = r'E:\python_scripts\GitHub\NCSS-Pedons---ArcGIS-Pro\Metadata_Tables.gdb\NCSS_Lab_Table_Metadata_20191114'
+        schemaTable = r'E:\python_scripts\GitHub\NCSS-Pedons---ArcGIS-Pro\Metadata_Tables.gdb\NCSS_Lab_Table_Schema_20210813'
 
         # Existing Empty FGDB
         #pedonGDB = r'D:\ESRI_stuff\python_scripts\GitHub\NASIS-Pedons\NCSSLabDatabase_Schema_Template.gdb'
-        pedonGDB = r'E:\python_scripts\GitHub\NCSS-Pedons---ArcGIS-Pro\Test.gdb'
+        pedonGDB = r'E:\python_scripts\GitHub\NCSS-Pedons---ArcGIS-Pro\NCSSLabDatabase_Schema_Template2.gdb'
 
-        """ --------------------------------- Collect schema tables and fields -------------------------"""
+        """ --------------------------------- set field position -------------------------"""
         tableName = 1
         fieldName = 2
         fieldSequence = 3
@@ -143,29 +143,32 @@ if __name__ == '__main__':
         currentTable = ""
 
         tblPhysicalNameFld = 'Table_Name'     # name of field containing Physical Name of Table from the schema table
-        pedonTable = 'combine_nasis_ncss'     # name of table that contains the Lat,Long and will be afeature class
+        pedonTable = 'lab_combine_nasis_ncss' # name of table that contains the Lat,Long and will be a feature class
         fieldSequenceFld = 'OrdinalPosition'
         currentTableFieldNames = list()
 
+        # iterate through the schema table creating the table and inserting fields
         for row in arcpy.da.SearchCursor(schemaTable,'*',sql_clause=(None, 'ORDER BY ' + tblPhysicalNameFld + ',' + fieldSequenceFld)):
             # --------------------------------------------------- Table does NOT EXIST - Create Table
-            if row[tableName] == 'analyte':continue
+            #if row[tableName] == 'analyte':continue
 
+            # Set the processing table
             if not currentTable == row[tableName]:
                 currentTable = row[tableName]
 
+                # Create Table alias name
+                tblAlias = currentTable.replace('_',' ').title()
+
                 # Table does exist; capture fields to compare to master list
+                # Might remove this section
                 if arcpy.Exists(os.path.join(pedonGDB,currentTable)):
                     currentTableFieldNames = [field.name for field in arcpy.ListFields(os.path.join(pedonGDB,currentTable))]
-                    tblAlias = currentTable.replace('_',' ').title()
-                    arcpy.AlterAliasName(currentTable,tblAlias)
-                    #AddMsgAndPrint("\n" + currentTable + " - " + row[tableAlias] + ": Already Exists!")
                     AddMsgAndPrint("\n" + currentTable + " - " + tblAlias + ": Already Exists!")
 
                 # Create feature class for pedons
                 elif currentTable == pedonTable:
 
-                    AddMsgAndPrint("\nCreating Feature Class: " + currentTable + " - " + row[tableAlias])
+                    AddMsgAndPrint("\nCreating Feature Class: " + currentTable + " - " + tblAlias)
 
                     # factory code for GCS WGS84 spatial reference
                     spatialRef = arcpy.SpatialReference(4326)
@@ -173,28 +176,34 @@ if __name__ == '__main__':
 
                 # Table doesn't exist; Create table
                 else:
-                    AddMsgAndPrint("\nCreating Table: " + currentTable + " - " + row[tableAlias])
+                    AddMsgAndPrint("\nCreating Table: " + currentTable + " - " + tblAlias)
                     arcpy.CreateTable_management(pedonGDB, currentTable)
 
                 # Add Alias Name to new table or feature class
-                arcpy.AlterAliasName(pedonGDB + os.sep + currentTable, row[tableAlias])
+                arcpy.AlterAliasName(pedonGDB + os.sep + currentTable, tblAlias)
 
             # --------------------------------------------------- Add fields to new table; check fields
             #print('\tAdding field: {0} - {1} - {2} - {3} - {4}'.format(row[fieldName], row[fieldAlias], row[fieldType], row[fieldSize], row[fieldSequence]))
 
+            # Field does exist - update alias name
+            # Might remove this section
             if row[fieldName] in currentTableFieldNames:
                newFieldAlias =  (row[fieldName]).replace('_',' ')
+
                try:
                    arcpy.AlterField_management(currentTable,row[fieldName],'#',newFieldAlias)
                    AddMsgAndPrint('\tfield: {0} - {1}'.format(row[fieldName], newFieldAlias) + ' already exists')
                except:
                    AddMsgAndPrint('\tfield: {0} - {1}'.format(row[fieldName], newFieldAlias) + ' already exists')
                #AddMsgAndPrint('\tfield: {0} - {1}'.format(row[fieldName], row[fieldAlias]) + ' already exists')
+
                continue
 
+            # Field doesn't exit - Create Field
             else:
-                 AddMsgAndPrint('\tAdding field: {0} - {1} - {2} Table'.format(row[fieldName], row[fieldAlias],currentTable))
-                 arcFieldLength = '#'
+                newFieldAlias =  (row[fieldName]).replace('_',' ')
+                AddMsgAndPrint('\tAdding field: {0} - {1} - {2} Table'.format(row[fieldName],newFieldAlias,currentTable))
+                arcFieldLength = '#'
 
             if row[fieldType].lower() in ('bit', 'boolean', 'choice', 'file reference', 'hyperlink', 'narrative text', 'varchar', 'nvarchar', 'string', 'uniqueidentifier'):
                 arcFieldType = 'TEXT'
@@ -209,6 +218,7 @@ if __name__ == '__main__':
                     else:
                         arcFieldLength = 100
 
+            # Convert field type to ESRI compatibility
             elif row[fieldType].lower() in ('date/time', 'datetime'):
                 arcFieldType = 'DATE'
             elif row[fieldType].lower() in ('decimal', 'float', 'real'):
@@ -226,7 +236,7 @@ if __name__ == '__main__':
                 arcFieldNull = 'NULLABLE'
             elif row[fieldNull].lower() in ('no'):
                 arcFieldNull = 'NULLABLE'
-            elif row[fieldNull].lower() in ('not null', 'none'):
+            elif row[fieldNull].lower() in ('not null'):
                 arcFieldNull = 'NON_NULLABLE'
 
             arcpy.AddField_management(currentTable, row[fieldName], arcFieldType, '#', '#', arcFieldLength, row[fieldAlias], arcFieldNull, 'REQUIRED', '#')

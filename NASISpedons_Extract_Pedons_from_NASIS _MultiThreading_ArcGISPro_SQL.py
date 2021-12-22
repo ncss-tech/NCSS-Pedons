@@ -1652,7 +1652,8 @@ if __name__ == '__main__':
             f.close()
 
             if difference < 20:
-                AddMsgAndPrint("\t\t" + missingPedons)
+                AddMsgAndPrint(".")
+                AddMsgAndPrint(".\t\t" + str(missingPedons))
 
             AddMsgAndPrint("\n\tThe Missing Pedons have been written to " + errorFile + " files",2)
 

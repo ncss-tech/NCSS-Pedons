@@ -35,6 +35,10 @@
 # Updated  6/17/2021 - Adolfo Diaz
 # - Added functionality to output an SQLite Database Format
 
+# ==========================================================================================
+# Updated  6/17/2021 - Adolfo Diaz
+# -
+
 #-------------------------------------------------------------------------------
 
 ## ===================================================================================
@@ -769,8 +773,6 @@ def createReferenceObjects(pedonDBloc):
         if not arcpy.Exists(theMDTable):
             AddMsgAndPrint(theMDTable + " doesn't Exist",2)
             return False,False
-        else:
-            AddMsgAndPrint(theMDTable + " is all good")
 
         tableList = arcpy.ListTables("*")
         tableList.append(prefix + "pedon")
@@ -1402,14 +1404,15 @@ if __name__ == '__main__':
         outputFolder = arcpy.GetParameterAsText(2)
         sqliteFormat = arcpy.GetParameter(3)
 
+##        inputTextFile = r'E:\Pedons\KSSL_for_NASIS_Morphological\Test.csv'
+##        DBname = 'TEST2'
+##        outputFolder = r'E:\Pedons\KSSL_for_NASIS_Morphological'
+##        sqliteFormat = False
+
         if sqliteFormat == True:
             prefix = "main."
         else:
             prefix = ""
-
-##        inputTextFile = inputTextFile = r'E:\Pedons\Temp\raca2.txt'
-##        DBname = 'totalJunk'
-##        outputFolder = r'E:\Pedons\Temp'
 
         arcpy.env.parallelProcessingFactor = "100%"
         arcpy.env.overwriteOutput = True
@@ -1584,25 +1587,26 @@ if __name__ == '__main__':
 
         else:
             difference = totalPedons - pedonCount
-            AddMsgAndPrint("\n\nDownloaded " + splitThousands(pedonCount) + " from NASIS",2)
-            AddMsgAndPrint("\tFailed to download " + splitThousands(difference) + " pedons from NASIS:",2)
+            AddMsgAndPrint("\n\nDownloaded " + splitThousands(pedonCount) + " pedons from NASIS",2)
+            AddMsgAndPrint("\tFailed to download the following " + splitThousands(difference) + " pedon(s) from NASIS:",2)
 
-            FGDBpedons = [str(row[0]) for row in arcpy.da.SearchCursor(pedonDBfc,'peiid')]
-            missingPedons = list(set(pedonDict.keys()) - set(FGDBpedons))
+            FGDBpedons = [int(row[0]) for row in arcpy.da.SearchCursor(pedonDBfc,'peiid')]
+            missingPedons = list(set(pedonList) - set(FGDBpedons))
+            #missingPedons = str(list(set(pedonList) - set(FGDBpedons))).replace('[','').replace(']','').replace('\'','')
 
             # Log pedons that did not download successfully into a text file
             f = open(errorFile,'a+')
             i=1
             for miaPedon in missingPedons:
                 if i != len(missingPedons):
-                    f.write(miaPedon + "\n")
+                    f.write(str(miaPedon) + "\n")
                 else:
-                    f.write(miaPedon)
+                    f.write(str(miaPedon))
                 i+=1
             f.close()
 
             if difference < 20:
-                AddMsgAndPrint("\t\t" + missingPedons)
+                AddMsgAndPrint("\t\t" + str(missingPedons))
 
             AddMsgAndPrint("\n\tThe Missing Pedons have been written to " + errorFile + " files",2)
 
