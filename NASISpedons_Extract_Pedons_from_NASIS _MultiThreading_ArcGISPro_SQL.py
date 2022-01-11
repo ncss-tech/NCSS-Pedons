@@ -733,7 +733,7 @@ def createPedonDB():
 ## ===============================================================================================================
 def createReferenceObjects(pedonDBloc):
     # Description
-    # This function will create the following 3 unique dictionaries that will be used throughout the script.
+    # This function will create the following 2 unique dictionaries that will be used throughout the script:
     # - pedonGDBtablesList: contains every table in the newly created pedonDB above as a key.
     #                       Individual records of tables will be added as list of values to the table keys.
     #                       This dictionary will be populated using the results from the
@@ -742,6 +742,7 @@ def createReferenceObjects(pedonDBloc):
     # - tableInfoDict:      Dictionary containing physical name from MDSTATTABS table as the key.
     #                       Each key has an associated list consisting of alias name, number of fields in the
     #                       physical table and the position index of the same table within the pedonGDBList.
+    #
     #                       i.e. {croptreedetails:['Crop Tree Details',48,34]}
     #                       The number of fields is used to double check that the values from
     #                       the web report are correct.  This was added b/c there were text fields that were
@@ -912,7 +913,7 @@ def organizeFutureInstanceIntoPedonDict(futureObject):
             return None
 
         invalidTable = 0    # represents tables that don't correspond with the GDB
-        invalidRecord = 0  # represents records that were not added
+        invalidRecord = 0   # represents records that were not added
         validRecord = 0
 
         bHeader = False         # flag indicating if value is html junk
