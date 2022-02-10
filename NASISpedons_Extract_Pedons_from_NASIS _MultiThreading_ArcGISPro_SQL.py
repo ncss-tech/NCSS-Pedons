@@ -36,6 +36,10 @@
 # Updated  7/12/2021 - Adolfo Diaz
 # - Added field within pedon layer to store pedon description hyperlink report
 
+# ==========================================================================================
+# Updated  2/8/2022 - Adolfo Diaz
+# - Addressed a bug associated with unprojected feature in the getBoundingCoordinates function
+
 #-------------------------------------------------------------------------------
 
 
@@ -124,6 +128,247 @@ def splitThousands(someNumber):
     except:
         errorMsg()
         return someNumber
+
+## ================================================================================================================
+def getNASISbreakdownCounts():
+    """ This function will send the bounding coordinates to the 'Web Export Pedon Box' NASIS report
+        and return a list of pedons within the bounding coordinates.  Pedons include regular
+        NASIS pedons and LAB pedons.  Each record in the report will contain the following values:
+
+            Row_Number,upedonid,peiid,pedlabsampnum,Longstddecimaldegrees,latstddecimaldegrees,Undisclosed Pedon
+            24|S1994MN161001|102861|94P0697|-93.5380936|44.0612717|'Y'
+
+        A dictionary will be returned containing something similar:
+        {'102857': ('S1954MN161113A', '40A1694', '-93.6499481', '43.8647194','Y'),
+        '102858': ('S1954MN161113B', '40A1695', '-93.6455002', '43.8899956','N')}
+        theURL = r'https://nasis.sc.egov.usda.gov/NasisReportsWebSite/limsreport.aspx?report_name=WEB_EXPORT_PEDON_BOX_COUNT&Lat1=44.070820&Lat2=44.596950&Long1=-91.166274&Long2=-90.311911'
+
+        returns a pedonDictionary"""
+
+        #-------------------------- KSSL Pedon and Undisclosed Metrics ----------------------------------
+        #------------------------------------------------------------------------------------------------
+        # This section is only to determine how many Lab Pedons and how many undiscolsed pedons there are
+        # nationwide.  It is recommended that the WEB_EXPORT_PEDON_BOX_COUNT NASIS report in the KSSL folder
+        # be duplicated and modified such that ONLY 2 fields are returned (pedlabsampnum and location) which
+        # represent the pedon lab sample number and a boolean indicating if the pedon is undisclosed.
+        #
+        # Iterate through the getWebExportPedon function 4 times to request all pedons from NASIS and get a
+        # Lab pedon and undisclosed count stricly for metrics.
+
+    def runWebMetricReport(coordinates):
+        try:
+            #AddMsgAndPrint(".\nGetting a NASIS pedon count using the above bounding coordinates")
+            URL = r'https://nasis.sc.egov.usda.gov/NasisReportsWebSite/limsreport.aspx?report_name=WEB_NASIS_Pedons_WFS_Metrics_AD' + coordinates
+
+            """ --------------------------------------  Try connecting to NASIS to read the report ------------------------"""
+            try:
+                theReport = urllib.request.urlopen(URL).readlines()
+            except:
+                try:
+                    AddMsgAndPrint(".\t2nd attempt at requesting data")
+                    theReport = urllib.request.urlopen(URL).readlines()
+
+                except:
+                    try:
+                        AddMsgAndPrint(".\t3rd attempt at requesting data")
+                        theReport = urllib.request.urlopen(URL).readlines()
+
+                    except URLError as e:
+                        AddMsgAndPrint('URL Error' + str(e),2)
+                        return False
+
+                    except HTTPError as e:
+                        AddMsgAndPrint('HTTP Error' + str(e),2)
+                        return False
+
+                    except socket.timeout as e:
+                        AddMsgAndPrint(".\n.\t" + URL)
+                        AddMsgAndPrint(".\tServer Timeout Error", 2)
+                        return False
+
+                    except socket.error as e:
+                        AddMsgAndPrint(".\n.\t" + URL)
+                        AddMsgAndPrint(".\tNASIS Reports Website connection failure", 2)
+                        return False
+
+            """ --------------------------------------  Read the NASIS report ------------------------------------"""
+            undisclosedLab = 0
+            disclosedLab = 0
+            undisclosedNASIS = 0
+            disclosedNASIS = 0
+            test = 0
+            bValidRecord = False # boolean that marks the starting point of the mapunits listed in the project
+
+            peiidList = list()
+
+            # iterate through the report until a valid record is found
+            for theValue in theReport:
+
+                # convert from bytes to string and remove white spaces
+                theValue = theValue.decode('utf-8').strip()
+
+                # Iterating through the lines in the report
+                if bValidRecord:
+                    if theValue == "STOP":  # written as part of the report; end of lines
+                        break
+
+                    # Found a valid project record i.e. 91P0481|N (only 2 values)
+                    else:
+                        theRec = theValue.split("|")
+
+                        if len(theRec) != 3:
+                            AddMsgAndPrint(".\tNASIS Report: WEB_NASIS_Pedons_WFS_Metrics_AD is not returning the correct amount of values per record",2)
+                            return False
+
+                        peiidList.append(theRec[0])
+                        continue
+
+                        # Go through the different combinations of metrics
+                        # Record is an undisclosed lab pedon
+                        if theRec[0] != 'Null' and theRec[1] == 'Y':
+                            undisclosedLab+= 1
+
+                        # Record is a disclosed lab pedon
+                        elif theRec[0] != 'Null' and theRec[1] == 'N':
+                            disclosedLab+=1
+
+                        # Record is an undisclosed NASIS pedon
+                        elif theRec[0] == 'Null' and theRec[1] == 'Y':
+                            undisclosedNASIS+= 1
+
+                        # Record is an disclosed NASIS pedon
+                        elif theRec[0] == 'Null' and theRec[1] == 'N':
+                            disclosedNASIS+=1
+
+                        else:
+                            AddMsgAndPrint(".\tUnaccounted for combination: " + str(theValue),1)
+                        test += 1
+
+                else:
+                    if theValue.startswith('<div id="ReportData">START'):
+                        bValidRecord = True
+
+##            bCountFailed = False
+##            if undisclosedLab + disclosedLab + undisclosedNASIS + disclosedNASIS != test:
+##                print(f"{coordinates} did not Match:")
+##                print("\t" + str(undisclosedLab))
+##                print("\t" + str(disclosedLab))
+##                print("\t" + str(undisclosedNASIS))
+##                print("\t" + str(disclosedNASIS))
+##                print("\t" + str(test))
+##                bCountFailed = True
+##
+##            if undisclosedLab == 0 and disclosedLab == 0 and undisclosedNASIS == 0 and disclosedNASIS == 0:
+##                print(f"    {coordinates} Returned empty:")
+##
+##            print(f"    {undisclosedLab},{disclosedLab},{undisclosedNASIS},{disclosedNASIS},{test},{bCountFailed}")
+##
+##            return [undisclosedLab,disclosedLab,undisclosedNASIS,disclosedNASIS,test,bCountFailed]
+            return peiidList
+
+        except:
+            errorMsg()
+            return [0,0,0]
+
+    try:
+        Starttest = tic()
+
+        latNorth = 49
+        latSouth = 24
+        longWest = -125
+        longEast = -65
+        degreeSize = 5
+
+        # list of coordinates for the 5x5 degree blocks covering the US
+        USdegreeblocks = []
+
+        # Create list of coordinates for 5x5 degree blocks for US
+        for lat in range(latSouth,latNorth,degreeSize):
+            for long in range(longWest,longEast,degreeSize):
+                USdegreeblocks.append([lat,lat+degreeSize,long,long+degreeSize])
+
+        # List of coordinates for 4 boxes around the US for the NW hemisphere
+        #NW_hemisphere = [[0,90,-179.5,longWest],[0,latSouth,longWest,-0.1],[latSouth,90,longEast,-0.1],[latNorth,90,longWest,longEast]]
+        NW_hemisphere = [[0,90,-180,longWest],[0,latSouth,longWest,0],[latSouth,90,longEast,0],[latNorth,90,longWest,longEast]]
+
+        # Lat1, Lat2, Long1, Long2 -- S,N,W,E -- NE, SW, ,SE hemishpere
+        # This represents the master list of coordinates to send to NASIS report
+        #worldQuadrant = [[0.0,90.0,0.5,179.5],[-90.0,0.0,-179.5,-0.5],[-90.0,0.0,0.5,179.5]]
+        worldQuadrant = [[0,90,0,180],[-90,0,-180,0],[-90,0,0,180]]
+
+        # Add NW Hemisphere box coordinates to worldQuadrant list
+        for coordLst in NW_hemisphere:
+            worldQuadrant.append(coordLst)
+
+        # Add US degree block coordinates to worldQuadrant list
+        for coordLst in USdegreeblocks:
+            worldQuadrant.append(coordLst)
+
+##        i=0
+##        for coord in worldQuadrant:
+##            i+=1
+##            Left = coord[2]
+##            Right = coord[3]
+##            Top = coord[1]
+##            Bottom = coord[0]
+##            outFC = f"N:\\flex\\NCSS_Pedons\\NASIS_Pedons\\Web_Feature_Service\\degreeBlocks\\quad_{Left}_{Right}_{Top}_{Bottom}.shp"
+##            origin_coord = f"{Left} {Bottom}"
+##            y_axis_coord = f"{Left} {Bottom + 10}"
+##            cell_width = abs(Left - Right)
+##            cell_height = abs(Top - Bottom)
+##            rows = 0
+##            columns = 0
+##            corner_coord = f"{Right} {Top}"
+##            template = f"{Left} {Bottom} {Right} {Top}"
+##            arcpy.CreateFishnet_management(outFC,origin_coord,y_axis_coord,cell_width,cell_height,rows,columns,corner_coord,'NO_LABELS',template,"POLYGON")
+
+        undisclosedLabRecs = 0
+        disclosedLabRecs = 0
+        undisclosedNASISrecs = 0
+        disclosedNASISrecs = 0
+        TOTAL = 0
+
+        peIIDlist = list()
+
+        # Gather global metrics w/out using US degree blocks.
+        for coordLst in worldQuadrant:
+            coordStr = f"&Lat1={coordLst[0]}&Lat2={coordLst[1]}&Long1={coordLst[2]}&Long2={coordLst[3]}"
+            print(f"Running report on {coordStr}")
+            pedonCounts = runWebMetricReport(coordStr)
+
+            for id in pedonCounts:
+                peIIDlist.append(id)
+
+##            undisclosedLabRecs+=pedonCounts[0]
+##            disclosedLabRecs+=pedonCounts[1]
+##            undisclosedNASISrecs+=pedonCounts[2]
+##            disclosedNASISrecs+=pedonCounts[3]
+##
+##            TOTAL+=pedonCounts[4]
+##            if pedonCounts[5]:
+##                exit()
+
+##        # Create an Executor to manage all tasks.  Using the with statement creates a context
+##        # manager, which ensures any stray threads or processes get cleaned up properly when done.
+##        with ThreadPoolExecutor(max_workers=multiprocessing.cpu_count()) as executor:
+##
+##            # use a set comprehension to start all tasks.  This creates a future object
+##            future_to_url = {executor.submit(openURL, url): url for url in URLlist}
+##
+##            # yield future objects as they are done.
+##            for future in as_completed(future_to_url):
+##                #futureResults.append(future.result())
+##                organizeFutureInstanceIntoPedonDict(future.result())
+##                arcpy.SetProgressorPosition()
+
+        print(toc(Starttest))
+        #return [undisclosedLabRecs,disclosedLabRecs,undisclosedNASISrecs,disclosedNASISrecs,TOTAL]
+        return peIIDlist
+
+    except:
+        errorMsg()
+        return False
+
 
 ## ================================================================================================================
 def getDictionaryOfAllPedonIDs():
@@ -259,11 +504,13 @@ def getBoundingCoordinates(feature):
             to be in Lat/Long"""
 
         inputSR = arcpy.Describe(feature).spatialReference                # Get Spatial Reference of input features
-        inputDatum = inputSR.GCS.datumName                                # Get Datum name of input features
 
-        if inputSR == "Unkown":
-            AddMsgAndPrint("\n\tInput layer needs a spatial reference defined to determine bounding envelope",2)
-            return False
+        if inputSR.name == 'Unknown':
+            AddMsgAndPrint(".\n\tInput layer needs a spatial reference defined to determine bounding envelope",2)
+            return False, False, False, False
+
+        # Get Datum name of input features
+        inputDatum = inputSR.GCS.datumName
 
         if inputDatum == "D_North_American_1983":
             arcpy.env.geographicTransformations = "WGS_1984_(ITRF00)_To_NAD_1983"
@@ -274,8 +521,8 @@ def getBoundingCoordinates(feature):
         elif inputDatum == "D_WGS_1984":
             arcpy.env.geographicTransformations = ""
         else:
-            AddMsgAndPrint("\n\tGeo Transformation of Datum could not be set",2)
-            AddMsgAndPrint("\tTry Projecting input layer to WGS 1984 Coordinate System",2)
+            AddMsgAndPrint(".\n\tGeo Transformation of Datum could not be set",2)
+            AddMsgAndPrint(".\tTry Projecting input layer to WGS 1984 Coordinate System",2)
             return False, False, False, False
 
         # Factory code for WGS84 Coordinate System
@@ -337,7 +584,7 @@ def getBoundingCoordinates(feature):
         return False
 
 ## ================================================================================================================
-def getWebPedonNumberSum(coordinates):
+def getNASISpedonCountbyBox(coordinates):
     """ This function will send the bounding coordinates to the 'Web Pedon Number SUM' NASIS report
         and return the number of pedons within the bounding coordinates.  Pedons include regular
         NASIS pedons and LAB pedons. Example of URL sent to the NASIS report would be:
@@ -418,7 +665,7 @@ def getWebPedonNumberSum(coordinates):
         return False
 
 ## ================================================================================================================
-def getWebExportPedon(coordinates):
+def getNASISpedonIDsByBox(coordinates):
     """ This function will send the bounding coordinates to the 'Web Export Pedon Box' NASIS report
         and return a list of pedons within the bounding coordinates.  Pedons include regular
         NASIS pedons and LAB pedons.  Each record in the report will contain the following values:
@@ -1406,21 +1653,26 @@ Column order
                     ----------------------"""
 
 """ 1st Report """
-# Used to get a number of pedons that are within a bounding box
+# If user choses to download all Pedons then the 1st report is to get a list of ALL NASIS pedonIDs:
+# https://nasis.sc.egov.usda.gov/NasisReportsWebSite/limsreport.aspx?report_name=WEB_PEDON_PEIID_LIST_ALL_OF_NASIS'
+
+# If the user choses to download pedons by AOI then the 1st report is to get a count of pedons within a bounding box
 # https://nasis.sc.egov.usda.gov/NasisReportsWebSite/limsreport.aspx?report_name=WEB_ANALYSIS_PC_PEDON_NUMBER_SUM&lat1=43&lat2=45&long1=-90&long2=-88
 
 """ 2nd Report """
-# Used to get a list of peiid which will be passed over to the 2nd report0
+# Used to get a list of peiids based on bounding box coordinates; This peiid list will passed over to the 3rd report
 # https://nasis.sc.egov.usda.gov/NasisReportsWebSite/limsreport.aspx?report_name=WEB_EXPORT_PEDON_BOX_COUNT&lat1=43&lat2=45&long1=-90&long2=-88
 
 """ 3rd Report """
-# This report will contain pedon information to be parsed into a FGDB.
+# This report will return all NASIS pedon related information that will be parsed into a FGDB.
 
-# Raw URL
-# https://nasis.sc.egov.usda.gov/NasisReportsWebSite/limsreport.aspx?report_name=TEST_sub_pedon_pc_6.1_phorizon&pedonid_list=    OLD one
-# https://nasis.sc.egov.usda.gov/NasisReportsWebSite/limsreport.aspx?report_name=WEB_AnalysisPC_MAIN_URL_EXPORT&pedonid_list=    NEW one
+# Original Report URL
+# https://nasis.sc.egov.usda.gov/NasisReportsWebSite/limsreport.aspx?report_name=TEST_sub_pedon_pc_6.1_phorizon&pedonid_list=
 
-# Sample complete URL with pedonIDs:
+# Updated Report URL
+# https://nasis.sc.egov.usda.gov/NasisReportsWebSite/limsreport.aspx?report_name=WEB_AnalysisPC_MAIN_URL_EXPORT&pedonid_list=
+
+# Sample URL with pedonIDs:
 # https://nasis.sc.egov.usda.gov/NasisReportsWebSite/limsreport.aspx?report_name=WEB_AnalysisPC_MAIN_URL_EXPORT&pedonid_list=36186,59976,60464,60465,101219,102867,106105,106106
 #===================================================================================================================================
 
@@ -1461,7 +1713,7 @@ if __name__ == '__main__':
 ##        DBname = 'smallTest'
 ##        outputFolder = r'E:\Pedons\Temp'
 ##        sqliteFormat = False
-##        allPedons = False
+##        allPedons = True
 
         if sqliteFormat == True:
             prefix = "main."
@@ -1478,6 +1730,7 @@ if __name__ == '__main__':
         if allPedons:
             pedonDict = getDictionaryOfAllPedonIDs()
             totalPedons = len(pedonDict)
+            exit()
             #pedonDict = dict(d.items()[len(d)/2:])
 
             AddMsgAndPrint("\nProcessing " + str(splitThousands(totalPedons)) + " pedons")
@@ -1494,14 +1747,15 @@ if __name__ == '__main__':
             Lat1,Lat2,Long1,Long2 = getBoundingCoordinates(inputFeatures)
 
             if not Lat1:
-                AddMsgAndPrint("\nFailed to acquire Lat/Long coordinates to pass over; Try a new input feature",2)
+                AddMsgAndPrint(".\nFailed to acquire Lat/Long coordinates to pass over; Try a new input feature",2)
                 exit()
 
             coordStr = "&Lat1=" + str(Lat1) + "&Lat2=" + str(Lat2) + "&Long1=" + str(Long1) + "&Long2=" + str(Long2)
 
             # Get a number of PedonIDs that are within the bounding box from NASIS
+            # Exit if pedon count is 0
             # Uses the 'WEB_ANALYSIS_PC_PEDON_NUMBER_SUM' NASIS report
-            areaPedonCount = getWebPedonNumberSum(coordStr)
+            areaPedonCount = getNASISpedonCountbyBox(coordStr)
 
             if areaPedonCount:
                 AddMsgAndPrint("\tThere are " + splitThousands(areaPedonCount) + " pedons within the bounding coordinates",0)
@@ -1512,7 +1766,7 @@ if __name__ == '__main__':
             # Get a list of PedonIDs that are within the bounding box from NASIS
             # Uses the 'WEB_EXPORT_PEDON_BOX_COUNT' NASIS report
             # {peiid: (siteID,Labnum,X,Y)} -- {'122647': ('84IA0130011', '85P0558', '-92.3241653', '42.3116684')
-            pedonDict = getWebExportPedon(coordStr)
+            pedonDict = getNASISpedonIDsByBox(coordStr)
 
             # populate the pedonDict with the pedons that fall within the bounding coordinates of the AOI
             if not pedonDict:
