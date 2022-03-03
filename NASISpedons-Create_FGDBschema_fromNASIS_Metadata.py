@@ -2,10 +2,10 @@
 # Name:        NASISpedons-Create_FGDBshema_fromNASIS_Metadata.py
 # Purpose:     This script will take in a table that contains the metadata schema
 #              for all of the NASIS pedon objects and their child tables and create
-#              an FGDB and their corresponding tables and fields.  The table is
+#              a FGDB and their corresponding tables and fields.  The table is
 #              manually created from the NASIS report:
 #              WEB_NREPO-Style_Metadata_Tabs_Cols_Pedon_Tools.html
-#              https://nasis.sc.egov.usda.gov/NasisReportsWebSite/limsreport.aspx?report_name=WEB_NREPO-Style_Metadata_Tabs_Cols-Pedon-Tools&system_name=NASIS%207.3.3&metadata_name=METADATA%202.0.2&domain_name=Current%20NASIS/SSURGO%20Domains
+#              https://nasis.sc.egov.usda.gov/NasisReportsWebSite/limsreport.aspx?report_name=WEB_NREPO-Style_Metadata_Tabs_Cols-Pedon-Tools&system_name=NASIS%207.4.1&metadata_name=METADATA%202.0.2&domain_name=Current%20NASIS/SSURGO%20Domains
 #              The contents of the html report were copied into an excel
 #              spreadsheet and then converted to a FGDB table.  The 'TabHelp'
 #              field was deleted but should be re-introduced and used to populate
@@ -16,12 +16,8 @@
 #
 # Created:     7/27/2018
 # Last Modified: 7/27/2018
-# Copyright:   (c) Adolfo.Diaz 2016
-#-------------------------------------------------------------------------------
+#
 
-## ===================================================================================
-class ExitError(Exception):
-    pass
 
 ## ===================================================================================
 def AddMsgAndPrint(msg, severity=0):
@@ -30,7 +26,7 @@ def AddMsgAndPrint(msg, severity=0):
     #
     #Split the message on \n first, so that if it's multiple lines, a GPMessage will be added for each line
     try:
-        print msg
+        print(msg)
 
         #for string in msg.split('\n'):
             #Add a geoprocessing message (in case this is run as a tool)
@@ -48,14 +44,19 @@ def AddMsgAndPrint(msg, severity=0):
 
 ## ===================================================================================
 def errorMsg():
-
     try:
+
         exc_type, exc_value, exc_traceback = sys.exc_info()
         theMsg = "\t" + traceback.format_exception(exc_type, exc_value, exc_traceback)[1] + "\n\t" + traceback.format_exception(exc_type, exc_value, exc_traceback)[-1]
-        AddMsgAndPrint(theMsg,2)
+
+        if theMsg.find("exit") > -1:
+            AddMsgAndPrint("\n\n")
+            pass
+        else:
+            AddMsgAndPrint(theMsg,2)
 
     except:
-        AddMsgAndPrint("Unhandled error in errorMsg method", 2)
+        AddMsgAndPrint("Unhandled error in unHandledException method", 2)
         pass
 
 # ===============================================================================================================
@@ -70,24 +71,58 @@ def splitThousands(someNumber):
         errorMsg()
         return someNumber
 
+
+# ===============================================================================================================
+def CreatePedonMetadataTables():
+
+    try:
+        pedonMetadataURL = r'https://nasis.sc.egov.usda.gov/NasisReportsWebSite/limsreport.aspx?report_name=Web-NREPO-Style-Metadata-Pedon-Main&system_name=NASIS%207.4.1&metadata_name=NASIS%207.4.1&domain_name=Current%20NASIS/SSURGO%20Domains'
+
+        try:
+            theReport = urlopen(pedonMetadataURL).readlines()
+        except:
+            try:
+                AddMsgAndPrint(tab + "2nd attempt at requesting data - 15 second pause")
+                time.sleep(15)
+                theReport = urlopen(URL).readlines()
+            except:
+                try:
+                    AddMsgAndPrint(tab + "3rd attempt at requesting data - 30 second pause")
+                    time.sleep(30)
+                    theReport = urlopen(URL).readlines()
+                except:
+                    errorMsg()
+                    return False
+
+                #memoryStartTime = tic()
+        for theValue in theReport:
+
+            theValue = theValue.strip() # remove whitespace characters
+
+            # represents the start of valid table
+            if theValue.find('@begin') > -1:
+
+
 # =========================================================== Main Body =============================================================================
 # Import modules
 import sys, string, os, traceback, urllib, re, arcpy
 from arcpy import env
+
+from urllib2 import urlopen, URLError, HTTPError
 
 if __name__ == '__main__':
 
     try:
         # Table produced from NASIS report: WEB_NREPO-Style_Metadata_Tabs_Cols-Pedon-Tools
         # Hyperlink:
-        # https://nasis.sc.egov.usda.gov/NasisReportsWebSite/limsreport.aspx?report_name=WEB_NREPO-Style_Metadata_Tabs_Cols-Pedon-Tools&system_name=NASIS%207.3.3&metadata_name=METADATA%202.0.2&domain_name=Current%20NASIS/SSURGO%20Domains
+        # https://nasis.sc.egov.usda.gov/NasisReportsWebSite/limsreport.aspx?report_name=WEB_NREPO-Style_Metadata_Tabs_Cols-Pedon-Tools&system_name=NASIS%207.4.1&metadata_name=METADATA%202.0.2&domain_name=Current%20NASIS/SSURGO%20Domains
         # HTML results are copied into NASIS_Pedons_Table_Field_Aliases.xls spreadsheet and exported
         # to FGDB table
 
-        schemaTable = r'E:\python_scripts\GitHub\NASIS-Pedons\Metadata_Tables.gdb\NASIS_Pedons_Table_Field_Schema_7_3_3'
+        schemaTable = r'E:\python_scripts\GitHub\NCSS-Pedons---ArcGIS-Pro\Metadata_Tables.gdb\NASIS_Pedons_Table_Field_Schema_7_4_1'
 
         # Empty FGDB
-        pedonGDB = r'C:\python_scripts\GitHub\NASIS-Pedons\NasisPedonsTemplate_NEW.gdb'
+        pedonGDB = r'E:\python_scripts\GitHub\NCSS-Pedons---ArcGIS-Pro\NASISPedonsTemplate_7_4_1.gdb'
 
         """ --------------------------------- Collect schema tables and fields -------------------------"""
         tableName = 2

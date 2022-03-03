@@ -1,0 +1,3144 @@
+
+============================================================================================= 
+ncsslayerlabdata Table: 
+
+	The following fields need to be added to the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['totalfragvolgt2mm'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'ncsspedonlabdataiidref', 
+'layerseqnum', 
+'labsampnum', 
+'hzdept', 
+'hzdepb', 
+'layertype', 
+'hzname', 
+'hznameoriginal', 
+'stratextsflag', 
+'moistprepstate', 
+'texcl', 
+'sandvcmeasured', 
+'sandcomeasured', 
+'sandmedmeasured', 
+'sandfinemeasured', 
+'sandvfmeasured', 
+'sandtotmeasured', 
+'siltcomeasured', 
+'siltfinemeasured', 
+'silttotmeasured', 
+'claycarbmeasured', 
+'clayfinemeasured', 
+'claytotmeasured', 
+'carbonorganicpctmeasured', 
+'carbontotalpctmeasured', 
+'ompctest', 
+'fiberrubbedpct', 
+'fiberunrubbedpct', 
+'fragwt25', 
+'fragwt520', 
+'fragwt2075', 
+'fragwt275', 
+'wtpct0175', 
+'wtpctgt2ws', 
+'ph1to1h2o', 
+'ph01mcacl2', 
+'phnaf', 
+'phoxidized', 
+'resistivity', 
+'ecmeasured', 
+'esp', 
+'sar', 
+'cecsumcations', 
+'cec7', 
+'ecec', 
+'sumbases', 
+'basesatsumcations', 
+'basesatnh4oac', 
+'caco3equivmeasured', 
+'caco3lt20measured', 
+'gypsumequivlt2measured', 
+'gypsumequivmeasured', 
+'feoxalatemeasured', 
+'feextractable', 
+'fetotal', 
+'sioxalatemeasured', 
+'extracid', 
+'extral', 
+'aloxalatemeasured', 
+'altotal', 
+'pmehlich3', 
+'ph2osolublemeasured', 
+'poxalatemeasured', 
+'polsenmeasured', 
+'ptotalmeasured', 
+'nzpretention', 
+'dbthirdbar', 
+'dbovendry', 
+'aggstabpct', 
+'wtenthbarclod', 
+'wtenthbarsieve', 
+'wthirdbarclod', 
+'wthirdbarsieve', 
+'wfifteenbarmeasured', 
+'wretentiondiffws', 
+'wfifteenbartoclay', 
+'adod', 
+'lep', 
+'cole', 
+'liquidlimitmeasured', 
+'pi', 
+'totalfragvolgt2mm', 
+'recwlupdated', 
+'recuseriidref', 
+'ncsslayerlabdataiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+ncsspedonlabdataiidref   , 
+layerseqnum   , 
+labsampnum   , 
+hzdept   , 
+hzdepb   , 
+layertype   ,* 
+hzname   , 
+hznameoriginal   , 
+stratextsflag   , 
+moistprepstate   ,* 
+texcl   ,* 
+sandvcmeasured   , 
+sandcomeasured   , 
+sandmedmeasured   , 
+sandfinemeasured   , 
+sandvfmeasured   , 
+sandtotmeasured   , 
+siltcomeasured   , 
+siltfinemeasured   , 
+silttotmeasured   , 
+claycarbmeasured   , 
+clayfinemeasured   , 
+claytotmeasured   , 
+carbonorganicpctmeasured   , 
+carbontotalpctmeasured   , 
+ompctest   , 
+fiberrubbedpct   , 
+fiberunrubbedpct   , 
+fragwt25   , 
+fragwt520   , 
+fragwt2075   , 
+fragwt275   , 
+wtpct0175   , 
+wtpctgt2ws   , 
+ph1to1h2o   , 
+ph01mcacl2   , 
+phnaf   , 
+phoxidized   , 
+resistivity   , 
+ecmeasured   , 
+esp   , 
+sar   , 
+cecsumcations   , 
+cec7   , 
+ecec   , 
+sumbases   , 
+basesatsumcations   , 
+basesatnh4oac   , 
+caco3equivmeasured   , 
+caco3lt20measured   , 
+gypsumequivlt2measured   , 
+gypsumequivmeasured   , 
+feoxalatemeasured   , 
+feextractable   , 
+fetotal   , 
+sioxalatemeasured   , 
+extracid   , 
+extral   , 
+aloxalatemeasured   , 
+altotal   , 
+pmehlich3   , 
+ph2osolublemeasured   , 
+poxalatemeasured   , 
+polsenmeasured   , 
+ptotalmeasured   , 
+nzpretention   , 
+dbthirdbar   , 
+dbovendry   , 
+aggstabpct   , 
+wtenthbarclod   , 
+wtenthbarsieve   , 
+wthirdbarclod   , 
+wthirdbarsieve   , 
+wfifteenbarmeasured   , 
+wretentiondiffws   , 
+wfifteenbartoclay   , 
+adod   , 
+lep   , 
+cole   , 
+liquidlimitmeasured   , 
+pi   , 
+totalfragvolgt2mm   , 
+recwlupdated   , 
+recuseriidref   , 
+ncsslayerlabdataiid   . 
+
+============================================================================================= 
+ncsspedonlabdata Table: 
+	The following fields need to be removed from the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['psctopdepth_s', 'pscbotdepth_s'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'pedlabsampnum', 
+'peiidref', 
+'psctopdepth', 
+'pscbotdepth', 
+'noncarbclaywtavg', 
+'claytotwtavg', 
+'le0to100', 
+'wf0175wtavgpsc', 
+'volfractgt2wtavg', 
+'cec7clayratiowtavg', 
+'labdatasheeturl', 
+'ncsspedbiidref', 
+'grpiidref', 
+'objwlupdated', 
+'objuseriidref', 
+'recwlupdated', 
+'recuseriidref', 
+'ncsspedonlabdataiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+pedlabsampnum   , 
+peiidref   , 
+psctopdepth   , 
+pscbotdepth   , 
+noncarbclaywtavg   , 
+claytotwtavg   , 
+le0to100   , 
+wf0175wtavgpsc   , 
+volfractgt2wtavg   , 
+cec7clayratiowtavg   , 
+labdatasheeturl   , 
+ncsspedbiidref   , 
+grpiidref   , 
+objwlupdated   , 
+objuseriidref   , 
+recwlupdated   , 
+recuseriidref   , 
+ncsspedonlabdataiid   . 
+
+============================================================================================= 
+pediagfeatures Table: 
+	The following fields need to be removed from the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['featthick_l', 'featthick_r', 'featthick_h'] 
+
+	The following fields need to be added to the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['featthick'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'peiidref', 
+'seqnum', 
+'featdept', 
+'featdepb', 
+'featthick', 
+'featkind', 
+'recwlupdated', 
+'recuseriidref', 
+'pediagfeatiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+peiidref   , 
+seqnum   , 
+featdept   , 
+featdepb   , 
+featthick   , 
+featkind   ,* 
+recwlupdated   , 
+recuseriidref   , 
+pediagfeatiid   . 
+
+============================================================================================= 
+pefmp Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+pehydricfieldindicator Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+peinfiltrationch Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+peinfiltrationchdata Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+peinfiltrationfh Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+peinfiltrationfhdata Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+peinfiltrationsummary Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+pepenetrationresistance Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+perestrictions Table: 
+	The following fields need to be removed from the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['resthk_l', 'resthk_r', 'resthk_h'] 
+
+	The following fields need to be added to the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['resthk'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'peiidref', 
+'seqnum', 
+'resdept', 
+'resdepb', 
+'resthk', 
+'reskind', 
+'reshard', 
+'recwlupdated', 
+'recuseriidref', 
+'perestrictiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+peiidref   , 
+seqnum   , 
+resdept   , 
+resdepb   , 
+resthk   , 
+reskind   ,* 
+reshard   ,* 
+recwlupdated   , 
+recuseriidref   , 
+perestrictiid   . 
+
+============================================================================================= 
+pesoilstability Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+petaxhistfmmin Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+petaxhistmoistcl Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+petaxhistory Table: 
+	The following fields need to be removed from the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['taxclname_s'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'peiidref', 
+'seqnum', 
+'classdate', 
+'classtype', 
+'classifier', 
+'taxonname', 
+'localphase', 
+'taxonkind', 
+'seriesstatus', 
+'taxclname', 
+'taxorder', 
+'taxsuborder', 
+'taxgrtgroup', 
+'taxsubgrp', 
+'taxpartsize', 
+'taxpartsizemod', 
+'taxceactcl', 
+'taxreaction', 
+'taxtempcl', 
+'taxmoistscl', 
+'taxtempregime', 
+'taxfamhahatmatcl', 
+'soiltaxedition', 
+'psctopdepth', 
+'pscbotdepth', 
+'osdtypelocflag', 
+'recwlupdated', 
+'recuseriidref', 
+'petaxhistoryiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+peiidref   , 
+seqnum   , 
+classdate   , 
+classtype   ,* 
+classifier   , 
+taxonname   , 
+localphase   , 
+taxonkind   ,* 
+seriesstatus   ,* 
+taxclname   , 
+taxorder   ,* 
+taxsuborder   ,* 
+taxgrtgroup   ,* 
+taxsubgrp   ,* 
+taxpartsize   ,* 
+taxpartsizemod   ,* 
+taxceactcl   ,* 
+taxreaction   ,* 
+taxtempcl   ,* 
+taxmoistscl   ,* 
+taxtempregime   ,* 
+taxfamhahatmatcl   ,* 
+soiltaxedition   ,* 
+psctopdepth   , 
+pscbotdepth   , 
+osdtypelocflag   , 
+recwlupdated   , 
+recuseriidref   , 
+petaxhistoryiid   . 
+
+============================================================================================= 
+petext Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+petxhistfmother Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+phcemagent Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+phcoledata Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+phcolor Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+phconccolor Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+phconcs Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+phcracks Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+phdb Table: 
+	The following fields need to be removed from the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['obsgrsoimoist_s', 'obsgravsoilmoistfe_s', 'bdovendrywhole_s', 'bdovendryfineearth_s'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'phiidref', 
+'seqnum', 
+'bddepthtop', 
+'bddepthbottom', 
+'bdmethod', 
+'datacollector', 
+'samplevolfieldmoist', 
+'totalsamplewtfm', 
+'totalsamplewtairdry', 
+'coarsefragwtfm', 
+'coarsefragwtairdry', 
+'coarsefragdensity', 
+'coarsefragvolmeasured', 
+'subsamplewtairdry', 
+'subsamplewtod', 
+'obsgrsoimoist', 
+'obsgravsoilmoistfe', 
+'bdfieldmoistfineearth', 
+'bdfieldmoistwhole', 
+'bdovendrywhole', 
+'bdovendryfineearth', 
+'bdsatiated', 
+'recwlupdated', 
+'recuseriidref', 
+'phbulkdensityiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+phiidref   , 
+seqnum   , 
+bddepthtop   , 
+bddepthbottom   , 
+bdmethod   ,* 
+datacollector   , 
+samplevolfieldmoist   , 
+totalsamplewtfm   , 
+totalsamplewtairdry   , 
+coarsefragwtfm   , 
+coarsefragwtairdry   , 
+coarsefragdensity   , 
+coarsefragvolmeasured   , 
+subsamplewtairdry   , 
+subsamplewtod   , 
+obsgrsoimoist   , 
+obsgravsoilmoistfe   , 
+bdfieldmoistfineearth   , 
+bdfieldmoistwhole   , 
+bdovendrywhole   , 
+bdovendryfineearth   , 
+bdsatiated   , 
+recwlupdated   , 
+recuseriidref   , 
+phbulkdensityiid   . 
+
+============================================================================================= 
+phdbcompliantcavity Table: 
+	The following fields need to be removed from the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['bulkdensitycavityinitvol_s', 'bulkdensitycavityfinalvol_s', 'bulkdensitycavitysampvol_s'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'phbulkdensityiidref', 
+'bulkdensitycavitydiameter', 
+'bulkdensitycavitylength', 
+'bulkdensitycavitywidth', 
+'bulkdensitycavityinitvol', 
+'bulkdensitycavityfinalvol', 
+'cavityavedepthpredig', 
+'cavityavedepthpostdig', 
+'bulkdensitycavitysampvol', 
+'recwlupdated', 
+'recuseriidref', 
+'phbulkdencavityiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+phbulkdensityiidref   , 
+bulkdensitycavitydiameter   , 
+bulkdensitycavitylength   , 
+bulkdensitycavitywidth   , 
+bulkdensitycavityinitvol   , 
+bulkdensitycavityfinalvol   , 
+cavityavedepthpredig   , 
+cavityavedepthpostdig   , 
+bulkdensitycavitysampvol   , 
+recwlupdated   , 
+recuseriidref   , 
+phbulkdencavityiid   . 
+
+============================================================================================= 
+phdbcore Table: 
+	The following fields need to be removed from the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['unfilledtubelength_s', 'coresamplelength_s', 'coresamplevolume_s'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'phbulkdensityiidref', 
+'sampletubelength', 
+'unfilledtubelength', 
+'coresamplelength', 
+'sampletubediameter', 
+'coresamplevolume', 
+'recwlupdated', 
+'recuseriidref', 
+'phbulkdencoreiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+phbulkdensityiidref   , 
+sampletubelength   , 
+unfilledtubelength   , 
+coresamplelength   , 
+sampletubediameter   , 
+coresamplevolume   , 
+recwlupdated   , 
+recuseriidref   , 
+phbulkdencoreiid   . 
+
+============================================================================================= 
+phdbcorereading Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+phdbscoop Table: 
+	The following fields need to be removed from the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['scoopvolume_s', 'scoopdepthunfilled_s', 'scoopsamplevolume_s'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'phbulkdensityiidref', 
+'scooplength', 
+'scoopwidth', 
+'scoopdepthtotal', 
+'scoopvolume', 
+'scoopdepthunfilled', 
+'scoopsamplevolume', 
+'recwlupdated', 
+'recuseriidref', 
+'phbulkdenscoopiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+phbulkdensityiidref   , 
+scooplength   , 
+scoopwidth   , 
+scoopdepthtotal   , 
+scoopvolume   , 
+scoopdepthunfilled   , 
+scoopsamplevolume   , 
+recwlupdated   , 
+recuseriidref   , 
+phbulkdenscoopiid   . 
+
+============================================================================================= 
+phdbscoopreading Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+phdesgnsuffix Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+phfeatcolor Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+phfeatures Table: 
+	The following fields need to be removed from the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['horfeatvtpct_l', 'horfeatvtpct_r', 'horfeatvtpct_h', 'horfeatlapct_l', 'horfeatlapct_r', 'horfeatlapct_h'] 
+
+	The following fields need to be added to the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['horfeatvtpct', 'horfeatlapct'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'phiidref', 
+'seqnum', 
+'horfeatkind', 
+'horfeatvtpct', 
+'horfeatlapct', 
+'recwlupdated', 
+'recuseriidref', 
+'phfeatsiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+phiidref   , 
+seqnum   , 
+horfeatkind   ,* 
+horfeatvtpct   , 
+horfeatlapct   , 
+recwlupdated   , 
+recuseriidref   , 
+phfeatsiid   . 
+
+============================================================================================= 
+phfmp Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+phfrags Table: 
+	The following fields need to be removed from the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['fragsize_l', 'fragsize_r', 'fragsize_h'] 
+
+	The following fields need to be added to the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['fragsize'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'phiidref', 
+'seqnum', 
+'fragvol', 
+'fragweight', 
+'fragsize', 
+'fragkind', 
+'fragshp', 
+'fraground', 
+'fraghard', 
+'fragestmethod', 
+'recwlupdated', 
+'recuseriidref', 
+'phfragsiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+phiidref   , 
+seqnum   , 
+fragvol   , 
+fragweight   , 
+fragsize   , 
+fragkind   ,* 
+fragshp   ,* 
+fraground   ,* 
+fraghard   ,* 
+fragestmethod   ,* 
+recwlupdated   , 
+recuseriidref   , 
+phfragsiid   . 
+
+============================================================================================= 
+phgrcountdata Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+phgrcountsummary Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+phhuarts Table: 
+	The following fields need to be removed from the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['huartsize_l', 'huartsize_r', 'huartsize_h'] 
+
+	The following fields need to be added to the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['huartsize'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'phiidref', 
+'seqnum', 
+'huartvol', 
+'huartsize', 
+'huartkind', 
+'huartco', 
+'huartshp', 
+'huartrnd', 
+'huartpen', 
+'huartsafety', 
+'huartper', 
+'recwlupdated', 
+'recuseriidref', 
+'phhuartiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+phiidref   , 
+seqnum   , 
+huartvol   , 
+huartsize   , 
+huartkind   ,* 
+huartco   ,* 
+huartshp   ,* 
+huartrnd   ,* 
+huartpen   ,* 
+huartsafety   ,* 
+huartper   ,* 
+recwlupdated   , 
+recuseriidref   , 
+phhuartiid   . 
+
+============================================================================================= 
+phhydrometeranalysis Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+phhydrometerdata Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+phksatamoozedata Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+phksatamoozemeter Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+phksatring Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+phksatringdata Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+phksatsummary Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+phlabresults Table: 
+
+	The following fields need to be added to the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['sieve3inch', 'clayfinemeasured', 'sieve34inch', 'sieveno4', 'sieveno10', 'sieveno18', 'sieveno35', 'sieveno40', 'sieveno60', 'sieveno140', 'sieveno200', 'sieveno270', 'vonposthumification', 'lossonignition'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'phiidref', 
+'seqnum', 
+'sampledepthtop', 
+'sampledepthbottom', 
+'sampleid', 
+'datacollector', 
+'claytotmeasured', 
+'claycarbmeasured', 
+'silttotmeasured', 
+'siltfinemeasured', 
+'siltcomeasured', 
+'sandtotmeasured', 
+'sandtotmethod', 
+'sandvcmeasured', 
+'sandcomeasured', 
+'sandmedmeasured', 
+'sandfinemeasured', 
+'sandvfmeasured', 
+'sandvfmethod', 
+'sieve3inch', 
+'clayfinemeasured', 
+'sieve34inch', 
+'sieveno4', 
+'sieveno10', 
+'sieveno18', 
+'sieveno35', 
+'sieveno40', 
+'sieveno60', 
+'sieveno140', 
+'sieveno200', 
+'sieveno270', 
+'textureclfieldlab', 
+'vonposthumification', 
+'fiberrubbedpct', 
+'fiberunrubbedpct', 
+'lossonignition', 
+'ph1to1h2o', 
+'ph01mcacl2', 
+'phnaf', 
+'phoxidized', 
+'phdeltah2o2', 
+'liquidlimitmeasured', 
+'plasticlimitmeasured', 
+'pi', 
+'atterbergsampcond', 
+'cole', 
+'esttotpotacidityetpa', 
+'camgmeh2', 
+'potassiummeh2', 
+'camgsatpaste', 
+'basesatmeh2', 
+'extractaciditykcl', 
+'cec7', 
+'cec82', 
+'ecec', 
+'phosphatephos', 
+'nitratenitrogen', 
+'ecmeasured', 
+'ecdeterminemeth', 
+'ec15', 
+'caco3equivmeasured', 
+'gypsumequiv', 
+'gypsumreq', 
+'sodium', 
+'sar', 
+'humiccolor', 
+'fulviccolor', 
+'humicfulviccolor', 
+'alummeasured', 
+'pyrophoshue', 
+'pyrophosvalue', 
+'pyrophoschroma', 
+'melanicindex', 
+'recwlupdated', 
+'recuseriidref', 
+'phlabresultiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+phiidref   , 
+seqnum   , 
+sampledepthtop   , 
+sampledepthbottom   , 
+sampleid   , 
+datacollector   , 
+claytotmeasured   , 
+claycarbmeasured   , 
+silttotmeasured   , 
+siltfinemeasured   , 
+siltcomeasured   , 
+sandtotmeasured   , 
+sandtotmethod   ,* 
+sandvcmeasured   , 
+sandcomeasured   , 
+sandmedmeasured   , 
+sandfinemeasured   , 
+sandvfmeasured   , 
+sandvfmethod   ,* 
+sieve3inch   , 
+clayfinemeasured   , 
+sieve34inch   , 
+sieveno4   , 
+sieveno10   , 
+sieveno18   , 
+sieveno35   , 
+sieveno40   , 
+sieveno60   , 
+sieveno140   , 
+sieveno200   , 
+sieveno270   , 
+textureclfieldlab   ,* 
+vonposthumification   ,* 
+fiberrubbedpct   , 
+fiberunrubbedpct   , 
+lossonignition   , 
+ph1to1h2o   , 
+ph01mcacl2   , 
+phnaf   , 
+phoxidized   , 
+phdeltah2o2   , 
+liquidlimitmeasured   , 
+plasticlimitmeasured   , 
+pi   , 
+atterbergsampcond   ,* 
+cole   , 
+esttotpotacidityetpa   , 
+camgmeh2   , 
+potassiummeh2   , 
+camgsatpaste   , 
+basesatmeh2   , 
+extractaciditykcl   , 
+cec7   , 
+cec82   , 
+ecec   , 
+phosphatephos   , 
+nitratenitrogen   , 
+ecmeasured   , 
+ecdeterminemeth   ,* 
+ec15   , 
+caco3equivmeasured   , 
+gypsumequiv   , 
+gypsumreq   , 
+sodium   , 
+sar   , 
+humiccolor   , 
+fulviccolor   , 
+humicfulviccolor   , 
+alummeasured   , 
+pyrophoshue   ,* 
+pyrophosvalue   ,* 
+pyrophoschroma   ,* 
+melanicindex   , 
+recwlupdated   , 
+recuseriidref   , 
+phlabresultiid   . 
+
+============================================================================================= 
+phmottles Table: 
+	The following fields need to be removed from the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['mottleloc'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'phiidref', 
+'seqnum', 
+'mottlepct', 
+'mottlesize', 
+'mottlecntrst', 
+'colorhue', 
+'colorvalue', 
+'colorchroma', 
+'mottleshape', 
+'colormoistst', 
+'recwlupdated', 
+'recuseriidref', 
+'phmottlesiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+phiidref   , 
+seqnum   , 
+mottlepct   , 
+mottlesize   ,* 
+mottlecntrst   ,* 
+colorhue   ,* 
+colorvalue   ,* 
+colorchroma   ,* 
+mottleshape   ,* 
+colormoistst   ,* 
+recwlupdated   , 
+recuseriidref   , 
+phmottlesiid   . 
+
+============================================================================================= 
+phorizon Table: 
+	The following fields need to be removed from the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['hzthk_l', 'hzthk_r', 'hzthk_h', 'hzname_s', 'texture_s', 'efflocation', 'horzvoltotpct_l', 'horzvoltotpct_r', 'horzvoltotpct_h', 'horzlatareapct_l', 'horzlatareapct_r', 'horzlatareapct_h'] 
+
+	The following fields need to be added to the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['hzthk', 'h20230percentreaction', 'h2o23percentreaction', 'acidvolatilesulfidetest', 'horzvoltotpct', 'horzlatareapct'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'peiidref', 
+'seqnum', 
+'hzdept', 
+'hzdepb', 
+'hzthk', 
+'obsmethod', 
+'hzname', 
+'desgndisc', 
+'desgnmaster', 
+'desgnmasterprime', 
+'desgnvert', 
+'texture', 
+'stratextsflag', 
+'claytotest', 
+'claycarbest', 
+'silttotest', 
+'sandtotest', 
+'fragvoltot', 
+'horcolorvflag', 
+'obssoimoiststat', 
+'rupresblkmst', 
+'rupresblkdry', 
+'rupresblkcem', 
+'rupresplate', 
+'mannerfailure', 
+'stickiness', 
+'plasticity', 
+'toughclass', 
+'penetrres', 
+'penetorient', 
+'ksatpedon', 
+'ksatstddev', 
+'ksatrepnum', 
+'horzpermclass', 
+'obsinfiltrationrate', 
+'phfield', 
+'phdetermeth', 
+'effclass', 
+'effagent', 
+'carbdevstagefe', 
+'carbdevstagecf', 
+'mneffclass', 
+'mneffagent', 
+'reactadipyridyl', 
+'dipyridylpct', 
+'dipyridylloc', 
+'excavdifcl', 
+'soilodor', 
+'soilodorintensity', 
+'rmonosulfidep', 
+'h20230percentreaction', 
+'h2o23percentreaction', 
+'acidvolatilesulfidetest', 
+'bounddistinct', 
+'boundtopo', 
+'horzvoltotpct', 
+'horzlatareapct', 
+'dspcomplayerid', 
+'aashtocl', 
+'unifiedcl', 
+'recwlupdated', 
+'phiid', 
+'recuseriidref'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+peiidref   , 
+seqnum   , 
+hzdept   , 
+hzdepb   , 
+hzthk   , 
+obsmethod   ,* 
+hzname   , 
+desgndisc   , 
+desgnmaster   ,* 
+desgnmasterprime   ,* 
+desgnvert   , 
+texture   , 
+stratextsflag   , 
+claytotest   , 
+claycarbest   , 
+silttotest   , 
+sandtotest   , 
+fragvoltot   , 
+horcolorvflag   , 
+obssoimoiststat   ,* 
+rupresblkmst   ,* 
+rupresblkdry   ,* 
+rupresblkcem   ,* 
+rupresplate   ,* 
+mannerfailure   ,* 
+stickiness   ,* 
+plasticity   ,* 
+toughclass   ,* 
+penetrres   ,* 
+penetorient   ,* 
+ksatpedon   , 
+ksatstddev   , 
+ksatrepnum   , 
+horzpermclass   ,* 
+obsinfiltrationrate   , 
+phfield   , 
+phdetermeth   ,* 
+effclass   ,* 
+effagent   ,* 
+carbdevstagefe   ,* 
+carbdevstagecf   ,* 
+mneffclass   ,* 
+mneffagent   ,* 
+reactadipyridyl   ,* 
+dipyridylpct   , 
+dipyridylloc   ,* 
+excavdifcl   ,* 
+soilodor   ,* 
+soilodorintensity   ,* 
+rmonosulfidep   , 
+h20230percentreaction   ,* 
+h2o23percentreaction   , 
+acidvolatilesulfidetest   , 
+bounddistinct   ,* 
+boundtopo   ,* 
+horzvoltotpct   , 
+horzlatareapct   , 
+dspcomplayerid   , 
+aashtocl   ,* 
+unifiedcl   ,* 
+recwlupdated   , 
+phiid   , 
+recuseriidref   . 
+
+============================================================================================= 
+phpores Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+phpvsf Table: 
+	The following fields need to be removed from the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['pvsfcont'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'phiidref', 
+'seqnum', 
+'pvsfpct', 
+'pvsfkind', 
+'pvsfdistinct', 
+'pvsflocation', 
+'recwlupdated', 
+'recuseriidref', 
+'phpvsfiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+phiidref   , 
+seqnum   , 
+pvsfpct   , 
+pvsfkind   ,* 
+pvsfdistinct   ,* 
+pvsflocation   ,* 
+recwlupdated   , 
+recuseriidref   , 
+phpvsfiid   . 
+
+============================================================================================= 
+phpvsfcolor Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+phrdxfeatures Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+phredoxfcolor Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+phroots Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+phsample Table: 
+
+	The following fields need to be added to the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['wt20to76mmdiscardedfragments', 'wtlt20mm'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'phiidref', 
+'seqnum', 
+'labsampnum', 
+'fldsampid', 
+'layerdepthtop', 
+'layerdepthbottom', 
+'numberofbulksampbags', 
+'numberofbulkdensityclods', 
+'numberofnaturalfabricclods', 
+'numberofothersamples', 
+'wt20to76mmdiscardedfragments', 
+'wtlt20mm', 
+'recwlupdated', 
+'recuseriidref', 
+'phlabsampiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+phiidref   , 
+seqnum   , 
+labsampnum   , 
+fldsampid   , 
+layerdepthtop   , 
+layerdepthbottom   , 
+numberofbulksampbags   , 
+numberofbulkdensityclods   , 
+numberofnaturalfabricclods   , 
+numberofothersamples   , 
+wt20to76mmdiscardedfragments   , 
+wtlt20mm   , 
+recwlupdated   , 
+recuseriidref   , 
+phlabsampiid   . 
+
+============================================================================================= 
+phstructure Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+phtext Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+phtexture Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+phtexturemod Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+phvnirscan Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+phvnirscanresult Table: 
+	The following fields need to be removed from the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['carbonorganicpct_s'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'phvnirscaniidref', 
+'vnirmodelid', 
+'vnirmodelrundate', 
+'carbontotalpct', 
+'carboninorganicpct', 
+'carbonorganicpct', 
+'recwlupdated', 
+'recuseriidref', 
+'phvnirscanresultiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+phvnirscaniidref   , 
+vnirmodelid   , 
+vnirmodelrundate   , 
+carbontotalpct   , 
+carboninorganicpct   , 
+carbonorganicpct   , 
+recwlupdated   , 
+recuseriidref   , 
+phvnirscanresultiid   . 
+
+============================================================================================= 
+plotdisturbance Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+plotgrazinguse Table: 
+
+	The following fields need to be added to the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['akgrazingplantgroup', 'akgrazingimpact'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'vegplotiidref', 
+'seqnum', 
+'animalkind', 
+'usefrequency', 
+'seasonofuse', 
+'stockingratecl', 
+'akgrazingplantgroup', 
+'akgrazingimpact', 
+'recwlupdated', 
+'recuseriidref', 
+'plotgrazinguseiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+vegplotiidref   , 
+seqnum   , 
+animalkind   ,* 
+usefrequency   ,* 
+seasonofuse   ,* 
+stockingratecl   ,* 
+akgrazingplantgroup   ,* 
+akgrazingimpact   ,* 
+recwlupdated   , 
+recuseriidref   , 
+plotgrazinguseiid   . 
+
+============================================================================================= 
+plotmainforeststanddetails Table: 
+	The following fields need to be removed from the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['transectpointlocation'] 
+
+	The following fields need to be added to the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['treenumber'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'vegplotiidref', 
+'seqnum', 
+'treenumber', 
+'distancefromprevious', 
+'plantiidref', 
+'treediameterbreastheight', 
+'treeconditions', 
+'notes', 
+'recwlupdated', 
+'recuseriidref', 
+'plotmainforstanddetailiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+vegplotiidref   , 
+seqnum   , 
+treenumber   , 
+distancefromprevious   , 
+plantiidref   , 
+treediameterbreastheight   , 
+treeconditions   ,* 
+notes   , 
+recwlupdated   , 
+recuseriidref   , 
+plotmainforstanddetailiid   . 
+
+============================================================================================= 
+plotplantinventory Table: 
+
+	The following fields need to be added to the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['speciescomppct', 'speciesdbhaverage', 'speciescompbywtpct', 'speciestreecount', 'akstratumcoverclasspct'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'vegplotiidref', 
+'seqnum', 
+'plantiidref', 
+'planttypegroup', 
+'akstratumcoverclass', 
+'plantheightcllowerlimit', 
+'plantheightclupperlimit', 
+'plantnativity', 
+'sociabilityclass', 
+'livecanopyhtbottom', 
+'livecanopyhttop', 
+'overstorydbhmin', 
+'overstorydbhmax', 
+'speciescancovpct', 
+'speciescancovclass', 
+'speciescomppct', 
+'speciesdbhaverage', 
+'speciescompbywtpct', 
+'speciestreecount', 
+'speciestraceamtflag', 
+'speciesbasalarea', 
+'understorygrcovpct', 
+'understorygrcovclass', 
+'seedlingdensityclass', 
+'maturedensityclass', 
+'vegetationstratalevel', 
+'orderofdominance', 
+'outsideplotindicator', 
+'estannualprod', 
+'esdannualprod', 
+'allowableannualprod', 
+'palatableannualprod', 
+'akfunctionalgroup', 
+'akstratumcoverclasspct', 
+'recwlupdated', 
+'recuseriidref', 
+'plotplantinventoryiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+vegplotiidref   , 
+seqnum   , 
+plantiidref   , 
+planttypegroup   ,* 
+akstratumcoverclass   ,* 
+plantheightcllowerlimit   , 
+plantheightclupperlimit   , 
+plantnativity   ,* 
+sociabilityclass   ,* 
+livecanopyhtbottom   , 
+livecanopyhttop   , 
+overstorydbhmin   , 
+overstorydbhmax   , 
+speciescancovpct   , 
+speciescancovclass   ,* 
+speciescomppct   , 
+speciesdbhaverage   , 
+speciescompbywtpct   , 
+speciestreecount   , 
+speciestraceamtflag   , 
+speciesbasalarea   , 
+understorygrcovpct   , 
+understorygrcovclass   ,* 
+seedlingdensityclass   ,* 
+maturedensityclass   ,* 
+vegetationstratalevel   ,* 
+orderofdominance   , 
+outsideplotindicator   , 
+estannualprod   , 
+esdannualprod   , 
+allowableannualprod   , 
+palatableannualprod   , 
+akfunctionalgroup   ,* 
+akstratumcoverclasspct   , 
+recwlupdated   , 
+recuseriidref   , 
+plotplantinventoryiid   . 
+
+============================================================================================= 
+plotplanttypecanopycover Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+plotsamplingprotocolused Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+plotspeciesbasalarea Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+plottreeinventory Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+plottreescounted Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+plottreesiteindexdetails Table: 
+
+	The following fields need to be added to the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['akcrownclass'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'plottreesiteindsumiidref', 
+'seqnum', 
+'treenumber', 
+'crownclass', 
+'reproductionsource', 
+'treediameterbreastheight', 
+'tenyeargrowthradius', 
+'growthringcount', 
+'growthringcountheight', 
+'growthringcountage', 
+'treeage', 
+'treecanopyhtbottom', 
+'treecanopyhttop', 
+'aknoringsinlastinch', 
+'akcrownclass', 
+'recwlupdated', 
+'recuseriidref', 
+'plottreesiteinddetailsiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+plottreesiteindsumiidref   , 
+seqnum   , 
+treenumber   , 
+crownclass   ,* 
+reproductionsource   ,* 
+treediameterbreastheight   , 
+tenyeargrowthradius   , 
+growthringcount   , 
+growthringcountheight   , 
+growthringcountage   , 
+treeage   , 
+treecanopyhtbottom   , 
+treecanopyhttop   , 
+aknoringsinlastinch   , 
+akcrownclass   ,* 
+recwlupdated   , 
+recuseriidref   , 
+plottreesiteinddetailsiid   . 
+
+============================================================================================= 
+plottreesiteindexsummary Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+plottreesummary Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+siteaoverlap Table: 
+	The following fields need to be removed from the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['areaname', 'areasymbol', 'areatypename'] 
+
+	The following fields need to be added to the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['recwlupdated', 'recuseriidref'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'siteiidref', 
+'seqnum', 
+'areaiidref', 
+'recwlupdated', 
+'recuseriidref', 
+'sareaoviid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+siteiidref   , 
+seqnum   , 
+areaiidref   , 
+recwlupdated   , 
+recuseriidref   , 
+sareaoviid   . 
+
+============================================================================================= 
+sitebedrock Table: 
+	The following fields need to be removed from the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['bedrckdip_l', 'bedrckdip_h'] 
+
+	The following fields need to be added to the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['bedrckdip', 'recwlupdated', 'recuseriidref'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'siteiidref', 
+'seqnum', 
+'bedrockorder', 
+'geogroup', 
+'geoform', 
+'geomember', 
+'bedrckdepth', 
+'bedrckkind', 
+'bedrckhardness', 
+'bedrckfractint', 
+'bedrckweather', 
+'bedrckstrike', 
+'bedrckdip', 
+'recwlupdated', 
+'recuseriidref', 
+'sitebedrockiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+siteiidref   , 
+seqnum   , 
+bedrockorder   , 
+geogroup   , 
+geoform   , 
+geomember   , 
+bedrckdepth   , 
+bedrckkind   ,* 
+bedrckhardness   ,* 
+bedrckfractint   ,* 
+bedrckweather   ,* 
+bedrckstrike   , 
+bedrckdip   , 
+recwlupdated   , 
+recuseriidref   , 
+sitebedrockiid   . 
+
+============================================================================================= 
+siteassocsoi Table: 
+
+	The following fields need to be added to the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['recwlupdated', 'recuseriidref'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'siteiidref', 
+'seqnum', 
+'assocsoi', 
+'recwlupdated', 
+'recuseriidref', 
+'siteassocsoiiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+siteiidref   , 
+seqnum   , 
+assocsoi   , 
+recwlupdated   , 
+recuseriidref   , 
+siteassocsoiiid   . 
+
+============================================================================================= 
+siteecositehistory Table: 
+
+	The following fields need to be added to the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['seqnum', 'recwlupdated', 'recuseriidref'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'siteiidref', 
+'seqnum', 
+'ecositecorrdate', 
+'ecositeiidref', 
+'classifier', 
+'recwlupdated', 
+'recuseriidref', 
+'siteecositehistoryiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+siteiidref   , 
+seqnum   , 
+ecositecorrdate   , 
+ecositeiidref   , 
+classifier   , 
+recwlupdated   , 
+recuseriidref   , 
+siteecositehistoryiid   . 
+
+============================================================================================= 
+siteassocsite Table: 
+
+	The following fields need to be added to the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['recwlupdated', 'recuseriidref'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'siteassociidref', 
+'seqnum', 
+'siteiidref', 
+'recwlupdated', 
+'recuseriidref', 
+'siteasiteiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+siteassociidref   , 
+seqnum   , 
+siteiidref   , 
+recwlupdated   , 
+recuseriidref   , 
+siteasiteiid   . 
+
+============================================================================================= 
+sitegeomordesc Table: 
+
+	The following fields need to be added to the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['recwlupdated', 'recuseriidref'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'siteiidref', 
+'seqnum', 
+'geomfiidref', 
+'geomfmod', 
+'geomfeatid', 
+'existsonfeat', 
+'recwlupdated', 
+'recuseriidref', 
+'sitegeomdiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+siteiidref   , 
+seqnum   , 
+geomfiidref   , 
+geomfmod   , 
+geomfeatid   , 
+existsonfeat   , 
+recwlupdated   , 
+recuseriidref   , 
+sitegeomdiid   . 
+
+============================================================================================= 
+siteobs Table: 
+	The following fields need to be removed from the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['geommicpat'] 
+
+	The following fields need to be added to the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['projectiidref', 'currentseasonprecip', 'growingseasonrating', 'currentyearprecip', 'extramoisturesource', 'landkind', 'safcovertype', 'stmversionid', 'rosgenstreamtype', 'rosgenstreamsubclass', 'cropname', 'shmanagmentsystem', 'shmanagementsystemsymbol', 'recuseriidref', 'recwlupdated'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'siteiidref', 
+'seqnum', 
+'obsdate', 
+'obsdatekind', 
+'datacollector', 
+'projectiidref', 
+'photoid', 
+'swaterkind', 
+'swaterdepth', 
+'hydrologystatus', 
+'geomicrorelief', 
+'geommicelev', 
+'ecostateid', 
+'ecostatename', 
+'commphaseid', 
+'commphasename', 
+'plantassocnm', 
+'earthcovkind1', 
+'earthcovkind2', 
+'resourceretentionclass', 
+'bareareamaxwidth', 
+'pedodermclass', 
+'pedodermcovind', 
+'biolcrusttypedom', 
+'biolcrusttypesecond', 
+'physcrustsubtype', 
+'crustdevcl', 
+'soilredistributionclass', 
+'exposedsoilpct', 
+'localdisturbancedistance', 
+'localdisturbancedescription', 
+'drainedflag', 
+'beddingflag', 
+'plantationflag', 
+'forestrotationstage', 
+'yldstudyid', 
+'currweathcond', 
+'currairtemp', 
+'tidalperiod', 
+'bottomtype', 
+'saswaterphupper', 
+'saswaterphlower', 
+'phdetermeth', 
+'saswatertemplower', 
+'saswatertempupper', 
+'sasdissolvedoxyupper', 
+'sasdissolvedoxylower', 
+'saswatersalinityupper', 
+'saswatersalinitylower', 
+'currentseasonprecip', 
+'growingseasonrating', 
+'currentyearprecip', 
+'extramoisturesource', 
+'landkind', 
+'safcovertype', 
+'stmversionid', 
+'rosgenstreamtype', 
+'rosgenstreamsubclass', 
+'cropname', 
+'shmanagmentsystem', 
+'shmanagementsystemsymbol', 
+'recuseriidref', 
+'recwlupdated', 
+'siteobsiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+siteiidref   , 
+seqnum   , 
+obsdate   , 
+obsdatekind   ,* 
+datacollector   , 
+projectiidref   , 
+photoid   , 
+swaterkind   ,* 
+swaterdepth   , 
+hydrologystatus   ,* 
+geomicrorelief   ,* 
+geommicelev   , 
+ecostateid   , 
+ecostatename   , 
+commphaseid   , 
+commphasename   , 
+plantassocnm   , 
+earthcovkind1   ,* 
+earthcovkind2   ,* 
+resourceretentionclass   ,* 
+bareareamaxwidth   , 
+pedodermclass   ,* 
+pedodermcovind   , 
+biolcrusttypedom   ,* 
+biolcrusttypesecond   ,* 
+physcrustsubtype   ,* 
+crustdevcl   ,* 
+soilredistributionclass   ,* 
+exposedsoilpct   , 
+localdisturbancedistance   , 
+localdisturbancedescription   , 
+drainedflag   , 
+beddingflag   , 
+plantationflag   , 
+forestrotationstage   ,* 
+yldstudyid   , 
+currweathcond   ,* 
+currairtemp   , 
+tidalperiod   ,* 
+bottomtype   ,* 
+saswaterphupper   , 
+saswaterphlower   , 
+phdetermeth   ,* 
+saswatertemplower   , 
+saswatertempupper   , 
+sasdissolvedoxyupper   , 
+sasdissolvedoxylower   , 
+saswatersalinityupper   , 
+saswatersalinitylower   , 
+currentseasonprecip   , 
+growingseasonrating   ,* 
+currentyearprecip   ,* 
+extramoisturesource   ,* 
+landkind   ,* 
+safcovertype   ,* 
+stmversionid   , 
+rosgenstreamtype   ,* 
+rosgenstreamsubclass   ,* 
+cropname   ,* 
+shmanagmentsystem   , 
+shmanagementsystemsymbol   , 
+recuseriidref   , 
+recwlupdated   , 
+siteobsiid   . 
+
+============================================================================================= 
+sitepm Table: 
+	The following fields need to be removed from the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['pmweathering'] 
+
+	The following fields need to be added to the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['recwlupdated', 'recuseriidref'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'siteiidref', 
+'seqnum', 
+'pmorder', 
+'pmdept', 
+'pmdepb', 
+'pmmodifier', 
+'pmgenmod', 
+'pmkind', 
+'pmorigin', 
+'recwlupdated', 
+'recuseriidref', 
+'sitepmiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+siteiidref   , 
+seqnum   , 
+pmorder   , 
+pmdept   , 
+pmdepb   , 
+pmmodifier   ,* 
+pmgenmod   , 
+pmkind   ,* 
+pmorigin   ,* 
+recwlupdated   , 
+recuseriidref   , 
+sitepmiid   . 
+
+============================================================================================= 
+sitetext Table: 
+
+	The following fields need to be added to the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['recwlupdated', 'recuseriidref'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'siteiidref', 
+'seqnum', 
+'recdate', 
+'recauthor', 
+'sitetextkind', 
+'textcat', 
+'textsubcat', 
+'textentry', 
+'recwlupdated', 
+'recuseriidref', 
+'sitetextiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+siteiidref   , 
+seqnum   , 
+recdate   , 
+recauthor   , 
+sitetextkind   ,* 
+textcat   , 
+textsubcat   , 
+textentry   , 
+recwlupdated   , 
+recuseriidref   , 
+sitetextiid   . 
+
+============================================================================================= 
+siteassoc Table: 
+
+	The following fields need to be added to the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['grpiidref', 'objwlupdated', 'objuseriidref', 'recwlupdated', 'recuseriidref'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'usiteassocid', 
+'sadbiidref', 
+'grpiidref', 
+'objwlupdated', 
+'objuseriidref', 
+'recwlupdated', 
+'recuseriidref', 
+'siteassociid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+usiteassocid   , 
+sadbiidref   , 
+grpiidref   , 
+objwlupdated   , 
+objuseriidref   , 
+recwlupdated   , 
+recuseriidref   , 
+siteassociid   . 
+
+============================================================================================= 
+siteerosionacc Table: 
+
+	The following fields need to be added to the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['recwlupdated', 'recuseriidref'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'siteobsiidref', 
+'seqnum', 
+'erokind', 
+'recwlupdated', 
+'recuseriidref', 
+'siteeroacciid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+siteobsiidref   , 
+seqnum   , 
+erokind   ,* 
+recwlupdated   , 
+recuseriidref   , 
+siteeroacciid   . 
+
+============================================================================================= 
+siteobstext Table: 
+
+	The following fields need to be added to the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['recwlupdated', 'recuseriidref'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'siteobsiidref', 
+'seqnum', 
+'recdate', 
+'recauthor', 
+'siteobstextkind', 
+'textcat', 
+'textsubcat', 
+'textentry', 
+'recwlupdated', 
+'recuseriidref', 
+'siteobstextiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+siteobsiidref   , 
+seqnum   , 
+recdate   , 
+recauthor   , 
+siteobstextkind   ,* 
+textcat   , 
+textsubcat   , 
+textentry   , 
+recwlupdated   , 
+recuseriidref   , 
+siteobstextiid   . 
+
+============================================================================================= 
+sitesoilmoist Table: 
+
+	The following fields need to be added to the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['recwlupdated', 'recuseriidref'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'siteobsiidref', 
+'seqnum', 
+'soimoistdept', 
+'soimoistdepb', 
+'soilmoistsensordepth', 
+'soilmoistsensorkind', 
+'obssoimoiststat', 
+'obssoimoist', 
+'obsgrsoimoist', 
+'soimoistten', 
+'recwlupdated', 
+'recuseriidref', 
+'sitesmiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+siteobsiidref   , 
+seqnum   , 
+soimoistdept   , 
+soimoistdepb   , 
+soilmoistsensordepth   , 
+soilmoistsensorkind   ,* 
+obssoimoiststat   ,* 
+obssoimoist   , 
+obsgrsoimoist   , 
+soimoistten   , 
+recwlupdated   , 
+recuseriidref   , 
+sitesmiid   . 
+
+============================================================================================= 
+sitesoiltemp Table: 
+
+	The following fields need to be added to the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['recwlupdated', 'recuseriidref'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'siteobsiidref', 
+'seqnum', 
+'soitempdep', 
+'soiltempsensorkind', 
+'soitemp', 
+'recwlupdated', 
+'recuseriidref', 
+'sitestiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+siteobsiidref   , 
+seqnum   , 
+soitempdep   , 
+soiltempsensorkind   ,* 
+soitemp   , 
+recwlupdated   , 
+recuseriidref   , 
+sitestiid   . 
+
+============================================================================================= 
+sitesurffrags Table: 
+	The following fields need to be removed from the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['sfragsize_l', 'sfragsize_r', 'sfragsize_h'] 
+
+	The following fields need to be added to the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['sfragsize', 'recwlupdated', 'recuseriidref'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'siteobsiidref', 
+'seqnum', 
+'sfragcov', 
+'distrocks', 
+'sfragsize', 
+'sfragkind', 
+'sfragshp', 
+'sfraground', 
+'sfraghard', 
+'recwlupdated', 
+'recuseriidref', 
+'sitesurffragsiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+siteobsiidref   , 
+seqnum   , 
+sfragcov   , 
+distrocks   , 
+sfragsize   , 
+sfragkind   ,* 
+sfragshp   ,* 
+sfraground   ,* 
+sfraghard   ,* 
+recwlupdated   , 
+recuseriidref   , 
+sitesurffragsiid   . 
+
+============================================================================================= 
+siteassoctext Table: 
+
+	The following fields need to be added to the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['recwlupdated', 'recuseriidref'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'siteassociidref', 
+'seqnum', 
+'recdate', 
+'recauthor', 
+'siteassoctextkind', 
+'textcat', 
+'textsubcat', 
+'textentry', 
+'recwlupdated', 
+'recuseriidref', 
+'siteatextiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+siteassociidref   , 
+seqnum   , 
+recdate   , 
+recauthor   , 
+siteassoctextkind   ,* 
+textcat   , 
+textsubcat   , 
+textentry   , 
+recwlupdated   , 
+recuseriidref   , 
+siteatextiid   . 
+
+============================================================================================= 
+transect Table: 
+
+	The following fields need to be added to the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['grpiidref', 'objwlupdated', 'objuseriidref', 'recwlupdated', 'recuseriidref'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'utransectid', 
+'tsectauth', 
+'tsectkind', 
+'tsectselmeth', 
+'tsectdelinsize', 
+'tsectdir', 
+'tsectcertstatus', 
+'tsectdbiidref', 
+'grpiidref', 
+'objwlupdated', 
+'objuseriidref', 
+'recwlupdated', 
+'recuseriidref', 
+'tsectiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+utransectid   , 
+tsectauth   , 
+tsectkind   ,* 
+tsectselmeth   ,* 
+tsectdelinsize   , 
+tsectdir   , 
+tsectcertstatus   ,* 
+tsectdbiidref   , 
+grpiidref   , 
+objwlupdated   , 
+objuseriidref   , 
+recwlupdated   , 
+recuseriidref   , 
+tsectiid   . 
+
+============================================================================================= 
+transectestcomposition Table: 
+	The following fields need to be removed from the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['slope_l', 'slope_h'] 
+
+	The following fields need to be added to the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['slope', 'recwlupdated', 'recuseriidref'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'tsectiidref', 
+'seqnum', 
+'compname', 
+'localphase', 
+'comppct', 
+'slope', 
+'recwlupdated', 
+'recuseriidref', 
+'tsectestcompiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+tsectiidref   , 
+seqnum   , 
+compname   , 
+localphase   , 
+comppct   , 
+slope   , 
+recwlupdated   , 
+recuseriidref   , 
+tsectestcompiid   . 
+
+============================================================================================= 
+transecttext Table: 
+
+	The following fields need to be added to the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['recwlupdated', 'recuseriidref'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'tsectiidref', 
+'seqnum', 
+'recdate', 
+'recauthor', 
+'transecttextkind', 
+'textcat', 
+'textsubcat', 
+'textentry', 
+'recwlupdated', 
+'recuseriidref', 
+'transecttextiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+tsectiidref   , 
+seqnum   , 
+recdate   , 
+recauthor   , 
+transecttextkind   ,* 
+textcat   , 
+textsubcat   , 
+textentry   , 
+recwlupdated   , 
+recuseriidref   , 
+transecttextiid   . 
+
+============================================================================================= 
+beltdata Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+daubenmirecancovclasssumm Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+daubenmirecancovquaddetail Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+densityquadratdetails Table: 
+	The following fields need to be removed from the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['maturedensityclass', 'seedlingdensityclass'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'vegtransplantsummiidref', 
+'seqnum', 
+'quadratnumber', 
+'transectpointlocation', 
+'maturecount', 
+'seedlingcount', 
+'recwlupdated', 
+'recuseriidref', 
+'densityquaddetailsiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+vegtransplantsummiidref   , 
+seqnum   , 
+quadratnumber   , 
+transectpointlocation   , 
+maturecount   , 
+seedlingcount   , 
+recwlupdated   , 
+recuseriidref   , 
+densityquaddetailsiid   . 
+
+============================================================================================= 
+dwrquadratdetails Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+frequencyquadratdetails Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+nestedfreqquadratdetails Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+nestedfrequencysummary Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+windbreakrowdata Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+comparativeyielddata Table: 
+	The following fields need to be removed from the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['quadratnumber', 'transectpointlocation'] 
+
+	The following fields need to be added to the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['tallycount', 'rankxtally'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'vegtransectiidref', 
+'seqnum', 
+'yieldrank', 
+'tallycount', 
+'rankxtally', 
+'recwlupdated', 
+'recuseriidref', 
+'compyielddataiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+vegtransectiidref   , 
+seqnum   , 
+yieldrank   , 
+tallycount   , 
+rankxtally   , 
+recwlupdated   , 
+recuseriidref   , 
+compyielddataiid   . 
+
+============================================================================================= 
+comparativeyieldrefquadrats Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+croptreedetails Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+croptreesubplotdetails Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+croptreesummary Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+croptreetotals Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+groundcovdetails Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+groundsurfcovdetails Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+plantprodquadratdetails Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+siteiristubedata Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+sitemuoverlap Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+siteothvegclass Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+sitetreescounted Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+siteusgsquadrangleoverlap Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+sitewoodybasalarea Table: 
+
+	The following fields need to be added to the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['basalareasubplottotal'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'vegplotiidref', 
+'seqnum', 
+'basalareafactor', 
+'basalareasubplottotal', 
+'numberoftreesin', 
+'recwlupdated', 
+'recuseriidref', 
+'sitewoodybasalareaiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+vegplotiidref   , 
+seqnum   , 
+basalareafactor   ,* 
+basalareasubplottotal   , 
+numberoftreesin   , 
+recwlupdated   , 
+recuseriidref   , 
+sitewoodybasalareaiid   . 
+
+============================================================================================= 
+soilmoistmonitordata Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+soilmonitordata Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+soiltempmonitordata Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+subplotplantdetails Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+totalquadratharvest Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+transectgapdetails Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+transectgroundcover Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+transectgroundcoverdatalegacy Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+transectgroundsurfcover Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+transectoverstorycanopycover Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+transectsamplingprotocolused Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+transectstandingbiomassdetails Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+vegplottext Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+vegtransect Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+vegtransectplantsummary Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+vegtransecttext Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+basalareatreescounted Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+belttransectsummary Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+pointplantcoverdetails Table: 
+	All NASIS report fields match FGDB 
+
+============================================================================================= 
+vegplot Table: 
+	The following fields need to be removed from the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['vegplotsize'] 
+
+	The following fields need to be added to the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['obsintensity'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'siteobsiidref', 
+'vegplotid', 
+'vegplotname', 
+'primarydatacollector', 
+'datacollectionpurpose', 
+'vegdataorigin', 
+'soilprofileindicator', 
+'assocuserpedonid', 
+'soil232idlegacy', 
+'ahorizondepth', 
+'alkalinesalineindicator', 
+'alkalineaffected', 
+'salinityclass', 
+'restrictivelayerdepthlegacy', 
+'legacysoilcompname', 
+'legacysoilphase', 
+'legacylocalsoilphase', 
+'legacysoilsurftext', 
+'legacysurftextmod', 
+'legacyterminlieu', 
+'erosionclasslegacy', 
+'landformgrouplegacy', 
+'cryptogamcovcllegacy', 
+'rangelandusehistory', 
+'cancovpctplotave', 
+'cancovtotalpct', 
+'cancovtotalclass', 
+'overstorycancontotalpct', 
+'overstorycancovtotalclass', 
+'dblsampannualprodave', 
+'compyieldproductionave', 
+'abovegroundbiomasstotave', 
+'understoryreprodabundance', 
+'woodyunderstoryabundance', 
+'herbundertoryabundance', 
+'lichensunderstoryabundance', 
+'crowncanclosurepct', 
+'crowncancloseassessmethod', 
+'crowncompfactorlpp', 
+'crowncomplppavedbh', 
+'basalcoverpctave', 
+'basalareaplottotal', 
+'basalareaassessmethod', 
+'constreeshrubgrp', 
+'windbreakrowonedirection', 
+'windbreaktrappedsoildepth', 
+'windbreaktrappedsoiltexture', 
+'understorydescindicator', 
+'mensurationdataindicator', 
+'vigorclasslegacy', 
+'siteconditionlegacy', 
+'overstoryspecieslegacy', 
+'plantmoiststate', 
+'currenttreedensity', 
+'currenttreespacing', 
+'currentdxspacing', 
+'currentplotavedbh', 
+'plotbasalareafactor', 
+'currentbasalarea', 
+'foreststandtype', 
+'foreststratainventoried', 
+'foreststandregen', 
+'foreststandquality', 
+'desiredtreedensity', 
+'desireddxspacing', 
+'desiredbasalarea', 
+'excessbasalarea', 
+'excesstreedensity', 
+'stockingchangepct', 
+'treepctgoodcondition', 
+'treepctfaircondition', 
+'treepctpoorcondition', 
+'treecounttotal', 
+'treesnagdensityhard', 
+'treesnagdensitysoft', 
+'rhiannualprod', 
+'rhibareground', 
+'rhicompactionlayer', 
+'rhifuncstructgroups', 
+'rhierosionresistance', 
+'rhigullies', 
+'rhirills', 
+'rhipedastalsterracettes', 
+'rhiinfilrunoff', 
+'rhilitteramount', 
+'rhilittermovement', 
+'rhiplantmortality', 
+'rhireprodcapability', 
+'rhiinvasiveplants', 
+'rhisoilsurfdegradation', 
+'rhiwaterflowpatterns', 
+'rhiwindscourareas', 
+'rhisoilsitestabsumm', 
+'rhibioticintegritysumm', 
+'rhihydrofunctionsumm', 
+'pastureforagetype', 
+'pasturestanddensityave', 
+'pastureplanthtave', 
+'pastureprodave', 
+'pcidesirableplants', 
+'pciplantcover', 
+'pciplantdiversity', 
+'pcigroundcovresidue', 
+'pcistandingdeadforage', 
+'pciplantresiduecompscore', 
+'pciplantvigor', 
+'pcilegumepctclass', 
+'pciuseuniformity', 
+'pcilivestockconcareas', 
+'pcisoilcompaction', 
+'pcisheetrillerosion', 
+'pciwinderosion', 
+'pcistreamshoreerosion', 
+'pcigullyerosion', 
+'pcierosioncompscore', 
+'pcipastureconditionscore', 
+'refplantcommunity', 
+'repannualprod', 
+'totestannualprod', 
+'totallowableannualprod', 
+'totpalatableannualprod', 
+'similarityindex', 
+'annualuseableprod', 
+'harvesteffpct', 
+'takehalfleavehalf', 
+'acresperaum', 
+'aumperacre', 
+'audperacre', 
+'desirableplantvigor', 
+'desirableseedlingabundance', 
+'decadentplantabundance', 
+'plantresidueadequacy', 
+'undesirableinvadingspecies', 
+'majorinvadingspecies', 
+'invadingspeciescancovpct', 
+'soilsurferosion', 
+'soilcrusting', 
+'soilcompaction', 
+'baregroundpct', 
+'gullyrillpresence', 
+'soildegradationrating', 
+'rangetrendcurrent', 
+'rangetrendplanned', 
+'qcreviewperson', 
+'qcreviewdate', 
+'qareviewperson', 
+'qareviewdate', 
+'swcdlegacy', 
+'fieldofficelegacy', 
+'nrcsarealegacy', 
+'aktotallichencoverpct', 
+'aktotallitter1coverpct', 
+'aktotallitter2coverpct', 
+'aktotalmosscoverpct', 
+'aktotalrockcoverpct', 
+'aktotalsoilcoverpct', 
+'aktotalwatercoverpct', 
+'akecologicalsitestatus', 
+'aktotalbedrockcoverpct', 
+'akfieldecositeid', 
+'obsintensity', 
+'vegplotdbiidref', 
+'grpiidref', 
+'objwlupdated', 
+'objuseriidref', 
+'recwlupdated', 
+'recuseriidref', 
+'vegplotiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+siteobsiidref   , 
+vegplotid   , 
+vegplotname   , 
+primarydatacollector   , 
+datacollectionpurpose   , 
+vegdataorigin   ,* 
+soilprofileindicator   , 
+assocuserpedonid   , 
+soil232idlegacy   , 
+ahorizondepth   , 
+alkalinesalineindicator   ,* 
+alkalineaffected   , 
+salinityclass   ,* 
+restrictivelayerdepthlegacy   , 
+legacysoilcompname   , 
+legacysoilphase   , 
+legacylocalsoilphase   , 
+legacysoilsurftext   ,* 
+legacysurftextmod   ,* 
+legacyterminlieu   ,* 
+erosionclasslegacy   ,* 
+landformgrouplegacy   ,* 
+cryptogamcovcllegacy   ,* 
+rangelandusehistory   ,* 
+cancovpctplotave   , 
+cancovtotalpct   , 
+cancovtotalclass   ,* 
+overstorycancontotalpct   , 
+overstorycancovtotalclass   ,* 
+dblsampannualprodave   , 
+compyieldproductionave   , 
+abovegroundbiomasstotave   , 
+understoryreprodabundance   ,* 
+woodyunderstoryabundance   ,* 
+herbundertoryabundance   ,* 
+lichensunderstoryabundance   ,* 
+crowncanclosurepct   , 
+crowncancloseassessmethod   ,* 
+crowncompfactorlpp   , 
+crowncomplppavedbh   , 
+basalcoverpctave   , 
+basalareaplottotal   , 
+basalareaassessmethod   ,* 
+constreeshrubgrp   ,* 
+windbreakrowonedirection   ,* 
+windbreaktrappedsoildepth   , 
+windbreaktrappedsoiltexture   ,* 
+understorydescindicator   , 
+mensurationdataindicator   , 
+vigorclasslegacy   ,* 
+siteconditionlegacy   , 
+overstoryspecieslegacy   , 
+plantmoiststate   ,* 
+currenttreedensity   , 
+currenttreespacing   , 
+currentdxspacing   , 
+currentplotavedbh   , 
+plotbasalareafactor   ,* 
+currentbasalarea   , 
+foreststandtype   ,* 
+foreststratainventoried   ,* 
+foreststandregen   ,* 
+foreststandquality   ,* 
+desiredtreedensity   , 
+desireddxspacing   , 
+desiredbasalarea   , 
+excessbasalarea   , 
+excesstreedensity   , 
+stockingchangepct   , 
+treepctgoodcondition   , 
+treepctfaircondition   , 
+treepctpoorcondition   , 
+treecounttotal   , 
+treesnagdensityhard   , 
+treesnagdensitysoft   , 
+rhiannualprod   ,* 
+rhibareground   ,* 
+rhicompactionlayer   ,* 
+rhifuncstructgroups   ,* 
+rhierosionresistance   ,* 
+rhigullies   ,* 
+rhirills   ,* 
+rhipedastalsterracettes   ,* 
+rhiinfilrunoff   ,* 
+rhilitteramount   ,* 
+rhilittermovement   ,* 
+rhiplantmortality   ,* 
+rhireprodcapability   ,* 
+rhiinvasiveplants   ,* 
+rhisoilsurfdegradation   ,* 
+rhiwaterflowpatterns   ,* 
+rhiwindscourareas   ,* 
+rhisoilsitestabsumm   ,* 
+rhibioticintegritysumm   ,* 
+rhihydrofunctionsumm   ,* 
+pastureforagetype   , 
+pasturestanddensityave   , 
+pastureplanthtave   , 
+pastureprodave   , 
+pcidesirableplants   ,* 
+pciplantcover   ,* 
+pciplantdiversity   ,* 
+pcigroundcovresidue   ,* 
+pcistandingdeadforage   ,* 
+pciplantresiduecompscore   , 
+pciplantvigor   ,* 
+pcilegumepctclass   ,* 
+pciuseuniformity   ,* 
+pcilivestockconcareas   ,* 
+pcisoilcompaction   ,* 
+pcisheetrillerosion   ,* 
+pciwinderosion   ,* 
+pcistreamshoreerosion   ,* 
+pcigullyerosion   ,* 
+pcierosioncompscore   , 
+pcipastureconditionscore   , 
+refplantcommunity   , 
+repannualprod   , 
+totestannualprod   , 
+totallowableannualprod   , 
+totpalatableannualprod   , 
+similarityindex   , 
+annualuseableprod   , 
+harvesteffpct   , 
+takehalfleavehalf   , 
+acresperaum   , 
+aumperacre   , 
+audperacre   , 
+desirableplantvigor   ,* 
+desirableseedlingabundance   ,* 
+decadentplantabundance   ,* 
+plantresidueadequacy   ,* 
+undesirableinvadingspecies   ,* 
+majorinvadingspecies   , 
+invadingspeciescancovpct   , 
+soilsurferosion   ,* 
+soilcrusting   ,* 
+soilcompaction   ,* 
+baregroundpct   , 
+gullyrillpresence   ,* 
+soildegradationrating   ,* 
+rangetrendcurrent   ,* 
+rangetrendplanned   ,* 
+qcreviewperson   , 
+qcreviewdate   , 
+qareviewperson   , 
+qareviewdate   , 
+swcdlegacy   , 
+fieldofficelegacy   , 
+nrcsarealegacy   , 
+aktotallichencoverpct   , 
+aktotallitter1coverpct   , 
+aktotallitter2coverpct   , 
+aktotalmosscoverpct   , 
+aktotalrockcoverpct   , 
+aktotalsoilcoverpct   , 
+aktotalwatercoverpct   , 
+akecologicalsitestatus   ,* 
+aktotalbedrockcoverpct   , 
+akfieldecositeid   , 
+obsintensity   ,* 
+vegplotdbiidref   , 
+grpiidref   , 
+objwlupdated   , 
+objuseriidref   , 
+recwlupdated   , 
+recuseriidref   , 
+vegplotiid   . 
+
+============================================================================================= 
+area Table: 
+
+	The following fields need to be added to the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['seqnum', 'recuseriidref'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'areatypeiidref', 
+'seqnum', 
+'areasymbol', 
+'areaname', 
+'areaacres', 
+'obterm', 
+'recwlupdated', 
+'recuseriidref', 
+'areaiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+areatypeiidref   , 
+seqnum   , 
+areasymbol   , 
+areaname   , 
+areaacres   , 
+obterm   , 
+recwlupdated   , 
+recuseriidref   , 
+areaiid   . 
+
+============================================================================================= 
+areatype Table: 
+
+	The following fields need to be added to the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['grpiidref', 'objwlupdated', 'objuseriidref', 'recuseriidref'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'areatypename', 
+'atdbiidref', 
+'grpiidref', 
+'objwlupdated', 
+'objuseriidref', 
+'recwlupdated', 
+'recuseriidref', 
+'areatypeiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+areatypename   , 
+atdbiidref   , 
+grpiidref   , 
+objwlupdated   , 
+objuseriidref   , 
+recwlupdated   , 
+recuseriidref   , 
+areatypeiid   . 
+
+============================================================================================= 
+site Table: 
+	The following fields need to be removed from the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['pmgroupname_s'] 
+
+	The following fields need to be added to the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['stateareaiidref', 'stateareatypeiidref', 'countyareaiidref', 'countyareatypeiidref', 'mlraareaiidref', 'mlraareatypeiidref', 'vegplotsize', 'cowardinwetlandsystem', 'cowardinwetlandsubsystem', 'cowardinwetlandclass', 'cowardinwetlandsubclass', 'cowardinmoistregimemodifier', 'hgmclass', 'hgmsubclass', 'hgmmodifier', 'legacyecositeid', 'legacyecositename', 'meanfrostfreeprecip', 'peindex', 'plotestablishedyear', 'plotnum', 'alternativeid', 'rcasiteid', 'rcasoilgroupid', 'dspplotid', 'dspsitetype', 'sampleplotconfiguration', 'plotwidth', 'plotbaselinelength', 'plotbaselineazimuth', 'plotradius', 'plottrianglesidelength', 'plotchainmaxwidth', 'plotchainmaxlength', 'plotoffsetazimuth', 'plotoffsetdistance', 'plotcreator', 'recorder', 'grpiidref', 'objwlupdated', 'objuseriidref', 'recwlupdated', 'recuseriidref'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'usiteid', 
+'latstddecimaldegrees', 
+'longstddecimaldegrees', 
+'geocoordsource', 
+'gpspositionalerror', 
+'gpspdop', 
+'locdesc', 
+'plsssdetails', 
+'plsssection', 
+'plsstownship', 
+'plssrange', 
+'plssmeridian', 
+'stateareaiidref', 
+'stateareatypeiidref', 
+'countyareaiidref', 
+'countyareatypeiidref', 
+'mlraareaiidref', 
+'mlraareatypeiidref', 
+'vegplotsize', 
+'elev', 
+'elevcorrected', 
+'geomposhill', 
+'geomposmntn', 
+'geompostrce', 
+'geomposflats', 
+'hillslopeprof', 
+'geomslopeseg', 
+'slope', 
+'aspect', 
+'slopelenusle', 
+'slopelenuptro', 
+'shapeacross', 
+'shapedown', 
+'slopecomplex', 
+'locphysnm', 
+'drainagecl', 
+'siteksatclassupper', 
+'siteksatclasslower', 
+'runoff', 
+'drainagepattern', 
+'pmgroupname', 
+'climstaid', 
+'climstanm', 
+'climstatype', 
+'ffd', 
+'map', 
+'reannualprecip', 
+'airtempa', 
+'soiltempa', 
+'airtemps', 
+'soiltemps', 
+'airtempw', 
+'soiltempw', 
+'flodfreqcl', 
+'floddurcl', 
+'flodmonthbeg', 
+'pondfreqcl', 
+'ponddurcl', 
+'pondmonthbeg', 
+'wtabledur', 
+'cowardinwetlandsystem', 
+'cowardinwetlandsubsystem', 
+'cowardinwetlandclass', 
+'cowardinwetlandsubclass', 
+'cowardinmoistregimemodifier', 
+'hgmclass', 
+'hgmsubclass', 
+'hgmmodifier', 
+'legacyecositeid', 
+'legacyecositename', 
+'meanfrostfreeprecip', 
+'peindex', 
+'plotestablishedyear', 
+'plotnum', 
+'alternativeid', 
+'rcasiteid', 
+'rcasoilgroupid', 
+'dspplotid', 
+'dspsitetype', 
+'sampleplotconfiguration', 
+'plotwidth', 
+'plotbaselinelength', 
+'plotbaselineazimuth', 
+'plotradius', 
+'plottrianglesidelength', 
+'plotchainmaxwidth', 
+'plotchainmaxlength', 
+'plotoffsetazimuth', 
+'plotoffsetdistance', 
+'plotcreator', 
+'recorder', 
+'benchmarksoilflag', 
+'latdegrees', 
+'latminutes', 
+'latseconds', 
+'latdir', 
+'longdegrees', 
+'longminutes', 
+'longseconds', 
+'longdir', 
+'horizdatnm', 
+'utmzone', 
+'utmeasting', 
+'utmnorthing', 
+'sdbiidref', 
+'grpiidref', 
+'objwlupdated', 
+'objuseriidref', 
+'recwlupdated', 
+'recuseriidref', 
+'siteiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+usiteid   , 
+latstddecimaldegrees   , 
+longstddecimaldegrees   , 
+geocoordsource   ,* 
+gpspositionalerror   , 
+gpspdop   , 
+locdesc   , 
+plsssdetails   , 
+plsssection   , 
+plsstownship   , 
+plssrange   , 
+plssmeridian   ,* 
+stateareaiidref   , 
+stateareatypeiidref   , 
+countyareaiidref   , 
+countyareatypeiidref   , 
+mlraareaiidref   , 
+mlraareatypeiidref   , 
+vegplotsize   , 
+elev   , 
+elevcorrected   , 
+geomposhill   ,* 
+geomposmntn   ,* 
+geompostrce   ,* 
+geomposflats   ,* 
+hillslopeprof   ,* 
+geomslopeseg   ,* 
+slope   , 
+aspect   , 
+slopelenusle   , 
+slopelenuptro   , 
+shapeacross   ,* 
+shapedown   ,* 
+slopecomplex   ,* 
+locphysnm   , 
+drainagecl   ,* 
+siteksatclassupper   ,* 
+siteksatclasslower   ,* 
+runoff   ,* 
+drainagepattern   ,* 
+pmgroupname   , 
+climstaid   , 
+climstanm   , 
+climstatype   , 
+ffd   , 
+map   , 
+reannualprecip   , 
+airtempa   , 
+soiltempa   , 
+airtemps   , 
+soiltemps   , 
+airtempw   , 
+soiltempw   , 
+flodfreqcl   ,* 
+floddurcl   ,* 
+flodmonthbeg   ,* 
+pondfreqcl   ,* 
+ponddurcl   ,* 
+pondmonthbeg   ,* 
+wtabledur   , 
+cowardinwetlandsystem   ,* 
+cowardinwetlandsubsystem   ,* 
+cowardinwetlandclass   ,* 
+cowardinwetlandsubclass   ,* 
+cowardinmoistregimemodifier   ,* 
+hgmclass   ,* 
+hgmsubclass   , 
+hgmmodifier   , 
+legacyecositeid   , 
+legacyecositename   , 
+meanfrostfreeprecip   , 
+peindex   , 
+plotestablishedyear   , 
+plotnum   , 
+alternativeid   , 
+rcasiteid   , 
+rcasoilgroupid   , 
+dspplotid   , 
+dspsitetype   ,* 
+sampleplotconfiguration   ,* 
+plotwidth   , 
+plotbaselinelength   , 
+plotbaselineazimuth   , 
+plotradius   , 
+plottrianglesidelength   , 
+plotchainmaxwidth   , 
+plotchainmaxlength   , 
+plotoffsetazimuth   , 
+plotoffsetdistance   , 
+plotcreator   , 
+recorder   , 
+benchmarksoilflag   , 
+latdegrees   , 
+latminutes   , 
+latseconds   , 
+latdir   ,* 
+longdegrees   , 
+longminutes   , 
+longseconds   , 
+longdir   ,* 
+horizdatnm   ,* 
+utmzone   , 
+utmeasting   , 
+utmnorthing   , 
+sdbiidref   , 
+grpiidref   , 
+objwlupdated   , 
+objuseriidref   , 
+recwlupdated   , 
+recuseriidref   , 
+siteiid   . 
+
+============================================================================================= 
+pedon Table: 
+	The following fields need to be removed from the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['SHAPE', 'taxonname_s', 'taxclname_s', 'taxonkind_s', 'relexpsize', 'relexpuom', 'earthcovkind1', 'earthcovkind2'] 
+
+	The following fields need to be added to the WEB_AnalysisPC_MAIN_URL_EXPORT report: 
+		['Shape', 'relexpwidth'] 
+
+------------------------------ FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+'siteobsiidref', 
+'upedonid', 
+'pedrecorigin', 
+'descname', 
+'taxonname', 
+'localphase', 
+'taxclname', 
+'taxonkind', 
+'pedontype', 
+'pedonpurpose', 
+'pedonunit', 
+'labdatadescflag', 
+'relexpwidth', 
+'erocl', 
+'labsourceid', 
+'pedlabsampnum', 
+'tsectiidref', 
+'tsectstopnum', 
+'tsectinterval', 
+'rcapointnumber', 
+'soilreplicatenumber', 
+'azimuthfromplotcenter', 
+'distancefromplotcenter', 
+'rectangularplotlinenumber', 
+'distancefrombaseline', 
+'pedodermclass', 
+'pedodermcovind', 
+'biolcrusttypedom', 
+'biolcrusttypesecond', 
+'physcrustsubtype', 
+'crustdevcl', 
+'rangevegcanopytypedom', 
+'rangevegcanopytypesec', 
+'forestoverstoryvegtype', 
+'forestunderstoryvegtype', 
+'forestgroundcovvegtypedom', 
+'forestgroundcovvegtypesec', 
+'agronomicfeature', 
+'otherfeaturedescription', 
+'currentcropname', 
+'littercoverpct', 
+'residuedescription', 
+'pedonhydricrating', 
+'pecertstatus', 
+'peqcstatus', 
+'peqastatus', 
+'saspipelengthtot', 
+'saspipelengthext', 
+'saspipelengthunfilled', 
+'sascoresettlement', 
+'sascorelength', 
+'sascorestoragesite', 
+'sasexposurebegin', 
+'sasexposureend', 
+'pedbiidref', 
+'grpiidref', 
+'objwlupdated', 
+'objuseriidref', 
+'recuseriidref', 
+'recwlupdated', 
+'peiid'. 
+
+------------------------------ FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE 
+siteobsiidref   , 
+upedonid   , 
+pedrecorigin   , 
+descname   , 
+taxonname   , 
+localphase   , 
+taxclname   , 
+taxonkind   ,* 
+pedontype   ,* 
+pedonpurpose   ,* 
+pedonunit   , 
+labdatadescflag   , 
+relexpwidth   , 
+erocl   ,* 
+labsourceid   , 
+pedlabsampnum   , 
+tsectiidref   , 
+tsectstopnum   , 
+tsectinterval   , 
+rcapointnumber   , 
+soilreplicatenumber   , 
+azimuthfromplotcenter   , 
+distancefromplotcenter   , 
+rectangularplotlinenumber   , 
+distancefrombaseline   , 
+pedodermclass   ,* 
+pedodermcovind   , 
+biolcrusttypedom   ,* 
+biolcrusttypesecond   ,* 
+physcrustsubtype   ,* 
+crustdevcl   ,* 
+rangevegcanopytypedom   ,* 
+rangevegcanopytypesec   ,* 
+forestoverstoryvegtype   ,* 
+forestunderstoryvegtype   ,* 
+forestgroundcovvegtypedom   ,* 
+forestgroundcovvegtypesec   ,* 
+agronomicfeature   ,* 
+otherfeaturedescription   , 
+currentcropname   ,* 
+littercoverpct   , 
+residuedescription   , 
+pedonhydricrating   , 
+pecertstatus   ,* 
+peqcstatus   ,* 
+peqastatus   ,* 
+saspipelengthtot   , 
+saspipelengthext   , 
+saspipelengthunfilled   , 
+sascoresettlement   , 
+sascorelength   , 
+sascorestoragesite   , 
+sasexposurebegin   , 
+sasexposureend   , 
+pedbiidref   , 
+grpiidref   , 
+objwlupdated   , 
+objuseriidref   , 
+recuseriidref   , 
+recwlupdated   , 
+peiid   . 
+
+============================================================================================= 
+The following NASIS report Tables do NOT exist in the FGDB: 
+	['ecologicalsite', 'pedondbcolumnmetadata', 'pedondbtablemetadata'] 
+
+============================================================================================= 
+The following FGDB Tables do NOT exist in the NASIS report: 
+	['areatext', 'climatestation', 'pediagfeatrefecmdoc', 'pedonrefecmdoc', 'peinfilcornelldata', 'peinfilncornell', 'perestrictionsrefecmdoc', 'phhuartrefecmdoc', 'phorizonrefecmdoc', 'phvnirscanrawdata', 'plotdisturbrefecmdoc', 'plotgrazerefecmdoc', 'plotsampprotocolrefecmdoc', 'siteinundationtype', 'siteiristubeimage', 'siteobsrefecmdoc', 'siterefecmdoc', 'transectrefecmdoc', 'vegplotrefecmdoc', 'vegtranssmpprotusedrefecmdoc'] 
+
+Total # of discrepancies between NASIS report and FGDB: 253
+
+ 

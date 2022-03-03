@@ -4,7 +4,7 @@
 #              to the tables and fields from the 'WEB Analysis PC MAIN URL Export'
 #              NASIS report that follows the NASIS 7.1 Schema.
 #              It is primarily for Jason Nemecek to adjust the pedon reports so that
-#              they match the 7.1 schema.
+#              they match the an updated schema.
 #
 # Author:      Adolfo.Diaz
 #
@@ -13,9 +13,14 @@
 # Copyright:   (c) Adolfo.Diaz 2018
 #-------------------------------------------------------------------------------
 
-## ===================================================================================
-class ExitError(Exception):
-    pass
+# ==========================================================================================
+# Updated  2/16/2022 - Adolfo Diaz
+# The script was updated to allow comparison of schemas between 2 FGDBs rather than just
+# against the the 'WEB Analysis PC MAIN URL Export' rerport.
+# If there are discrepancies between tables/schemas then the fields will be printed twice
+# in 2 different formats so that jason can simply copy and paste as he updates the fields
+# in his report. The fields are printed in the correct sequence as well.
+
 
 ## ===================================================================================
 def AddMsgAndPrint(msg, severity=0):
@@ -24,7 +29,15 @@ def AddMsgAndPrint(msg, severity=0):
     #
     #Split the message on \n first, so that if it's multiple lines, a GPMessage will be added for each line
     try:
-        print msg
+        print(msg)
+
+        try:
+            f = open(textFilePath,'a+')
+            f.write(msg + " \n")
+            f.close
+            del f
+        except:
+            pass
 
         #for string in msg.split('\n'):
             #Add a geoprocessing message (in case this is run as a tool)
@@ -42,14 +55,19 @@ def AddMsgAndPrint(msg, severity=0):
 
 ## ===================================================================================
 def errorMsg():
-
     try:
+
         exc_type, exc_value, exc_traceback = sys.exc_info()
         theMsg = "\t" + traceback.format_exception(exc_type, exc_value, exc_traceback)[1] + "\n\t" + traceback.format_exception(exc_type, exc_value, exc_traceback)[-1]
-        AddMsgAndPrint(theMsg,2)
+
+        if theMsg.find("exit") > -1:
+            AddMsgAndPrint("\n\n")
+            pass
+        else:
+            AddMsgAndPrint(theMsg,2)
 
     except:
-        AddMsgAndPrint("Unhandled error in errorMsg method", 2)
+        AddMsgAndPrint("Unhandled error in unHandledException method", 2)
         pass
 
 # ===============================================================================================================
@@ -67,54 +85,90 @@ def splitThousands(someNumber):
 # =========================================================== Main Body =============================================================================
 # Import modules
 import sys, string, os, traceback, urllib, re, arcpy
+from urllib.request import Request
 from arcpy import env
 
 if __name__ == '__main__':
 
     try:
-        pedonID = arcpy.GetParameterAsText(0)
-
+        # New pedon template schema will either be compared to the URL report or the old Pedon template
         sampleURL = "https://nasis.sc.egov.usda.gov/NasisReportsWebSite/limsreport.aspx?report_name=WEB_AnalysisPC_MAIN_URL_EXPORT&pedonid_list=36186"
-        #sampleURL = "https://nasis.sc.egov.usda.gov/NasisReportsWebSite/limsreport.aspx?report_name=WEB_AnalysisPC_MAIN_URL_EXPORT&pedonid_list=" + str(pedonID)
-        pedonGDB =  os.path.dirname(sys.argv[0]) + os.sep + 'NasisPedonsTemplate_NEW.gdb'
+        oldPedonTemplate = r'E:\python_scripts\GitHub\NCSS-Pedons---ArcGIS-Pro\NASISPedonsFGDBTemplate.gdb'
 
-        theReport = urllib.urlopen(sampleURL)
+        # True = Use NASIS URL to compare; False = Use older pedon Template FGDB
+        bUseNASISurlReport = False
 
-        bFieldNameRecord = False # boolean that marks the starting point of the table and attributes.
+        newPedonTemplate =  os.path.dirname(sys.argv[0]) + os.sep + 'NASISPedonsTemplate_7_4_1.gdb'
+        textFilePath = os.path.dirname(sys.argv[0]) + os.sep + "CompareSchemas_logFile.txt"
 
-        """ --------------------------------- Parse the report to isolate the NASIS tables and fields -------------------------"""
-        nasisDict = dict()  # collection of table and field names  from the URL report {'siteobs': ['seqnum','obsdate','obsdatekind']
-        tempTableName = ""  # name of the current table
+        # This is the same metadata table that is used to create the FGDB template using the NASISpedons_Create_FGDBschema_fromNASIS_Metadata.py script.
+        schemaTable = r'E:\python_scripts\GitHub\NCSS-Pedons---ArcGIS-Pro\Metadata_Tables.gdb\NASIS_Pedons_Table_Field_Schema_7_4_1'
+        tableName = 2
+        tableAlias = 3
+        fieldSequence = 5
+        fieldPhysicalName = 7
+        fieldAlias = 8
+        fieldType = 9
+        fieldPhysicalType = 10
+        fieldNull = 11
+        fieldSize = 12
+        domain = 17
+        schemaFlds = [f.name for f in arcpy.ListFields(schemaTable)]
 
-        # iterate through the report until a valid record is found
-        for theValue in theReport:
-            fieldNames = list()
-            theValue = theValue.strip() # remove whitespace characters
+        nasisDict = dict()  # collection of table and field names {'siteobs': ['seqnum','obsdate','obsdatekind']
 
-            # Iterating through the report
-            if bFieldNameRecord:
+        if bUseNASISurlReport:
+            """ --------------------------------- Parse the report to isolate the NASIS tables and fields -------------------------"""
+            tempTableName = ""  # name of the current table
 
-                nasisDict[tempTableName] = (theValue.split('|'))
-                tempTableName = ""
-                bFieldNameRecord = False
+            theReport = urllib.request.urlopen(sampleURL).readlines()
+            bFieldNameRecord = False # boolean that marks the starting point of the table and attributes.
 
-            elif theValue.find('@begin') > -1:
-                bFieldNameRecord = True
-                tempTableName = theValue[theValue.find('@begin')+7:]
+            # iterate through the report until a valid record is found
+            for theValue in theReport:
 
-            else:
-                continue
+                # convert from bytes to string and remove white spaces
+                theValue = theValue.decode('utf-8').strip()
 
-        del bFieldNameRecord,tempTableName
+                fieldNames = list()
+                theValue = theValue.strip() # remove whitespace characters
+
+                # Iterating through the report
+                if bFieldNameRecord:
+
+                    nasisDict[tempTableName] = (theValue.split('|'))
+                    tempTableName = ""
+                    bFieldNameRecord = False
+
+                elif theValue.find('@begin') > -1:
+                    bFieldNameRecord = True
+                    tempTableName = theValue[theValue.find('@begin')+7:]
+
+                else:
+                    continue
+
+            del bFieldNameRecord,tempTableName
+
+        else:
+            arcpy.env.workspace = oldPedonTemplate
+            oldTables = arcpy.ListTables('*')
+            oldTables.append(r'pedon')
+
+            for tbl in oldTables:
+                tblPath = f"{oldPedonTemplate}\{tbl}"
+                flds = [f.name for f in arcpy.ListFields(tblPath)]
+                flds.remove('OBJECTID')
+                nasisDict[tbl] = flds
 
         if not len(nasisDict):
-            raise ExitError,"\n\nNo records returned for pedon ID: " + str(pedonID)
+            AddMsgAndPrint("\n\nNo records returned for pedon ID: " + str(pedonID))
+            exit()
 
         """ --------------------------------- Collect FGDB tables and fields -------------------------"""
-        arcpy.env.workspace = pedonGDB
-        pedonGDBTables = arcpy.ListTables('*')
+        arcpy.env.workspace = newPedonTemplate
+        newPedonTemplateTables = arcpy.ListTables('*')
 
-        if arcpy.ListFeatureClasses('site'):pedonGDBTables.append('site') # Site is not a table so we will manually add it.
+        if arcpy.ListFeatureClasses('pedon'):newPedonTemplateTables.append('pedon') # Site is not a table so we will manually add it.
         missingTables = list()
 
         """ ---------------------------------------- Begin the Comparison between NASIS URL and FGDB -----------------------------"""
@@ -125,14 +179,14 @@ if __name__ == '__main__':
             if nasisTable.find("Metadata") > -1: continue
 
             # Check if NASIS table exists in Pedon FGDB; log and continue if it doesn't
-            if nasisTable not in pedonGDBTables:
+            if not nasisTable in newPedonTemplateTables:
                 missingTables.append(nasisTable)
                 continue
 
             else:
-                pedonGDBTables.remove(nasisTable)
+                newPedonTemplateTables.remove(nasisTable)
 
-            gdbTableFields = [f.name for f in arcpy.ListFields(pedonGDB + os.sep + nasisTable)]   # List of GDB table fields
+            gdbTableFields = [f.name for f in arcpy.ListFields(newPedonTemplate + os.sep + nasisTable)]   # List of GDB table fields
             nasisFields = [value for value in nasisDict.get(nasisTable)]                          # List of NASIS table fields
             fieldsMissingGDB = list()                                                             # List of NASIS fields missing from FGDB
 
@@ -168,10 +222,15 @@ if __name__ == '__main__':
                 AddMsgAndPrint("\tAll NASIS report fields match FGDB")
                 continue
 
-            # Notify user of missing fields
+            #
             if len(fieldsMissingGDB):
                 AddMsgAndPrint(nasisTable + " Table:",2)
-                AddMsgAndPrint("\tThe following NASIS report fields do NOT exist in the FGDB table:",1)
+
+                if bUseNASISurlReport:
+                    AddMsgAndPrint("\tThe following NASIS report fields do NOT exist in the FGDB table:",1)
+                else:
+                    AddMsgAndPrint("\tThe following fields need to be removed from the WEB_AnalysisPC_MAIN_URL_EXPORT report:",1)
+
                 AddMsgAndPrint("\t\t" + str(fieldsMissingGDB))
                 tablePrinted = True
                 discrepancies += len(fieldsMissingGDB)
@@ -179,9 +238,52 @@ if __name__ == '__main__':
             if len(gdbTableFields):
                 if not tablePrinted:
                     AddMsgAndPrint(nasisTable + " Table:",2)
-                AddMsgAndPrint("\n\tThe following FGDB fields do NOT exist in the NASIS report:",1)
+
+                if bUseNASISurlReport:
+                    AddMsgAndPrint("\n\tThe following FGDB fields do NOT exist in the NASIS report:",1)
+                else:
+                    AddMsgAndPrint("\n\tThe following fields need to be added to the WEB_AnalysisPC_MAIN_URL_EXPORT report:",1)
+
                 AddMsgAndPrint("\t\t" + str(gdbTableFields))
                 discrepancies += len(gdbTableFields)
+
+            # Print all of the fields in their correct format and sequence so that Jason can copy and paste directly
+            # into the NASIS report; This will save Jason a ton of time.  This will only print if there are field discrepancies
+            # in the table.
+
+            whereClause = f"{schemaFlds[tableName].upper()} = \'{nasisTable}\'"
+            sqlPostfix = f"ORDER BY {schemaFlds[fieldSequence].upper()} ASC"
+            tableFlds = list()
+            with arcpy.da.SearchCursor(schemaTable,[schemaFlds[fieldPhysicalName],schemaFlds[domain]],where_clause=whereClause,sql_clause=(None,sqlPostfix)) as cursor:
+                for row in cursor:
+                     key = row[0]
+                     if row[1] is None:
+                        value = None
+                     else:
+                        value = '*'
+
+                     tableFlds.append((key,value))
+
+            AddMsgAndPrint(f"{os.linesep}{30*'-'} FORMAT #1: LIST OF TABLE FIELDS IN PROPER SEQUENCE")
+            i = 1
+            j = len(tableFlds)
+            for fld in tableFlds:
+                if i < j:
+                    AddMsgAndPrint(f"\'{fld[0]}\',")
+                else:
+                    AddMsgAndPrint(f"\'{fld[0]}\'.")
+                i+=1
+
+
+            AddMsgAndPrint(f"{os.linesep}{30*'-'} FORMAT #2: LIST OF TABLE FIELDS IN PROPER SEQUENCE")
+            i = 1
+            j = len(tableFlds)
+            for fld in tableFlds:
+                if i < j:
+                    AddMsgAndPrint(f"{fld[0]}   ,{'*' if not fld[1] == None else ''}")
+                else:
+                    AddMsgAndPrint(f"{fld[0]}   .{'*' if not fld[1] == None else ''}")
+                i+=1
 
             del gdbTableFields,nasisFields,gdbTableFieldsTotal,nasisFieldsTotal,fieldsMissingGDB,tablePrinted
 
@@ -193,12 +295,12 @@ if __name__ == '__main__':
             AddMsgAndPrint("\t" + str(missingTables))
             discrepancies += len(missingTables)
 
-        if len(pedonGDBTables):
+        if len(newPedonTemplateTables):
             AddMsgAndPrint("\n=============================================================================================",0)
             AddMsgAndPrint("The following FGDB Tables do NOT exist in the NASIS report:",2)
-            pedonGDBTables.sort()
-            AddMsgAndPrint("\t" + str(pedonGDBTables))
-            discrepancies += len(pedonGDBTables)
+            newPedonTemplateTables.sort()
+            AddMsgAndPrint("\t" + str(newPedonTemplateTables))
+            discrepancies += len(newPedonTemplateTables)
         else:
             AddMsgAndPrint("\n\n")
 
@@ -207,7 +309,7 @@ if __name__ == '__main__':
         else:
             AddMsgAndPrint("\nThere are no discrepancies between NASIS report and FGDB....CONGRATULATIONS!\n\n",0)
 
-        del missingTables,pedonGDBTables
+        del missingTables,newPedonTemplateTables
 
     except:
         errorMsg()

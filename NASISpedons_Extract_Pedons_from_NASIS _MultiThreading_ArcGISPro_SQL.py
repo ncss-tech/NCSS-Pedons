@@ -1163,7 +1163,7 @@ def organizeFutureInstanceIntoPedonDict(futureObject):
         invalidRecord = 0   # represents records that were not added
         validRecord = 0
 
-        bHeader = False         # flag indicating if value is html junk
+        bHeader = False         # indicator that record represents fields
         currentTable = ""       # The table found in the report
         numOfFields = ""        # The number of fields a specific table should contain
         partialValue = ""       # variable containing part of a value that is not complete
