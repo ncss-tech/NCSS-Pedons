@@ -544,8 +544,8 @@ def createReferenceObjects(pedonDBloc):
         tableList = arcpy.ListTables("*")
         tableList.append(prefix + "pedon")
 
-        # "Tablelabel" Table is misspelled....huh?
-        nameOfFields = ["TablePhysicalName","TableLabel"]
+        #nameOfFields = ["TablePhysicalName","TableLabel"]
+        nameOfFields = ["tabphynm","tablab"]
 
         # Initiate 3 Dictionaries
         tableInfoDict = dict()
@@ -1307,7 +1307,8 @@ if __name__ == '__main__':
     try:
 
         DBname = r'NASIS_Pedons_Interim'
-        outputFolder = r'N:\flex\NCSS_Pedons\NASIS_Pedons\Web_Feature_Service'
+        #outputFolder = r'N:\flex\NCSS_Pedons\NASIS_Pedons\Web_Feature_Service'
+        outputFolder = r'E:\NCSS_Pedons\NASIS_Pedons_Metatdata_Update'
         FinalDB = f"{outputFolder}\\NASIS_Pedons_WFS_Final.gdb"
         sqliteFormat = False
         allPedons = True
