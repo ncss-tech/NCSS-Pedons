@@ -236,6 +236,7 @@ attphynm = 7           # Field Physical Name
 collab = 8             # Field Alias
 cholabtxt = 9          # Field Type
 colnotnulbool = 11     # Field Allow NULLs
+coldisplaysz = 12      # Field Length if associated with Domain choice list
 attfldsiz = 15         # Field Length
 attprec = 16           # Field Precision
 domnm = 22             # Field Domain
@@ -343,12 +344,18 @@ for tbl in tableList:
             else:
                 fieldAllowNulls = 'NULLABLE'
 
+            # This is strictly for fields that have a domain associated with them
+            # and the metadata describes them as integers instead of text
+            if row[cholabtxt] == 'Choice':
+                fieldType = 'TEXT'
+                fieldLength = row[coldisplaysz] + 10
+
             # Create 3 fields representing _l, _r, _h if aggregation code is 2
             if row[aggregation] == 2:
                 aggDict = {'_l':'_Low','_r':'_RV','_h':'_High'}
                 for k,v in aggDict.items():
                     arcpy.AddField_management(newTable,fieldName + k,fieldType,'',field_alias=fieldAlias+v,field_is_nullable=fieldAllowNulls)
-                    print(f"\t\t{fieldName : <35}{fieldAlias : <45}{fieldType : <10}")
+                    print(f"\t\t{fieldName + k: <35}{fieldAlias + v: <45}{fieldType : <10}")
             else:
                 arcpy.AddField_management(newTable,fieldName,fieldType,field_length=fieldLength,field_alias=fieldAlias,field_is_nullable=fieldAllowNulls)
                 print(f"\t\t{fieldName : <35}{fieldAlias : <45}{fieldType : <10}")
@@ -374,8 +381,8 @@ sqlCluase = (None,f"ORDER BY {tblColRelsFlds[originTbl]} ASC")
 relList = [(row[1],row[2],row[4],row[5]) for row in arcpy.da.SearchCursor(tblColRels,'*',where_clause=parentChldExp,sql_clause=sqlCluase)]
 
 print(f"\nCreating Relationship Classes")
-print(f"{'\n\tOrigin Table' : <25}{'Destination Table' : <30}{'Relationship Type' : <20}{'Relationship Name' : <60}")
-print(f"{\t130*'='}")
+print(f"\n\t{'Origin Table' : <25}{'Destination Table' : <30}{'Relationship Type' : <20}{'Relationship Name' : <60}")
+print(f"\t{130*'='}")
 
 # ('area', 'areaiid', 'areatext', 'areaiidref')
 for rel in relList:
@@ -423,10 +430,14 @@ for rel in relList:
                                                  origin_primaryKey,
                                                  origin_foreignKey)
 
-        print(f"{\torigin_table : <25}{'--> ' + destination_table: <30}{'--> ' + cardinality : <20}{'--> ' + outRelClass : <60}")
+        print(f"\t{origin_table : <25}{'--> ' + destination_table: <30}{'--> ' + cardinality : <20}{'--> ' + outRelClass : <60}")
 
 ##    else:
 ##        print(f"{origin_table} or {destination_table} DOES NOT EXIST")
+
+# --------------------------------------------------------------- CREATE FGDB PEDON FIELD INDEXES
+
+
 
 
 
