@@ -50,7 +50,6 @@
 # - No data will be provided fo
 #-------------------------------------------------------------------------------
 
-
 # Import modules
 import sys, string, os, traceback, urllib, re, arcpy
 from arcpy import env
@@ -431,11 +430,39 @@ for rel in relList:
                                                  origin_foreignKey)
 
         print(f"\t{origin_table : <25}{'--> ' + destination_table: <30}{'--> ' + cardinality : <20}{'--> ' + outRelClass : <60}")
-
 ##    else:
 ##        print(f"{origin_table} or {destination_table} DOES NOT EXIST")
 
 # --------------------------------------------------------------- CREATE FGDB PEDON FIELD INDEXES
+# Field index includes OBJECTID
+tabphynm = 1
+indxName = 3
+indxFld = 4
+
+indexTblFlds = [f.name for f in arcpy.ListFields(tblConstraints)]
+
+# Order by the field sequence field
+pkIndexExp = f"{arcpy.AddFieldDelimiters(tblConstraints, indexTblFlds[indxName])} LIKE \'PK_%\'"
+IndexSqlCluase = (None,f"ORDER BY {indexTblFlds[tabphynm]} ASC")
+
+print(f"\nCreating Attribute Indexes")
+print(f"\n\t{'Table' : <30}{'Index Field' : <30}{'Index Name' : <30}")
+print(f"\t{90*'='}")
+
+with arcpy.da.SearchCursor(tblConstraints,indexTblFlds,where_clause=pkIndexExp,sql_clause=IndexSqlCluase) as cursor:
+    for row in cursor:
+
+        table = row[tabphynm]
+        tablePath = f"{newSchemaFGDBpath}\\{table}"
+
+        if arcpy.Exists(tablePath):
+            indexField = row[indxFld]
+
+            if indexField in [f.name for f in arcpy.ListFields(tablePath,indexField)]:
+                indexName = row[indxName]
+                arcpy.AddIndex_management(tablePath,indexField,indexName)
+                print(f"\t{table: <30}{indexField: <30}{indexName : <30}")
+
 
 
 
