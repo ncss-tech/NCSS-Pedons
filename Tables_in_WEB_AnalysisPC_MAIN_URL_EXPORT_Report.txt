@@ -19,7 +19,7 @@ pedon
 perestrictions
 sitesurffrags
 petaxfmmin  
-petxfmother
+petxhistfmother
 petaxmoistcl
 petext
 phcemagent
@@ -44,6 +44,7 @@ phtexture
 phtexturemod
 siteexistveg
 phorizon
+petaxhistfmmin
 petaxhistory
 pepenetrationresistance
 pehydricfieldindicator
@@ -61,7 +62,7 @@ phcracks
 phdb
 phdbcore
 phdbcorereading
-siteassocso
+siteassocsoi
 phksatringdata
 phksatring
 phksatamoozedata

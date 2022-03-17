@@ -39,6 +39,28 @@
 #    PedonMetadataTableColDesc table.  Tables that start with dom* or nasis* will be ignored
 #    i.e. domaindetail, domaingroup, domainhist, domainmaster, nasisgroup, nasisgroupmember, nasissite
 #
+#    Workarounds:
+#        a. Fields that have a domain associated with them and have a field type of 'Choice'
+#           are automatically converted to TEXT and the 'coldisplaysz' field is used as the
+#           Text length.  Currently, the metadata describes these fields as 'Integers'
+#           instead of Text.
+#
+#        b. Fields that have an 'aggregation' field value of 2 actually represent 3 individual
+#           fields (_low, _RV, _high).  The same field parameters are used on all 3 fields.
+#
+#        c. 'labdatadescflag' field needs to be a TEXT of 5 to capture yes or no.
+#            The metadata has this field described as an integer.
+#
+#        d. 'pedonhydricrating' field needs to be a TEXT of 5 to capture yes or no.
+#            The metadata has this field described as an integer.
+#
+#        e. The metadata files list more tables than what is currently ready to populated by
+#           Jason's report.
+#
+#        f. Manually copied siteaoverlap, Xsitegeomordesc, #siteobstext table from old schema b/c the NASIS
+#           report was still referencing the old schema and sequence of values.  Discuss this with Jason.
+#           Modified pedon_siteaoverlap NASIS subreport to remove #'recwlupdated', 'recuseriidref'. ---This table needs to be discussed.  It doesn't match metadata reports at all.
+#
 # 8. Relatiionships are created using the PedonMetadataRelationships Table
 #
 # 9. Field Indices are created using the PedonMetadataTableUniqueConstraints
@@ -68,7 +90,7 @@ pedonMetadataURL = f"https://nasis.sc.egov.usda.gov/NasisReportsWebSite/limsrepo
 
 newSchemaFGDBroot = f"{os.path.dirname(sys.argv[0])}"
 metadataTblFGDB = f"{newSchemaFGDBroot}\\Metadata_Tables.gdb"    # Metadata_Tables FGDB
-newSchemaFGDBname = f"NASISPedonsTemplate_{nasisDBmodel.replace(' ','_').replace('.','_')}.gdb"
+newSchemaFGDBname = f"NASISPedonsFGDBTemplate_{nasisDBmodel.replace(' ','_').replace('.','_')}.gdb"
 nasisTblsWithSubReports = f"{newSchemaFGDBroot}\\Tables_in_WEB_AnalysisPC_MAIN_URL_EXPORT_Report.txt"
 
 tblColFldsDesc = f"{metadataTblFGDB}\\PedonMetadataTableColDesc"  # official NASIS table for table/column metadata
@@ -227,6 +249,7 @@ for tbl,recs in tableColumnsDict.items():
     del cursor
 
 # --------------------------------------------------------------- CREATE FGDB PEDON TABLES USING NEW METADATA SCHEMA
+# The following represents the position of field
 tablab = 1             # Table Alias
 tabphynm = 2           # Table Physical Name
 tabhelptext = 4        # Table Description
@@ -345,9 +368,16 @@ for tbl in tableList:
 
             # This is strictly for fields that have a domain associated with them
             # and the metadata describes them as integers instead of text
+            # i.e Pedon Table --> labdatadescflag field
             if row[cholabtxt] == 'Choice':
                 fieldType = 'TEXT'
                 fieldLength = row[coldisplaysz] + 10
+
+            # These fields are boolean datatype but are translated in the nasis pedon
+            # subreport to yes or no.
+            if tbl in ['pedon','ncsslayerlabdata'] and fieldName in ['labdatadescflag','pedonhydricrating','stratextsflag']:
+                fieldType = 'TEXT'
+                fieldLength = 10
 
             # Create 3 fields representing _l, _r, _h if aggregation code is 2
             if row[aggregation] == 2:

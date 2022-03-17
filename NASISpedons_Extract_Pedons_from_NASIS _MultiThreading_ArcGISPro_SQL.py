@@ -40,6 +40,10 @@
 # Updated  2/8/2022 - Adolfo Diaz
 # - Addressed a bug associated with unprojected feature in the getBoundingCoordinates function
 
+# ==========================================================================================
+# Updated  3/14/2022 - Adolfo Diaz
+""" Address the following changes due to NASIS database model changes
+"""
 #-------------------------------------------------------------------------------
 
 
@@ -82,7 +86,7 @@ def errorMsg():
         theMsg = "\t" + traceback.format_exception(exc_type, exc_value, exc_traceback)[1] + "\n\t" + traceback.format_exception(exc_type, exc_value, exc_traceback)[-1]
 
         if theMsg.find("exit") > -1:
-            AddMsgAndPrint("\n\n")
+            AddMsgAndPrint(".\n\n")
             pass
         else:
             AddMsgAndPrint(theMsg,2)
@@ -379,7 +383,7 @@ def getDictionaryOfAllPedonIDs():
     # START 1204126, 1204127, 1204128 STOP"""
 
     try:
-        AddMsgAndPrint("\nRequesting a list of ALL pedonIDs from NASIS")
+        AddMsgAndPrint(".\nRequesting a list of ALL pedonIDs from NASIS")
         arcpy.SetProgressorLabel("Requesting a list of ALL pedonIDs from NASIS")
 
         #URL = r'https://nasis.sc.egov.usda.gov/NasisReportsWebSite/limsreport.aspx?report_name=WEB_EXPORT_PEDON_BOX_COUNT' + coordinates
@@ -387,19 +391,19 @@ def getDictionaryOfAllPedonIDs():
 
         # Open a network object using the URL with the search string already concatenated
         startTime = tic()
-        #AddMsgAndPrint("\tNetwork Request Time: " + toc(startTime))
+        #AddMsgAndPrint(".\tNetwork Request Time: " + toc(startTime))
 
         """ --------------------------------------  Try connecting to NASIS to read the report ------------------------"""
         try:
             theReport = urllib.request.urlopen(URL).readlines()
         except:
             try:
-                AddMsgAndPrint("\t2nd attempt at requesting data")
+                AddMsgAndPrint(".\t2nd attempt at requesting data")
                 theReport = urllib.request.urlopen(URL).readlines()
 
             except:
                 try:
-                    AddMsgAndPrint("\t3rd attempt at requesting data")
+                    AddMsgAndPrint(".\t3rd attempt at requesting data")
                     theReport = urllib.request.urlopen(URL).readlines()
 
                 except URLError as e:
@@ -411,13 +415,13 @@ def getDictionaryOfAllPedonIDs():
                     return False
 
                 except socket.timeout as e:
-                    AddMsgAndPrint("\n\t" + URL)
-                    AddMsgAndPrint("\tServer Timeout Error", 2)
+                    AddMsgAndPrint(".\n\t" + URL)
+                    AddMsgAndPrint(".\tServer Timeout Error", 2)
                     return False
 
                 except socket.error as e:
-                    AddMsgAndPrint("\n\t" + URL)
-                    AddMsgAndPrint("\tNASIS Reports Website connection failure", 2)
+                    AddMsgAndPrint(".\n\t" + URL)
+                    AddMsgAndPrint(".\tNASIS Reports Website connection failure", 2)
                     return False
 
         """ --------------------------------------  Read the NASIS report ------------------------------------"""
@@ -455,7 +459,7 @@ def getDictionaryOfAllPedonIDs():
         arcpy.ResetProgressor()
 
         if len(pedonDict) == 0:
-            AddMsgAndPrint("\tThere were no pedons returned from this report",2)
+            AddMsgAndPrint(".\tThere were no pedons returned from this report",2)
             return False
 
         else:
@@ -492,12 +496,12 @@ def getBoundingCoordinates(feature):
         if selectedPolys < totalPolys:
             envelopeFeature = arcpy.CreateScratchName("envelopeFeature",data_type="FeatureClass", workspace="in_memory")
             arcpy.CopyFeatures_management(feature,envelopeFeature)
-            AddMsgAndPrint("\nCalculating bounding coordinates for " + splitThousands(selectedPolys) + " feature(s)",0)
+            AddMsgAndPrint(".\nCalculating bounding coordinates for " + splitThousands(selectedPolys) + " feature(s)")
             bExport = True
 
         else:
             envelopeFeature = feature
-            AddMsgAndPrint("\nCalculating bounding coordinates of input features",0)
+            AddMsgAndPrint(".\nCalculating bounding coordinates of input features")
 
         """ Set Projection and Geographic Transformation environments in order
             to post process everything in WGS84.  This will force all coordinates
@@ -536,7 +540,7 @@ def getBoundingCoordinates(feature):
         arcpy.MinimumBoundingGeometry_management(envelopeFeature,envelope,"ENVELOPE","ALL","#","MBG_FIELDS")
 
         if int(arcpy.GetCount_management(envelope).getOutput(0)) < 1:
-            AddMsgAndPrint("\n\tFailed to create minimum bounding area. \n\tArea of interest is potentially too small",2)
+            AddMsgAndPrint(".\n\tFailed to create minimum bounding area. \n\tArea of interest is potentially too small",2)
             return False
 
         arcpy.FeatureVerticesToPoints_management(envelope, envelopePts, "ALL")
@@ -563,15 +567,15 @@ def getBoundingCoordinates(feature):
             arcpy.Delete_management(envelopeFeature)
 
         if len(coordList) == 4:
-            AddMsgAndPrint("\tBounding Box Coordinates:")
-            AddMsgAndPrint("\t\tSouth Latitude: " + str(coordList[0][1]))
-            AddMsgAndPrint("\t\tNorth Latitude: " + str(coordList[2][1]))
-            AddMsgAndPrint("\t\tEast Longitude: " + str(coordList[0][0]))
-            AddMsgAndPrint("\t\tWest Longitude: " + str(coordList[2][0]))
+            AddMsgAndPrint(".\tBounding Box Coordinates:")
+            AddMsgAndPrint(".\t\tSouth Latitude: " + str(coordList[0][1]))
+            AddMsgAndPrint(".\t\tNorth Latitude: " + str(coordList[2][1]))
+            AddMsgAndPrint(".\t\tEast Longitude: " + str(coordList[0][0]))
+            AddMsgAndPrint(".\t\tWest Longitude: " + str(coordList[2][0]))
             return coordList[0][1],coordList[2][1],coordList[0][0],coordList[2][0]
 
         else:
-            AddMsgAndPrint("\tCould not get Latitude-Longitude coordinates from bounding area",2)
+            AddMsgAndPrint(".\.tCould not get Latitude-Longitude coordinates from bounding area",2)
             return False
 
     except:
@@ -596,7 +600,7 @@ def getNASISpedonCountbyBox(coordinates):
         """
 
     try:
-        AddMsgAndPrint("\nDetermining if there are any pedons within the bounding coordinates")
+        AddMsgAndPrint(".\nDetermining if there are any pedons within the bounding coordinates")
         arcpy.SetProgressorLabel("Determining if there are any pedons within the bounding coordinates")
 
         # Open a network object using the URL with the search string already concatenated
@@ -607,11 +611,11 @@ def getNASISpedonCountbyBox(coordinates):
             theReport = urllib.request.urlopen(URL).readlines()
         except:
             try:
-                AddMsgAndPrint("\t2nd attempt at requesting data")
+                AddMsgAndPrint(".\t2nd attempt at requesting data")
                 theReport = urllib.request.urlopen(URL).read().decode('utf-8')
             except:
                 try:
-                    AddMsgAndPrint("\t3rd attempt at requesting data")
+                    AddMsgAndPrint(".\t3rd attempt at requesting data")
                     theReport = urllib.request.urlopen(URL).read().decode('utf-8')
 
                 except URLError as e:
@@ -623,13 +627,13 @@ def getNASISpedonCountbyBox(coordinates):
                     return False
 
                 except socket.timeout as e:
-                    AddMsgAndPrint("\n\t" + URL)
-                    AddMsgAndPrint("\tServer Timeout Error", 2)
+                    AddMsgAndPrint(".\n\t" + URL)
+                    AddMsgAndPrint(".\tServer Timeout Error", 2)
                     return False
 
                 except socket.error as e:
-                    AddMsgAndPrint("\n\t" + URL)
-                    AddMsgAndPrint("\tNASIS Reports Website connection failure (Socket Error)", 2)
+                    AddMsgAndPrint(".\n\t" + URL)
+                    AddMsgAndPrint(".\tNASIS Reports Website connection failure (Socket Error)", 2)
                     return False
 
                 except:
@@ -681,14 +685,14 @@ def getNASISpedonIDsByBox(coordinates):
         returns a pedonDictionary"""
 
     try:
-        AddMsgAndPrint("\nRequesting a list of pedonIDs from NASIS using the above bounding coordinates")
+        AddMsgAndPrint(".\nRequesting a list of pedonIDs from NASIS using the above bounding coordinates")
         arcpy.SetProgressorLabel("Requesting a list of pedons from NASIS")
 
         URL = r'https://nasis.sc.egov.usda.gov/NasisReportsWebSite/limsreport.aspx?report_name=WEB_EXPORT_PEDON_BOX_COUNT' + coordinates
 
         # Open a network object using the URL with the search string already concatenated
         startTime = tic()
-        #AddMsgAndPrint("\tNetwork Request Time: " + toc(startTime))
+        #AddMsgAndPrint(".\tNetwork Request Time: " + toc(startTime))
 
         pedonDictionary = dict()
 
@@ -697,12 +701,12 @@ def getNASISpedonIDsByBox(coordinates):
             theReport = urllib.request.urlopen(URL).readlines()
         except:
             try:
-                AddMsgAndPrint("\t2nd attempt at requesting data")
+                AddMsgAndPrint(".\t2nd attempt at requesting data")
                 theReport = urllib.request.urlopen(URL).readlines()
 
             except:
                 try:
-                    AddMsgAndPrint("\t3rd attempt at requesting data")
+                    AddMsgAndPrint(".\t3rd attempt at requesting data")
                     theReport = urllib.request.urlopen(URL).readlines()
 
                 except URLError as e:
@@ -714,13 +718,13 @@ def getNASISpedonIDsByBox(coordinates):
                     return False
 
                 except socket.timeout as e:
-                    AddMsgAndPrint("\n\t" + URL)
-                    AddMsgAndPrint("\tServer Timeout Error", 2)
+                    AddMsgAndPrint(".\n\t" + URL)
+                    AddMsgAndPrint(".\tServer Timeout Error", 2)
                     return False
 
                 except socket.error as e:
-                    AddMsgAndPrint("\n\t" + URL)
-                    AddMsgAndPrint("\tNASIS Reports Website connection failure", 2)
+                    AddMsgAndPrint(".\n\t" + URL)
+                    AddMsgAndPrint(".\tNASIS Reports Website connection failure", 2)
                     return False
 
         """ --------------------------------------  Read the NASIS report ------------------------------------"""
@@ -747,7 +751,7 @@ def getNASISpedonIDsByBox(coordinates):
                     theRec = theValue.split("|")
 
                     if len(theRec) != 7:
-                        AddMsgAndPrint("\tNASIS Report: Web Export Pedon Box is not returning the correct amount of values per record",2)
+                        AddMsgAndPrint(".\tNASIS Report: Web Export Pedon Box is not returning the correct amount of values per record",2)
                         return False
 
                     # Undisclosed Record; Reject this record
@@ -783,15 +787,15 @@ def getNASISpedonIDsByBox(coordinates):
         arcpy.ResetProgressor()
 
         if len(pedonDictionary) == 0:
-            AddMsgAndPrint("\tThere were no pedons found in this area; Try using a larger extent",1)
+            AddMsgAndPrint(".\tThere were no pedons found in this area; Try using a larger extent",1)
             return False
 
         else:
-            #AddMsgAndPrint("\tThere are a total of " + splitThousands(totalPedonCnt) + " pedons found in this area:")
-            AddMsgAndPrint("\tThere are " + splitThousands(totalPedonCnt) + " within this layer:")
-            AddMsgAndPrint("\t\tLAB Pedons: " + splitThousands(labPedonCnt))
-            AddMsgAndPrint("\t\tUndisclosed: " + splitThousands(undisclosed))
-            AddMsgAndPrint("\t\tNASIS Pedons: " + splitThousands((totalPedonCnt - labPedonCnt) - undisclosed))
+            #AddMsgAndPrint(".\tThere are a total of " + splitThousands(totalPedonCnt) + " pedons found in this area:")
+            AddMsgAndPrint(".\tThere are " + splitThousands(totalPedonCnt) + " within this layer:")
+            AddMsgAndPrint(".\t\tLAB Pedons: " + splitThousands(labPedonCnt))
+            AddMsgAndPrint(".\t\tUndisclosed: " + splitThousands(undisclosed))
+            AddMsgAndPrint(".\t\tNASIS Pedons: " + splitThousands((totalPedonCnt - labPedonCnt) - undisclosed))
 
             return pedonDictionary
 
@@ -819,7 +823,7 @@ def filterPedonsByFeature(feature):
     # it is not returned since it is directly updated from main.
 
     try:
-        AddMsgAndPrint("\nSelecting pedons that intersect with " + arcpy.Describe(feature).Name + " Layer",0)
+        AddMsgAndPrint(".\nSelecting pedons that intersect with " + arcpy.Describe(feature).Name + " Layer")
         arcpy.SetProgressorLabel("Selecting pedons that intersect with " + arcpy.Describe(feature).Name + " Layer")
 
         # Set everything to WGS84
@@ -855,13 +859,13 @@ def filterPedonsByFeature(feature):
         tempPointsLYR = arcpy.CreateScratchName("tempPointsLYR",data_type="FeatureClass", workspace="in_memory")
         arcpy.MakeFeatureLayer_management(tempPoints,tempPointsLYR)
 
-        #AddMsgAndPrint("\tThere are " + str(int(arcpy.GetCount_management("tempPoints_LYR").getOutput(0))) + " pedons in the layer",2)
+        #AddMsgAndPrint(".\tThere are " + str(int(arcpy.GetCount_management("tempPoints_LYR").getOutput(0))) + " pedons in the layer",2)
         arcpy.SelectLayerByLocation_management(tempPointsLYR,"INTERSECT",aoiFeature, "","NEW_SELECTION")
         pedonsWithinAOI = int(arcpy.GetCount_management(tempPointsLYR).getOutput(0))
 
         # There are pedons within the user's AOI
         if pedonsWithinAOI > 0:
-            AddMsgAndPrint("\tThere are " + splitThousands(pedonsWithinAOI) + " pedons within this layer",0)
+            AddMsgAndPrint(".\tThere are " + splitThousands(pedonsWithinAOI) + " pedons within this layer")
 
             # Make a copy of the user-input features - this is just in case there is a selected set
             selectedPedons = arcpy.CreateScratchName("selectedPedons",data_type="FeatureClass", workspace="in_memory")
@@ -883,8 +887,8 @@ def filterPedonsByFeature(feature):
                     if not pedonDict[pedon][1] is None:
                         labPedonCnt+=1
 
-            AddMsgAndPrint("\t\tLAB Pedons: " + splitThousands(labPedonCnt))
-            AddMsgAndPrint("\t\tNASIS Pedons: " + splitThousands(pedonsWithinAOI - labPedonCnt))
+            AddMsgAndPrint(".\t\tLAB Pedons: " + splitThousands(labPedonCnt))
+            AddMsgAndPrint(".\t\tNASIS Pedons: " + splitThousands(pedonsWithinAOI - labPedonCnt))
 
             for layer in (aoiFeature,tempPoints,tempPointsLYR,selectedPedons):
                 if arcpy.Exists(layer):
@@ -896,7 +900,7 @@ def filterPedonsByFeature(feature):
             return pedonsWithinAOI
 
         else:
-            AddMsgAndPrint("\tThere are NO pedons that are completely within your AOI. EXITING! \n",2)
+            AddMsgAndPrint(".\tThere are NO pedons that are completely within your AOI. EXITING! \n",2)
             return False
 
     except:
@@ -914,10 +918,10 @@ def createPedonDB():
 
     try:
         if sqliteFormat:
-            AddMsgAndPrint("\nCreating New Pedon SQLite Database",0)
+            AddMsgAndPrint(".\nCreating New Pedon SQLite Database")
             arcpy.SetProgressorLabel("Creating New Pedon SQLite Database")
         else:
-            AddMsgAndPrint("\nCreating New Pedon File Geodatabase",0)
+            AddMsgAndPrint(".\nCreating New Pedon File Geodatabase")
             arcpy.SetProgressorLabel("Creating New Pedon File Geodatabase")
 
         # pedon xml template that contains empty pedon Tables and relationships
@@ -933,7 +937,7 @@ def createPedonDB():
 
         # Return false if pedon fGDB template is not found
         if not arcpy.Exists(localPedonDB):
-            AddMsgAndPrint("\t" + os.path.basename(localPedonDB) + ext + " template was not found!",2)
+            AddMsgAndPrint(".\t" + os.path.basename(localPedonDB) + " template was not found!",2)
             return False
 
         newPedonDB = os.path.join(outputFolder,DBname + ext)
@@ -941,30 +945,30 @@ def createPedonDB():
         if arcpy.Exists(newPedonDB):
             try:
                 arcpy.Delete_management(newPedonDB)
-                AddMsgAndPrint("\t" + os.path.basename(newPedonDB) + " already exists. Deleting and re-creating FGDB\n",1)
+                AddMsgAndPrint(".\t" + os.path.basename(newPedonDB) + " already exists. Deleting and re-creating FGDB\n",1)
             except:
-                AddMsgAndPrint("\t" + os.path.basename(newPedonDB) + " already exists. Failed to delete\n",2)
+                AddMsgAndPrint(".\t" + os.path.basename(newPedonDB) + " already exists. Failed to delete\n",2)
                 return False
 
         # copy template over to new location
-        AddMsgAndPrint("\tCreating " + DBname + ext + " with NCSS Pedon Schema 7.3")
+        AddMsgAndPrint(".\tCreating " + DBname + ext + " with NCSS Pedon Schema 7.4.1")
         arcpy.Copy_management(localPedonDB,newPedonDB)
 
         """ ------------------------------ Code to use XML Workspace -------------------------------------------"""
 ##        # Return false if xml file is not found
 ##        if not arcpy.Exists(pedonXML):
-##            AddMsgAndPrint("\t" + os.path.basename(pedonXML) + " Workspace document was not found!",2)
+##            AddMsgAndPrint(".\t" + os.path.basename(pedonXML) + " Workspace document was not found!",2)
 ##            return False
 ##
 ##        # Create empty temp File Geodatabae
 ##        arcpy.CreateFileGDB_management(outputFolder,os.path.splitext(os.path.basename(newPedonFGDB))[0])
 ##
 ##        # set the pedon schema on the newly created temp Pedon FGDB
-##        AddMsgAndPrint("\tImporting NCSS Pedon Schema 7.3 into " + DBname + ".gdb")
+##        AddMsgAndPrint(".\tImporting NCSS Pedon Schema 7.3 into " + DBname + ".gdb")
 ##        arcpy.ImportXMLWorkspaceDocument_management(newPedonFGDB, pedonXML, "DATA", "DEFAULTS")
 
         #arcpy.UncompressFileGeodatabaseData_management(newPedonFGDB)
-        AddMsgAndPrint("\tSuccessfully created: " + os.path.basename(newPedonDB))
+        AddMsgAndPrint(".\tSuccessfully created: " + os.path.basename(newPedonDB))
 
         return newPedonDB
 
@@ -1019,14 +1023,13 @@ def createReferenceObjects(pedonDBloc):
         if not arcpy.Exists(theMDTable):
             AddMsgAndPrint(theMDTable + " doesn't Exist",2)
             return False,False
-        else:
-            AddMsgAndPrint(theMDTable + " is all good")
 
         tableList = arcpy.ListTables("*")
         tableList.append(prefix + "pedon")
 
         # "Tablelabel" Table is misspelled....huh?
-        nameOfFields = ["TablePhysicalName","TableLabel"]
+        #nameOfFields = ["TablePhysicalName","TableLabel"]
+        nameOfFields = ["tabphynm","tablab"]
 
         # Initiate 3 Dictionaries
         tableInfoDict = dict()
@@ -1048,7 +1051,7 @@ def createReferenceObjects(pedonDBloc):
                     numOfValidFlds = 0
 
                     for field in uniqueFields:
-                        if not field.type.lower() in ("oid","geometry","FID"):
+                        if not field.type.lower() in ("oid","geometry","fid","shape"):
                             numOfValidFlds +=1
 
                     # Add 2 more fields to the pedon table for X,Y
@@ -1121,7 +1124,7 @@ def parsePedonsIntoLists():
         numOfPedonStrings = len(listOfPedonStrings)  # Number of unique requests that will be sent
 
         if not numOfPedonStrings:
-            AddMsgAndPrint("\n\t Something Happened here.....WTF!",2)
+            AddMsgAndPrint(".\n\t Something Happened here.....WTF!",2)
             exit()
 
         else:
@@ -1188,7 +1191,7 @@ def organizeFutureInstanceIntoPedonDict(futureObject):
                     bHeader = True  ## Next line will be the header
 
                 else:
-                    AddMsgAndPrint("\t" + theTable + " Does not exist in the FGDB schema!  Figure this out Jason Nemecek!",2)
+                    AddMsgAndPrint(".\t" + theTable + " Does not exist in the FGDB schema!  Figure this out Jason Nemecek!",2)
                     invalidTable += 1
 
             # end of the previous table has been reached; reset currentTable
@@ -1229,10 +1232,10 @@ def organizeFutureInstanceIntoPedonDict(futureObject):
 
                     # appending this value exceeded the number of possible fields
                     else:
-                        AddMsgAndPrint("\t\tIncorrectly formatted Record Found in " + currentTable + " table:",2)
-                        AddMsgAndPrint("\t\t\tRecord should have " + str(numOfFields) + " values but has " + str(len(partialValue.split('|'))),2)
-                        AddMsgAndPrint("\t\t\tOriginal Record: " + originalValue,2)
-                        AddMsgAndPrint("\t\t\tAppended Record: " + partialValue,2)
+                        AddMsgAndPrint(".\t\tIncorrectly formatted Record Found in " + currentTable + " table:",2)
+                        AddMsgAndPrint(".\t\t\tRecord should have " + str(numOfFields) + " values but has " + str(len(partialValue.split('|'))),2)
+                        AddMsgAndPrint(".\t\t\tOriginal Record: " + originalValue,2)
+                        AddMsgAndPrint(".\t\t\tAppended Record: " + partialValue,2)
                         invalidRecord += 1
                         bPartialValue = False
                         partialValue,originalValue = ""
@@ -1242,9 +1245,9 @@ def organizeFutureInstanceIntoPedonDict(futureObject):
 
                     # number of values exceed the number of fields; Big Error
                     if numOfValues > numOfFields:
-                        AddMsgAndPrint("\n\t\tIncorrectly formatted Record Found in " + currentTable + " table:",2)
-                        AddMsgAndPrint("\t\t\tRecord should have " + str(numOfFields) + " values but has " + str(numOfValues),2)
-                        AddMsgAndPrint("\t\t\tRecord: " + theValue,2)
+                        AddMsgAndPrint(".\n\t\tIncorrectly formatted Record Found in " + currentTable + " table:",2)
+                        AddMsgAndPrint(".\t\t\tRecord should have " + str(numOfFields) + " values but has " + str(numOfValues),2)
+                        AddMsgAndPrint(".\t\t\tRecord: " + theValue,2)
                         invalidRecord += 1
 
                     # number of values falls short of the number of correct fields
@@ -1259,23 +1262,23 @@ def organizeFutureInstanceIntoPedonDict(futureObject):
                     partialValue = ""
 
             elif theValue.find("ERROR") > -1:
-                AddMsgAndPrint("\n\t\t" + theValue[theValue.find("ERROR"):],2)
+                AddMsgAndPrint(".\n\t\t" + theValue[theValue.find("ERROR"):],2)
                 return False
 
             else:
                 invalidRecord += 1
 
         if not validRecord:
-            AddMsgAndPrint("\t\tThere were no valid records captured from NASIS request",2)
+            AddMsgAndPrint(".\t\tThere were no valid records captured from NASIS request",2)
             return False
 
         # Report any invalid tables found in report; This should take care of itself as Jason perfects the report.
         if invalidTable and invalidRecord:
-            AddMsgAndPrint("\t\tThere were " + splitThousands(invalidTable) + " invalid table(s) included in the report with " + splitThousands(invalidRecord) + " invalid record(s)",1)
+            AddMsgAndPrint(".\t\tThere were " + splitThousands(invalidTable) + " invalid table(s) included in the report with " + splitThousands(invalidRecord) + " invalid record(s)",1)
 
         # Report any invalid records found in report; There are 27 html lines reserved for headers and footers
         if invalidRecord > 28:
-            AddMsgAndPrint("\t\tThere were " + splitThousands(invalidRecord) + " invalid record(s) not captured",1)
+            AddMsgAndPrint(".\t\tThere were " + splitThousands(invalidRecord) + " invalid record(s) not captured",1)
 
         return True
 
@@ -1293,7 +1296,7 @@ def importPedonData(tableInfoDict,verbose=False):
         memory."""
 
     try:
-        if verbose: AddMsgAndPrint("\nImporting Pedon Data into FGDB")
+        if verbose: AddMsgAndPrint(".\nImporting Pedon Data into FGDB")
         arcpy.SetProgressorLabel("Importing Pedon Data into FGDB")
 
         # use the tableInfoDict so that tables are imported in alphabetical order
@@ -1301,10 +1304,9 @@ def importPedonData(tableInfoDict,verbose=False):
         maxCharTable = max([len(table) for table in tblKeys]) + 1
         maxCharAlias = max([len(value[1][0]) for value in tableInfoDict.items()])
 
-        firstTab = (maxCharTable - len("Table Physical Name")) * " "
-        headerName = "\n\tTable Physical Name" + firstTab + "Table Alias Name"
-        if verbose: AddMsgAndPrint(headerName,0)
-        if verbose: AddMsgAndPrint("\t" + len(headerName) * "=",0)
+        headerName = f"\n\t{'Table Physical Name' : <30}{'Table Alias Name' : <55}{'# of Records' : <20}"
+        if verbose: AddMsgAndPrint(headerName)
+        if verbose: AddMsgAndPrint(".\t" + len(headerName) * "=")
 
         tblKeys = dict(sorted(tableFldDict.items(), key=lambda item: item[0]))
 
@@ -1416,13 +1418,13 @@ def importPedonData(tableInfoDict,verbose=False):
                         numOfRowsAdded += 1;recNum += 1
 
                     except arcpy.ExecuteError:
-                        AddMsgAndPrint("\n\tError in :" + table + " table: Field No: " + str(fldNo) + " : " + str(rec),2)
-                        AddMsgAndPrint("\n\t" + arcpy.GetMessages(2),2)
+                        AddMsgAndPrint(".\n\tError in :" + table + " table: Field No: " + str(fldNo) + " : " + str(rec),2)
+                        AddMsgAndPrint(".\n\t" + arcpy.GetMessages(2),2)
                         break
                     except:
-                        AddMsgAndPrint("\n\tError in: " + table + " table")
-                        AddMsgAndPrint("\tNumber of Fields in GDB: " + str(len(nameOfFields)))
-                        AddMsgAndPrint("\tNumber of fields in report: " + str(len([rec.split('|')][0])))
+                        AddMsgAndPrint(".\n\tError in: " + table + " table")
+                        AddMsgAndPrint(".\tNumber of Fields in GDB: " + str(len(nameOfFields)))
+                        AddMsgAndPrint(".\tNumber of fields in report: " + str(len([rec.split('|')][0])))
                         errorMsg()
                         break
 
@@ -1430,17 +1432,14 @@ def importPedonData(tableInfoDict,verbose=False):
 
                 # Report the # of records added to the table
 ##                if bAliasName:
-                secondTab = (maxCharAlias - len(aliasName)) * " "
-                if verbose: AddMsgAndPrint("\t" + table + firstTab + aliasName + secondTab + " Records Added: " + splitThousands(numOfRowsAdded))
-##                else:
-##                    if verbose: AddMsgAndPrint("\t" + table + firstTab + " Records Added: " + splitThousands(numOfRowsAdded),1)
+                if verbose:AddMsgAndPrint(f".\t{table : <30}{aliasName: <55}{'Records Added: ' + splitThousands(numOfRowsAdded) : <20}")
 
                 del numOfRowsAdded,GDBtable,fieldList,nameOfFields,fldLengths,cursor
 
             # Table had no records; still print it out
             else:
-                secondTab = (maxCharAlias - len(aliasName)) * " "
-                if verbose: AddMsgAndPrint("\t" + table + firstTab + aliasName + secondTab + " Records Added: 0")
+                if verbose:
+                    AddMsgAndPrint(f".\t{table : <30}{aliasName: <55}{'Records Added: 0' : <20}")
 
 
         #Resets the progressor back to its initial state
@@ -1557,7 +1556,7 @@ def openURL(url):
 
         """ Strictly for formatting print message """
         if numOfPedonStrings > 1:
-            AddMsgAndPrint("\tRequest " + splitThousands(i) + " of " + splitThousands(numOfPedonStrings) + " for " + str(numOfPedonsInThisString) + " pedons")
+            AddMsgAndPrint(".\tRequest " + splitThousands(i) + " of " + splitThousands(numOfPedonStrings) + " for " + str(numOfPedonsInThisString) + " pedons")
             arcpy.SetProgressorLabel("Request " + splitThousands(i) + " of " + splitThousands(numOfPedonStrings) + " for " + str(numOfPedonsInThisString) + " pedons")
         else:
             AddMsgAndPrint("Retrieving pedon data from NASIS for " + str(numOfPedonsInThisString) + " pedons.")
@@ -1573,7 +1572,7 @@ def openURL(url):
         if response.code == 200:
             return response.readlines()
         else:
-            AddMsgAndPrint("\nFailed to open URL: " + str(url),2)
+            AddMsgAndPrint(".\nFailed to open URL: " + str(url),2)
             return None
 
     except URLError as e:
@@ -1709,11 +1708,11 @@ if __name__ == '__main__':
             sqliteFormat = arcpy.GetParameter(2)
             allPedons = arcpy.GetParameter(3)
 
-##        inputFeatures = r'E:\Pedons\Temp\smallArea.shp'
-##        DBname = 'smallTest'
-##        outputFolder = r'E:\Pedons\Temp'
+##        inputFeatures = r'E:\SSURGO\WI025\spatial\'
+##        DBname = 'PedonTest'
+##        outputFolder = r'E:\Temp\scratch'
 ##        sqliteFormat = False
-##        allPedons = True
+##        allPedons = False
 
         if sqliteFormat == True:
             prefix = "main."
@@ -1733,10 +1732,10 @@ if __name__ == '__main__':
             exit()
             #pedonDict = dict(d.items()[len(d)/2:])
 
-            AddMsgAndPrint("\nProcessing " + str(splitThousands(totalPedons)) + " pedons")
+            AddMsgAndPrint(".\nProcessing " + str(splitThousands(totalPedons)) + " pedons")
 
             if not pedonDict:
-                AddMsgAndPrint("\nFailed to obtain a list of ALL NASIS Pedon IDs",2)
+                AddMsgAndPrint(".\nFailed to obtain a list of ALL NASIS Pedon IDs",2)
                 exit()
 
         # User has chosen to pedons by AOI
@@ -1758,9 +1757,9 @@ if __name__ == '__main__':
             areaPedonCount = getNASISpedonCountbyBox(coordStr)
 
             if areaPedonCount:
-                AddMsgAndPrint("\tThere are " + splitThousands(areaPedonCount) + " pedons within the bounding coordinates",0)
+                AddMsgAndPrint(".\tThere are " + splitThousands(areaPedonCount) + " pedons within the bounding coordinates")
             else:
-                AddMsgAndPrint("\nThere are no records found within the area of interest.  Try using a larger area",2)
+                AddMsgAndPrint(".\nThere are no records found within the area of interest.  Try using a larger area",2)
                 exit()
 
             # Get a list of PedonIDs that are within the bounding box from NASIS
@@ -1770,14 +1769,14 @@ if __name__ == '__main__':
 
             # populate the pedonDict with the pedons that fall within the bounding coordinates of the AOI
             if not pedonDict:
-                AddMsgAndPrint("\n\tFailed to get a list of pedonIDs from NASIS \n",2)
+                AddMsgAndPrint(".\n\tFailed to get a list of pedonIDs from NASIS \n",2)
                 exit()
 
             # Filter pedons by those that fall completely within the AOI; This will update the pedonDict
             totalPedons = filterPedonsByFeature(inputFeatures)
 
             if not totalPedons:
-                AddMsgAndPrint("\n\tFailed to filter list of Pedons by Area of Interest. EXITING! \n",2)
+                AddMsgAndPrint(".\n\tFailed to filter list of Pedons by Area of Interest. EXITING! \n",2)
                 exit()
 
             """ ------------------------------------------------------Create New File Geodatabaes and get Table Aliases for printing -------------------------------------------------------------------
@@ -1790,14 +1789,14 @@ if __name__ == '__main__':
         arcpy.env.workspace = pedonDB
 
         if not pedonDB:
-            AddMsgAndPrint("\nFailed to Initiate Empty Pedon Database.  Error in createPedonDB() function. Exiting!",2)
+            AddMsgAndPrint(".\nFailed to Initiate Empty Pedon Database.  Error in createPedonDB() function. Exiting!",2)
             exit()
 
         # Create 2 Dictionaries that will be used throughout this script
         pedonDBtablesDict,tableFldDict = createReferenceObjects(pedonDB)
 
         if not tableFldDict:
-            AddMsgAndPrint("\nCould not retrieve alias names from " + prefix + "\'MetadataTable\'",1)
+            AddMsgAndPrint(".\nCould not retrieve alias names from " + prefix + "\'MetadataTable\'",1)
             exit()
 
         """ ------------------------------------------ Get Site, Pedon, and Pedon Horizon information from NASIS -------------------------------------------------------------------------
@@ -1810,9 +1809,9 @@ if __name__ == '__main__':
         listOfPedonStrings,numOfPedonStrings = parsePedonsIntoLists()
 
         if numOfPedonStrings > 1:
-            AddMsgAndPrint("\nDue to URL limitations there will be " + splitThousands(len(listOfPedonStrings))+ " seperate requests to NASIS:",1)
+            AddMsgAndPrint(".\nDue to URL limitations there will be " + splitThousands(len(listOfPedonStrings))+ " seperate requests to NASIS:",1)
         else:
-            AddMsgAndPrint("\n")
+            AddMsgAndPrint(".\n")
 
         i = 1   # represents the request number; only used for ArcMap formatting
 
@@ -1871,9 +1870,9 @@ if __name__ == '__main__':
 
         # Add Hyperlink to Pedon Description Report
         if addPedonReportHyperlink(pedonDBfc):
-            AddMsgAndPrint("Successfully added Pedon Description Report Hyperlink")
+            AddMsgAndPrint(".\nSuccessfully added Pedon Description Report Hyperlink")
         else:
-            AddMsgAndPrint("Pedon Description Report Hyperlink Could not be added",2)
+            AddMsgAndPrint(".\nPedon Description Report Hyperlink Could not be added",2)
 
         """ ------------------------------------ Report Summary of results -----------------------------------"""
         pedonCount = int(arcpy.GetCount_management(pedonDBfc).getOutput(0))
@@ -1885,12 +1884,12 @@ if __name__ == '__main__':
             os.remove(errorFile)
 
         if totalPedons == pedonCount:
-            AddMsgAndPrint("\n\nSuccessfully downloaded " + splitThousands(totalPedons) + " pedons from NASIS",0)
+            AddMsgAndPrint(".\n\nSuccessfully downloaded " + splitThousands(totalPedons) + " pedons from NASIS")
 
         else:
             difference = totalPedons - pedonCount
-            AddMsgAndPrint("\n\nDownloaded " + splitThousands(pedonCount) + " from NASIS",2)
-            AddMsgAndPrint("\tFailed to download " + splitThousands(difference) + " pedons from NASIS:",2)
+            AddMsgAndPrint(".\nDownloaded " + splitThousands(pedonCount) + " from NASIS",2)
+            AddMsgAndPrint(".\tFailed to download " + splitThousands(difference) + " pedons from NASIS:",2)
 
             FGDBpedons = [str(row[0]) for row in arcpy.da.SearchCursor(pedonDBfc,'peiid')]
             missingPedons = list(set(pedonDict.keys()) - set(FGDBpedons))
@@ -1910,7 +1909,7 @@ if __name__ == '__main__':
                 AddMsgAndPrint(".")
                 AddMsgAndPrint(".\t\t" + str(missingPedons))
 
-            AddMsgAndPrint("\n\tThe Missing Pedons have been written to " + errorFile + " files",2)
+            AddMsgAndPrint(".\n\tThe Missing Pedons have been written to " + errorFile + " files",2)
 
         """ ---------------------------Add Pedon Feature Class to ArcGIS Pro Session if available ------------------"""
         try:
@@ -1918,13 +1917,13 @@ if __name__ == '__main__':
                 aprx = arcpy.mp.ArcGISProject("CURRENT")
                 aprxMap = aprx.listMaps()[0]
                 aprxMap.addDataFromPath(pedonDBfc)
-                AddMsgAndPrint("\nAdded the pedon feature class to your ArcMap Session",0)
+                AddMsgAndPrint(".\nAdded the pedon feature class to your ArcMap Session")
         except:
             pass
 
 ##        FinishTime = toc(startTime)
 ##        AddMsgAndPrint("Total Time = " + str(FinishTime))
-##        AddMsgAndPrint("\n")
+##        AddMsgAndPrint(".\n")
 ##        AddMsgAndPrint("Dictionary Size: " + str(getObjectSize(pedonDBtablesDict)))
 
     except:
