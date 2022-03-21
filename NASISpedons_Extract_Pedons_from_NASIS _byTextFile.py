@@ -36,8 +36,11 @@
 # - Added functionality to output an SQLite Database Format
 
 # ==========================================================================================
-# Updated  6/17/2021 - Adolfo Diaz
-# -
+# Updated  3/14/2022 - Adolfo Diaz
+# - updated createReferenceObjects function to set the number of fields to 9 for the siteaoverlap
+#   table from 6.  This is b/c the metadatatable only has 6 fields and 3 additional fields are
+#   added (areasym, areaname and areatype)
+
 
 #-------------------------------------------------------------------------------
 
@@ -669,10 +672,10 @@ def createPedonDB():
 
     try:
         if sqliteFormat:
-            AddMsgAndPrint("\nCreating New Pedon SQLite Database",0)
+            AddMsgAndPrint(".\nCreating New Pedon SQLite Database",0)
             arcpy.SetProgressorLabel("Creating New Pedon SQLite Database")
         else:
-            AddMsgAndPrint("\nCreating New Pedon File Geodatabase",0)
+            AddMsgAndPrint(".\nCreating New Pedon File Geodatabase",0)
             arcpy.SetProgressorLabel("Creating New Pedon File Geodatabase")
 
         # pedon xml template that contains empty pedon Tables and relationships
@@ -696,13 +699,13 @@ def createPedonDB():
         if arcpy.Exists(newPedonDB):
             try:
                 arcpy.Delete_management(newPedonDB)
-                AddMsgAndPrint("\t" + os.path.basename(newPedonDB) + " already exists. Deleting and re-creating FGDB\n",1)
+                AddMsgAndPrint(".\t" + os.path.basename(newPedonDB) + " already exists. Deleting and re-creating FGDB\n",1)
             except:
-                AddMsgAndPrint("\t" + os.path.basename(newPedonDB) + " already exists. Failed to delete\n",2)
+                AddMsgAndPrint(".\t" + os.path.basename(newPedonDB) + " already exists. Failed to delete\n",2)
                 return False
 
         # copy template over to new location
-        AddMsgAndPrint("\tCreating " + DBname + ext + " with NCSS Pedon Schema 7.3")
+        AddMsgAndPrint(".\tCreating " + DBname + ext + " with NCSS Pedon Schema 7.4.1")
         arcpy.Copy_management(localPedonDB,newPedonDB)
 
         """ ------------------------------ Code to use XML Workspace -------------------------------------------"""
@@ -719,13 +722,9 @@ def createPedonDB():
 ##        arcpy.ImportXMLWorkspaceDocument_management(newPedonFGDB, pedonXML, "DATA", "DEFAULTS")
 
         #arcpy.UncompressFileGeodatabaseData_management(newPedonFGDB)
-        AddMsgAndPrint("\tSuccessfully created: " + os.path.basename(newPedonDB))
+        AddMsgAndPrint(".\tSuccessfully created: " + os.path.basename(newPedonDB))
 
         return newPedonDB
-
-    except arcpy.ExecuteError:
-        AddMsgAndPrint(arcpy.GetMessages(2),2)
-        return False
 
     except:
         AddMsgAndPrint("Unhandled exception (createDB)", 2)
@@ -735,7 +734,7 @@ def createPedonDB():
 ## ===============================================================================================================
 def createReferenceObjects(pedonDBloc):
     # Description
-    # This function will create the following 3 unique dictionaries that will be used throughout the script.
+    # This function will create the following 2 unique dictionaries that will be used throughout the script:
     # - pedonGDBtablesList: contains every table in the newly created pedonDB above as a key.
     #                       Individual records of tables will be added as list of values to the table keys.
     #                       This dictionary will be populated using the results from the
@@ -744,6 +743,7 @@ def createReferenceObjects(pedonDBloc):
     # - tableInfoDict:      Dictionary containing physical name from MDSTATTABS table as the key.
     #                       Each key has an associated list consisting of alias name, number of fields in the
     #                       physical table and the position index of the same table within the pedonGDBList.
+    #
     #                       i.e. {croptreedetails:['Crop Tree Details',48,34]}
     #                       The number of fields is used to double check that the values from
     #                       the web report are correct.  This was added b/c there were text fields that were
@@ -762,27 +762,28 @@ def createReferenceObjects(pedonDBloc):
     # return False,False and the script will eventually exit.
 
     try:
-        arcpy.SetProgressorLabel("Gathering Table and Field Information")
+        arcpy.SetProgressorLabel("Gathering Metadata Table and Field Information")
+        AddMsgAndPrint(".\nGathering Metadata Table and Field Information")
 
         # Open Metadata table containing information for other pedon tables
         theMDTable = pedonDBloc + os.sep + prefix + "MetadataTable"
-        arcpy.env.workspace = pedonDBloc
 
         # Establishes a cursor for searching through field rows. A search cursor can be used to retrieve rows.
         # This method will return an enumeration object that will, in turn, hand out row objects
         if not arcpy.Exists(theMDTable):
-            AddMsgAndPrint(theMDTable + " doesn't Exist",2)
+            AddMsgAndPrint(".\n\t" + theMDTable + " doesn't Exist",2)
             return False,False
 
+        # Establish a list of tables to get field aliases for
+        arcpy.env.workspace = pedonDBloc
         tableList = arcpy.ListTables("*")
         tableList.append(prefix + "pedon")
 
-        # "Tablelabel" Table is misspelled....huh?
-        nameOfFields = ["TablePhysicalName","TableLabel"]
+        #nameOfFields = ["TablePhysicalName","TableLabel"]
+        nameOfFields = ["tabphynm","tablab"]
 
-        # Initiate 3 Dictionaries
+        # Initiate 2 Dictionaries
         tableInfoDict = dict()
-        #tblAliasesDict = dict()
         emptyPedonGDBtablesDict = dict()
 
         with arcpy.da.SearchCursor(theMDTable,nameOfFields) as cursor:
@@ -790,22 +791,28 @@ def createReferenceObjects(pedonDBloc):
             for row in cursor:
 
                 physicalName = prefix + row[0]  # Physical name of table
-                aliasName = row[1]     # Alias name of table
+                aliasName = row[1]              # Alias name of table
+                tblPath = f"{pedonDBloc}\\{physicalName}"
 
                 if physicalName.find(prefix + 'Metadata') > -1: continue
 
+                if physicalName in tableInfoDict: continue
+
+                # The metadata table has more tables than what is in the DB template.  Only
+                # Gather field information for those tables in the DB.
                 if physicalName in tableList:
 
-                    uniqueFields = arcpy.Describe(os.path.join(pedonDBloc,physicalName)).fields
-                    numOfValidFlds = 0
-
-                    for field in uniqueFields:
-                        if not field.type.lower() in ("oid","geometry","FID"):
-                            numOfValidFlds +=1
+                    uniqueFields = [f.name for f in arcpy.ListFields(tblPath) if not f.name.lower() in ('objectid','oid','geometry','fid','shape')]
+                    numOfValidFlds = len(uniqueFields)
 
                     # Add 2 more fields to the pedon table for X,Y
                     if physicalName == prefix + 'pedon':
                         numOfValidFlds += 2
+
+                    # Siteaoverlap table has 9 fields instead of 6 b/c areaiidref is actually
+                    # a NASIS client placeholder for areatypename, areasymbol, areaname, areaiidref
+                    if physicalName == prefix + 'siteaoverlap':
+                        numOfValidFlds = 9
 
                     # i.e. {phtexture:'Pedon Horizon Texture',phtexture}; will create a one-to-many dictionary
                     # As long as the physical name doesn't exist in dict() add physical name
@@ -816,17 +823,11 @@ def createReferenceObjects(pedonDBloc):
 
                     del uniqueFields;numOfValidFlds
 
-        del theMDTable,tableList,nameOfFields
-        arcpy.SetProgressorLabel("")
-
+        arcpy.SetProgressorLabel('')
         return emptyPedonGDBtablesDict,tableInfoDict
 
-    except arcpy.ExecuteError:
-        AddMsgAndPrint(arcpy.GetMessages(2),2)
-        return False, False
-
     except:
-        AddMsgAndPrint("Unhandled exception (GetTableAliases)", 2)
+        AddMsgAndPrint("Unhandled exception (createReferenceObject)", 2)
         errorMsg()
         return False, False
 
@@ -935,7 +936,7 @@ def organizeFutureInstanceIntoPedonDict(futureObject):
 
                 # Check if the table name exists in the list of dictionaries
                 # if so, set the currentTable variable and bHeader
-                if theTable in pedonGDBtablesDict:
+                if theTable in pedonDBtablesDict:
                     currentTable = theTable
                     bHeader = True  ## Next line will be the header
 
@@ -967,7 +968,7 @@ def organizeFutureInstanceIntoPedonDict(futureObject):
 
                     # This value completed the previous value
                     if len(partialValue.split('|')) == numOfFields:
-                        pedonGDBtablesDict[currentTable].append(partialValue)
+                        pedonDBtablesDict[currentTable].append(partialValue)
                         validRecord += 1
                         bPartialValue = False
                         partialValue,originalValue = "",""
@@ -1005,7 +1006,7 @@ def organizeFutureInstanceIntoPedonDict(futureObject):
                         bPartialValue = True
 
                 else:
-                    pedonGDBtablesDict[currentTable].append(theValue)
+                    pedonDBtablesDict[currentTable].append(theValue)
                     validRecord += 1
                     bPartialValue = False
                     partialValue = ""
@@ -1037,26 +1038,25 @@ def organizeFutureInstanceIntoPedonDict(futureObject):
 
 ## ================================================================================================================
 def importPedonData(tableInfoDict,verbose=False):
-    """ This function will purge the contents from the pedonGDBtablesDict dictionary which contains all of the pedon
+    """ This function will purge the contents from the pedonDBtablesDict dictionary which contains all of the pedon
         data into the pedon FGDB.  Depending on the number of pedons in the user's AOI, this function will be
-        used multiple times.  The pedonGDBtablesDict dictionary could possilbly allocate all of the computer's
+        used multiple times.  The pedonDBtablesDict dictionary could possilbly allocate all of the computer's
         memory so a fail-safe was built in to make sure a memory exception error wasn't encountered.  This
         function is invoked when approximately 40,000 pedons have been retrieved from the server and stored in \
         memory."""
 
     try:
-        if verbose: AddMsgAndPrint("\nImporting Pedon Data into FGDB")
-        arcpy.SetProgressorLabel("Importing Pedon Data into FGDB")
+        if verbose: AddMsgAndPrint(".\nImporting Pedon Data into Database")
+        arcpy.SetProgressorLabel("Importing Pedon Data into Database")
 
         # use the tableInfoDict so that tables are imported in alphabetical order
         tblKeys = tableInfoDict.keys()
         maxCharTable = max([len(table) for table in tblKeys]) + 1
         maxCharAlias = max([len(value[1][0]) for value in tableInfoDict.items()])
 
-        firstTab = (maxCharTable - len("Table Physical Name")) * " "
-        headerName = "\n\tTable Physical Name" + firstTab + "Table Alias Name"
-        if verbose: AddMsgAndPrint(headerName,0)
-        if verbose: AddMsgAndPrint("\t" + len(headerName) * "=",0)
+        headerName = f".\t{'Table Physical Name' : <30}{'Table Alias Name' : <55}{'# of Records' : <20}"
+        if verbose: AddMsgAndPrint(headerName)
+        if verbose: AddMsgAndPrint(".\t" + len(headerName) * "=")
 
         tblKeys = dict(sorted(tableFldDict.items(), key=lambda item: item[0]))
 
@@ -1064,7 +1064,9 @@ def importPedonData(tableInfoDict,verbose=False):
         arcpy.SetProgressor("step","Importing Pedon Data into FGDB table: ",0,len(tblKeys),1)
         for table in tblKeys:
 
-            arcpy.SetProgressorLabel("Importing Pedon Data into FGDB: " + table)
+            possibleNumOfRecords = len(pedonDBtablesDict[table])
+
+            arcpy.SetProgressorLabel(f"Importing Pedon Data into {table} table: {splitThousands(possibleNumOfRecords)} Records")
             arcpy.SetProgressorPosition()
 
             # Skip any Metadata files
@@ -1077,7 +1079,7 @@ def importPedonData(tableInfoDict,verbose=False):
             firstTab = (maxCharTable - len(table)) * " "
 
             # check if list contains records to be added
-            if len(pedonGDBtablesDict[table]):
+            if possibleNumOfRecords:
 
                 numOfRowsAdded = 0
                 GDBtable = pedonDB + os.sep + table # FGDB Pyhsical table path
@@ -1114,7 +1116,7 @@ def importPedonData(tableInfoDict,verbose=False):
                     fldLengths.append(0)  # Y coord
 
                 """ -------------------------------- Insert Rows ------------------------------------------
-                    Iterate through every value from a specific table in the pedonGDBtablesDict dictary
+                    Iterate through every value from a specific table in the pedonDBtablesDict dictary
                     and add it to the appropriate FGDB table  Truncate the value if it exceeds the
                     max number of characters.  Set the value to 'None' if it is an empty string."""
 
@@ -1123,12 +1125,11 @@ def importPedonData(tableInfoDict,verbose=False):
                 recNum = 0
 
                 # '"S1962WI025001","43","15","9","North","89","7","56","West",,"Dane County, Wisconsin. 100 yards south of road."'
-                for rec in pedonGDBtablesDict[table]:
+                for rec in pedonDBtablesDict[table]:
 
                     newRow = list()  # list containing the values that will populate a new row
                     fldNo = 0        # list position to reference the field lengths in order to compare
 
-                    AddMsgAndPrint
                     for value in rec.replace('"','').split('|'):
 
                         value = value.strip()
@@ -1169,13 +1170,13 @@ def importPedonData(tableInfoDict,verbose=False):
                         numOfRowsAdded += 1;recNum += 1
 
                     except arcpy.ExecuteError:
-                        AddMsgAndPrint("\n\tError in :" + table + " table: Field No: " + str(fldNo) + " : " + str(rec),2)
-                        AddMsgAndPrint("\n\t" + arcpy.GetMessages(2),2)
+                        AddMsgAndPrint(".\n\tError in :" + table + " table: Field No: " + str(fldNo) + " : " + str(rec),2)
+                        AddMsgAndPrint(".\n\t" + arcpy.GetMessages(2),2)
                         break
                     except:
-                        AddMsgAndPrint("\n\tError in: " + table + " table")
-                        AddMsgAndPrint("\tNumber of Fields in GDB: " + str(len(nameOfFields)))
-                        AddMsgAndPrint("\tNumber of fields in report: " + str(len([rec.split('|')][0])))
+                        AddMsgAndPrint(".\n\tError in: " + table + " table")
+                        AddMsgAndPrint(".\tNumber of Fields in GDB: " + str(len(nameOfFields)))
+                        AddMsgAndPrint(".\tNumber of fields in report: " + str(len([rec.split('|')][0])))
                         errorMsg()
                         break
 
@@ -1183,17 +1184,14 @@ def importPedonData(tableInfoDict,verbose=False):
 
                 # Report the # of records added to the table
 ##                if bAliasName:
-                secondTab = (maxCharAlias - len(aliasName)) * " "
-                if verbose: AddMsgAndPrint("\t" + table + firstTab + aliasName + secondTab + " Records Added: " + splitThousands(numOfRowsAdded))
-##                else:
-##                    if verbose: AddMsgAndPrint("\t" + table + firstTab + " Records Added: " + splitThousands(numOfRowsAdded),1)
+                if verbose:AddMsgAndPrint(f".\t{table : <30}{aliasName: <55}{'Records Added: ' + splitThousands(numOfRowsAdded) : <20}")
 
                 del numOfRowsAdded,GDBtable,fieldList,nameOfFields,fldLengths,cursor
 
             # Table had no records; still print it out
             else:
-                secondTab = (maxCharAlias - len(aliasName)) * " "
-                if verbose: AddMsgAndPrint("\t" + table + firstTab + aliasName + secondTab + " Records Added: 0")
+                if verbose:
+                    AddMsgAndPrint(f".\t{table : <30}{aliasName: <55}{'Records Added: 0' : <20}")
 
 
         #Resets the progressor back to its initial state
@@ -1489,21 +1487,21 @@ if __name__ == '__main__':
                 pass
 
         totalPedons = len(pedonList)
-        AddMsgAndPrint("\nThere are " + splitThousands(totalPedons) + " pedon IDs in your text file")
+        AddMsgAndPrint(".\nThere are " + splitThousands(totalPedons) + " pedon IDs found your text file")
         # ------------- ADDED SECTION END
 
         pedonDB = createPedonDB()
         arcpy.env.workspace = pedonDB
 
         if not pedonDB:
-            AddMsgAndPrint("\nFailed to Initiate Empty Pedon File Geodatabase.  Error in createPedonFGDB() function. Exiting!",2)
+            AddMsgAndPrint(".\nFailed to Initiate Empty Pedon File Geodatabase.  Error in createPedonFGDB() function. Exiting!",2)
             exit()
 
         # Create 2 Dictionaries that will be used throughout this script
-        pedonGDBtablesDict,tableFldDict = createReferenceObjects(pedonDB)
+        pedonDBtablesDict,tableFldDict = createReferenceObjects(pedonDB)
 
         if not tableFldDict:
-            AddMsgAndPrint("\nCould not retrieve alias names from " + prefix + "\'MetadataTable\'",1)
+            AddMsgAndPrint(".\nCould not retrieve alias names from " + prefix + "\'MetadataTable\'",1)
             exit()
 
         """ ------------------------------------------ Get Site, Pedon, and Pedon Horizon information from NASIS -------------------------------------------------------------------------
@@ -1516,9 +1514,9 @@ if __name__ == '__main__':
         listOfPedonStrings,numOfPedonStrings = parsePedonsIntoLists(pedonList)
 
         if numOfPedonStrings > 1:
-            AddMsgAndPrint("\nDue to URL limitations there will be " + splitThousands(len(listOfPedonStrings))+ " seperate requests to NASIS:",1)
+            AddMsgAndPrint(".\nDue to URL limitations there will be " + splitThousands(len(listOfPedonStrings))+ " seperate requests to NASIS:",1)
         else:
-            AddMsgAndPrint("\n")
+            AddMsgAndPrint(".\n")
 
         i = 1   # represents the request number; only used for ArcMap formatting
 
@@ -1557,7 +1555,7 @@ if __name__ == '__main__':
 # The next 10 lines were used to test the ProcessPoolExecutor with arcpy.da.editor
 # The test was successful but it was way too slow.
 ##        edit = arcpy.da.Editor(pedonDB)
-##        pedonDBtables = pedonGDBtablesDict.keys()  # A list of pedonDB tables extracted from tblAliases dict
+##        pedonDBtables = pedonDBtablesDict.keys()  # A list of pedonDB tables extracted from tblAliases dict
 ##        pedonDBtables.sort()                       # Sort the list so that tables are alphabetical order
 ##
 ##        maxCharTable = max([len(table) for table in pedonDBtables]) + 1
@@ -1568,7 +1566,7 @@ if __name__ == '__main__':
 ##                importPedonDataByTable(table)
 
         # Import Pedon Information into Pedon FGDB
-        if len(pedonGDBtablesDict[prefix + 'pedon']):
+        if len(pedonDBtablesDict[prefix + 'pedon']):
             if not importPedonData(tableFldDict,verbose=(True if i==numOfPedonStrings else False)):
                 exit()
 
@@ -1583,12 +1581,12 @@ if __name__ == '__main__':
             os.remove(errorFile)
 
         if totalPedons == pedonCount:
-            AddMsgAndPrint("\n\nSuccessfully downloaded " + splitThousands(totalPedons) + " pedons from NASIS",0)
+            AddMsgAndPrint(".\n\nSuccessfully downloaded " + splitThousands(totalPedons) + " pedons from NASIS",0)
 
         else:
             difference = totalPedons - pedonCount
-            AddMsgAndPrint("\n\nDownloaded " + splitThousands(pedonCount) + " pedons from NASIS",2)
-            AddMsgAndPrint("\tFailed to download the following " + splitThousands(difference) + " pedon(s) from NASIS:",2)
+            AddMsgAndPrint(".\n\nDownloaded " + splitThousands(pedonCount) + " pedons from NASIS",2)
+            AddMsgAndPrint(".\tFailed to download the following " + splitThousands(difference) + " pedon(s) from NASIS:",2)
 
             FGDBpedons = [int(row[0]) for row in arcpy.da.SearchCursor(pedonDBfc,'peiid')]
             missingPedons = list(set(pedonList) - set(FGDBpedons))
@@ -1606,9 +1604,9 @@ if __name__ == '__main__':
             f.close()
 
             if difference < 20:
-                AddMsgAndPrint("\t\t" + str(missingPedons))
+                AddMsgAndPrint(".\t\t" + str(missingPedons))
 
-            AddMsgAndPrint("\n\tThe Missing Pedons have been written to " + errorFile + " files",2)
+            AddMsgAndPrint(".\n\tThe Missing Pedons have been written to " + errorFile + " files",2)
 
         """ ---------------------------Add Pedon Feature Class to ArcGIS Pro Session if available ------------------"""
         try:
@@ -1616,17 +1614,17 @@ if __name__ == '__main__':
                 aprx = arcpy.mp.ArcGISProject("CURRENT")
                 aprxMap = aprx.listMaps()[0]
                 aprxMap.addDataFromPath(pedonDBfc)
-                AddMsgAndPrint("\nAdded the pedon feature class to your ArcMap Session",0)
+                AddMsgAndPrint(".\nAdded the pedon feature class to your ArcGIS Pro Session\n\n")
         except:
             pass
 
 ##        FinishTime = toc(startTime)
 ##        AddMsgAndPrint("Total Time = " + str(FinishTime))
 ##        AddMsgAndPrint("\n")
-##        AddMsgAndPrint("Dictionary Size: " + str(getObjectSize(pedonGDBtablesDict)))
+##        AddMsgAndPrint("Dictionary Size: " + str(getObjectSize(pedonDBtablesDict)))
 
     except:
         FinishTime = toc(startTime)
         AddMsgAndPrint("Total Time = " + str(FinishTime))
-        #AddMsgAndPrint("Size of pedonGDBtablesDict  = " + str(objSize) )
+        #AddMsgAndPrint("Size of pedonDBtablesDict  = " + str(objSize) )
         errorMsg()

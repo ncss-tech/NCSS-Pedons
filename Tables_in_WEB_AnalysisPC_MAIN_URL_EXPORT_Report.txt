@@ -20,7 +20,7 @@ perestrictions
 sitesurffrags
 petaxfmmin  
 petxhistfmother
-petaxmoistcl
+petaxhistmoistcl
 petext
 phcemagent
 phcolor

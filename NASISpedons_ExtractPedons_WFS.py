@@ -529,27 +529,28 @@ def createReferenceObjects(pedonDBloc):
     # return False,False and the script will eventually exit.
 
     try:
-        arcpy.SetProgressorLabel("Gathering Table and Field Information")
+        arcpy.SetProgressorLabel("Gathering Metadata Table and Field Information")
+        AddMsgAndPrint(".\nGathering Metadata Table and Field Information")
 
         # Open Metadata table containing information for other pedon tables
         theMDTable = pedonDBloc + os.sep + prefix + "MetadataTable"
-        arcpy.env.workspace = pedonDBloc
 
         # Establishes a cursor for searching through field rows. A search cursor can be used to retrieve rows.
         # This method will return an enumeration object that will, in turn, hand out row objects
         if not arcpy.Exists(theMDTable):
-            AddMsgAndPrint(theMDTable + " doesn't Exist",2)
+            AddMsgAndPrint(".\n\t" + theMDTable + " doesn't Exist",2)
             return False,False
 
+        # Establish a list of tables to get field aliases for
+        arcpy.env.workspace = pedonDBloc
         tableList = arcpy.ListTables("*")
         tableList.append(prefix + "pedon")
 
         #nameOfFields = ["TablePhysicalName","TableLabel"]
         nameOfFields = ["tabphynm","tablab"]
 
-        # Initiate 3 Dictionaries
+        # Initiate 2 Dictionaries
         tableInfoDict = dict()
-        #tblAliasesDict = dict()
         emptyPedonGDBtablesDict = dict()
 
         with arcpy.da.SearchCursor(theMDTable,nameOfFields) as cursor:
@@ -557,22 +558,28 @@ def createReferenceObjects(pedonDBloc):
             for row in cursor:
 
                 physicalName = prefix + row[0]  # Physical name of table
-                aliasName = row[1]     # Alias name of table
+                aliasName = row[1]              # Alias name of table
+                tblPath = f"{pedonDBloc}\\{physicalName}"
 
                 if physicalName.find(prefix + 'Metadata') > -1: continue
 
+                if physicalName in tableInfoDict: continue
+
+                # The metadata table has more tables than what is in the DB template.  Only
+                # Gather field information for those tables in the DB.
                 if physicalName in tableList:
 
-                    uniqueFields = arcpy.Describe(os.path.join(pedonDBloc,physicalName)).fields
-                    numOfValidFlds = 0
-
-                    for field in uniqueFields:
-                        if not field.type.lower() in ("oid","geometry","FID"):
-                            numOfValidFlds +=1
+                    uniqueFields = [f.name for f in arcpy.ListFields(tblPath) if not f.name.lower() in ('objectid','oid','geometry','fid','shape')]
+                    numOfValidFlds = len(uniqueFields)
 
                     # Add 2 more fields to the pedon table for X,Y
                     if physicalName == prefix + 'pedon':
                         numOfValidFlds += 2
+
+                    # Siteaoverlap table has 9 fields instead of 6 b/c areaiidref is actually
+                    # a NASIS client placeholder for areatypename, areasymbol, areaname, areaiidref
+                    if physicalName == prefix + 'siteaoverlap':
+                        numOfValidFlds = 9
 
                     # i.e. {phtexture:'Pedon Horizon Texture',phtexture}; will create a one-to-many dictionary
                     # As long as the physical name doesn't exist in dict() add physical name
@@ -583,17 +590,11 @@ def createReferenceObjects(pedonDBloc):
 
                     del uniqueFields;numOfValidFlds
 
-        del theMDTable,tableList,nameOfFields
-        arcpy.SetProgressorLabel("")
-
+        arcpy.SetProgressorLabel('')
         return emptyPedonGDBtablesDict,tableInfoDict
 
-    except arcpy.ExecuteError:
-        AddMsgAndPrint(arcpy.GetMessages(2),2)
-        return False, False
-
     except:
-        AddMsgAndPrint("Unhandled exception (GetTableAliases)", 2)
+        AddMsgAndPrint("Unhandled exception (createReferenceObject)", 2)
         errorMsg()
         return False, False
 
@@ -1301,14 +1302,10 @@ from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor, as_compl
 
 if __name__ == '__main__':
 
-    #test = getNASISbreakdownCounts()
-    #exit()
-
     try:
 
         DBname = r'NASIS_Pedons_Interim'
-        #outputFolder = r'N:\flex\NCSS_Pedons\NASIS_Pedons\Web_Feature_Service'
-        outputFolder = r'E:\NCSS_Pedons\NASIS_Pedons_Metatdata_Update'
+        outputFolder = r'N:\flex\NCSS_Pedons\NASIS_Pedons\Web_Feature_Service'
         FinalDB = f"{outputFolder}\\NASIS_Pedons_WFS_Final.gdb"
         sqliteFormat = False
         allPedons = True
@@ -1332,10 +1329,6 @@ if __name__ == '__main__':
         date = now.strftime("%B %d %Y")
         hour = now.strftime("%I:%M %p")
         AddMsgAndPrint(f"{date} - {hour}")
-
-        totalPedons = 773487
-        overwritePedonLayer()
-        exit()
 
         # User has chosen to donwload all pedons
         if allPedons:
