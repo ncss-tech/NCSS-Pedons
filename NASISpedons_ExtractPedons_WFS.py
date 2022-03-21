@@ -24,13 +24,13 @@ def AddMsgAndPrint(msg, severity=0):
     try:
         print(msg)
 
-##        try:
-##            f = open(textFilePath,'a+')
-##            f.write(msg + " \n")
-##            f.close
-##            del f
-##        except:
-##            pass
+        try:
+            f = open(textFilePath,'a+')
+            f.write(msg + " \n")
+            f.close
+            del f
+        except:
+            pass
 
     except:
         pass
