@@ -247,7 +247,7 @@ for tbl,recs in tableColumnsDict.items():
     del cursor
 
 # --------------------------------------------------------------- CREATE FGDB PEDON TABLES USING NEW METADATA SCHEMA
-# The following represents the position of field
+# The following represents the position of fields from the 'PedonMetadataTableColDesc' table
 tablab = 1             # Table Alias
 tabphynm = 2           # Table Physical Name
 tabhelptext = 4        # Table Description
