@@ -277,33 +277,6 @@ if __name__ == '__main__':
             AddMsgAndPrint("\t" + str(newPedonTemplateTables))
             discrepancies += len(newPedonTemplateTables)
 
-
-            # ----------------------- TEMPORARY -----------------------
-            #
-##            bWrite = True
-##            mainURLtblFile = r'E:\NCSS_Pedons\NASIS_Pedons_Metatdata_Update\WEB_AnalysisPC_MAIN_URL_EXPORT.txt'
-##            with open(mainURLtblFile) as f:
-##                mainURlTblList = f.readlines()
-##            mainURlTblList = [f.strip('\n') for f in lines][:-1]
-##
-##            arcpy.env.workspace = newPedonTemplate
-##            newSchemaTables = arcpy.ListTables('*')
-##
-##            for addtlTbl in newSchemaTables:
-##                if addtlTbl in mainURlTblList or addtlTbl in newPedonTemplateTables:
-##                    continue
-##                else:
-##                    newPedonTemplateTables.append(addtlTbl)
-##
-##            AddMsgAndPrint(f"\n{'='*95}")
-##            AddMsgAndPrint(f"{'='*95}")
-##            AddMsgAndPrint(f"The following {len(newPedonTemplateTables)} Tables have been added to the NEW Template:",2)
-##            newPedonTemplateTables.sort()
-##            AddMsgAndPrint("\t" + str(newPedonTemplateTables))
-##            discrepancies += len(newPedonTemplateTables)
-
-            # ----------------------- TEMPORARY END -----------------------
-
             # Print all of the fields in their correct format and sequence so that Jason can copy and paste directly
             # into the NASIS report; This will save Jason a ton of time.  This will only print if there are field discrepancies
             # in the table.

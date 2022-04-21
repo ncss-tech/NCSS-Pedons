@@ -1815,7 +1815,7 @@ if __name__ == '__main__':
         listOfPedonStrings,numOfPedonStrings = parsePedonsIntoLists()
 
         if numOfPedonStrings > 1:
-            AddMsgAndPrint(".\nDue to URL limitations there will be " + splitThousands(len(listOfPedonStrings))+ " seperate requests to NASIS:",1)
+            AddMsgAndPrint("\nDue to URL limitations there will be " + splitThousands(len(listOfPedonStrings))+ " seperate requests to NASIS:",1)
         else:
             AddMsgAndPrint(".\n")
 
