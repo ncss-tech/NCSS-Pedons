@@ -1469,7 +1469,7 @@ if __name__ == '__main__':
                 AddMsgAndPrint(".")
                 AddMsgAndPrint(".\t\t" + str(missingPedons))
 
-            AddMsgAndPrint(".\n\tThe Missing Pedon(s) have been written to " + errorFile + " files",2)
+            AddMsgAndPrint("\n\tThe Missing Pedons have been written to " + errorFile + " files",2)
 
         # Delete Metadata Table
         if arcpy.Exists(os.path.join(pedonDB,'MetadataTable')):
@@ -1478,7 +1478,7 @@ if __name__ == '__main__':
         # If there were no missing pedons from the download process
         # proceed to updating the AGOL NASIS Pedon Web layer
         bUpdateWFS = False
-        if totalPedons == pedonCount or ((totalPedons - pedonCount) / totalPedons) < totalPedons * 0.0005:
+        if totalPedons == pedonCount:
 
             bUpdateWFS = overwritePedonLayer()
 
@@ -1489,7 +1489,7 @@ if __name__ == '__main__':
                     AddMsgAndPrint("AGOL NASIS Pedon Web Feature Layer NOT updated due to errors in downloading process")
 
         else:
-            AddMsgAndPrint("\nAGOL NASIS Pedon Web Feature Layer NOT updated due to errors in downloading process")
+            AddMsgAndPrint("AGOL NASIS Pedon Web Feature Layer NOT updated due to errors in downloading process")
 
         # Stop the clock
         FinishTime = toc(startTime)
