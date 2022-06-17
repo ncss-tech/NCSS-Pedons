@@ -46,6 +46,15 @@
 #   table from 6.  This is b/c the metadatatable only has 6 fields and 3 additional fields are
 #   added (areasym, areaname and areatype)
 
+# ==========================================================================================
+# Updated  6/17/2022 - Adolfo Diaz
+# - Added a new function to remove potential PII from the following table/fields:
+#  .	Table Name               Field Name
+#  =============================================
+#  .	Site Observation Text    Text Entry
+#  .	Site Text                Text Entry
+#  .	Pedon Text               Text Entry
+
 #-------------------------------------------------------------------------------
 
 
@@ -596,6 +605,8 @@ def getNASISpedonCountbyBox(coordinates):
         NASIS pedons and LAB pedons. Example of URL sent to the NASIS report would be:
 
         https://nasis.sc.egov.usda.gov/NasisReportsWebSite/limsreport.aspx?report_name=WEB_ANALYSIS_PC_PEDON_NUMBER_SUM&Lat1=43.6425577303&Lat2=43.9828939095&Long1=-89.5997555233&Long2=-89.167551308
+
+        # START 94 STOP
 
         # peiid: siteID,Labnum,X,Y
         # {'122647': ('84IA0130011', '85P0558', '-92.3241653', '42.3116684'), '883407': ('2014IA013003', None, '-92.1096600', '42.5332000')}
@@ -1644,6 +1655,38 @@ def createPedonDescLink(pedonID):
         errorMsg()
         return False
 
+## ===================================================================================
+def removePIIfields(pedonDB,fldsToDelete,tableFldDict):
+
+    try:
+
+        AddMsgAndPrint(f"\nDeleting attributes that may contain PII information from the following fields:" )
+        AddMsgAndPrint(f".\t{'Table Name' : <25}{'Field Name' : <25}")
+        AddMsgAndPrint(f".\t{'=' * 40}")
+
+        # Open Metadata table containing information for other pedon tables
+        theMDTable = f"{pedonDB}\{prefix}MetadataTable"
+        maxCharTable = max([len(table) for table in fldsToDelete]) + 1
+
+        for table in fldsToDelete:
+            tablePath = f"{pedonDB}\{table}"
+            tblAlias = tableFldDict[table][0]
+            fieldName = fldsToDelete[table]
+
+            if arcpy.Exists(tablePath):
+                try:
+                    arcpy.CalculateField_management(tablePath,fieldName,'""',"PYTHON3")
+                except:
+                    AddMsgAndPrint(f".\tFailed to remove attributes from {fieldName} field",1)
+
+                aliasExpression = f"{arcpy.AddFieldDelimiters(tablePath, 'tabphynm')} = \'{table}\' AND {arcpy.AddFieldDelimiters(tablePath, 'attphynm')} =  \'{fieldName}\'"
+                fldAlias = [row[0] for row in arcpy.da.SearchCursor(theMDTable, ("collab"), where_clause=aliasExpression)][0]
+                AddMsgAndPrint(f".\t{tblAlias : <25}{fldAlias: <25}")
+
+    except:
+        errorMsg()
+        return False
+
 #===================================================================================================================================
 """ ----------------------------------------My Notes -------------------------------------------------"""
 
@@ -1714,11 +1757,11 @@ if __name__ == '__main__':
             sqliteFormat = arcpy.GetParameter(2)
             allPedons = arcpy.GetParameter(3)
 
-##        inputFeatures = r'E:\SSURGO\WI025\spatial\soilsa_a_wi025.shp'
-##        DBname = 'PedonTest'
-##        outputFolder = r'E:\Temp\scratch'
-##        sqliteFormat = False
-##        allPedons = False
+        inputFeatures = r'E:\Temp\scratch\scratch.gdb\PedonTest'
+        DBname = 'PedonTest'
+        outputFolder = r'E:\Temp\scratch'
+        sqliteFormat = False
+        allPedons = False
 
         if sqliteFormat == True:
             prefix = "main."
@@ -1770,10 +1813,10 @@ if __name__ == '__main__':
 
             # Get a list of PedonIDs that are within the bounding box from NASIS
             # Uses the 'WEB_EXPORT_PEDON_BOX_COUNT' NASIS report
+            # populate the pedonDict with the pedons that fall within the bounding coordinates of the AOI
             # {peiid: (siteID,Labnum,X,Y)} -- {'122647': ('84IA0130011', '85P0558', '-92.3241653', '42.3116684')
             pedonDict = getNASISpedonIDsByBox(coordStr)
 
-            # populate the pedonDict with the pedons that fall within the bounding coordinates of the AOI
             if not pedonDict:
                 AddMsgAndPrint(".\n\tFailed to get a list of pedonIDs from NASIS \n",2)
                 exit()
@@ -1879,6 +1922,10 @@ if __name__ == '__main__':
             AddMsgAndPrint(".\nSuccessfully added Pedon Description Report Hyperlink to Pedon Table")
         else:
             AddMsgAndPrint(".\nPedon Description Report Hyperlink Could not be added",2)
+
+        # Remove fields that could potentially have PII
+        fldsToRemove = {'siteobstext':'textentry','sitetext':'textentry','petext':'textentry'}
+        removePIIfields(pedonDB,fldsToRemove,tableFldDict)
 
         """ ------------------------------------ Report Summary of results -----------------------------------"""
         pedonCount = int(arcpy.GetCount_management(pedonDBfc).getOutput(0))
