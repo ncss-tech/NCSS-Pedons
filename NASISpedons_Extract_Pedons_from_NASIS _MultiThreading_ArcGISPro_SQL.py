@@ -1757,11 +1757,11 @@ if __name__ == '__main__':
             sqliteFormat = arcpy.GetParameter(2)
             allPedons = arcpy.GetParameter(3)
 
-        inputFeatures = r'E:\Temp\scratch\scratch.gdb\PedonTest'
-        DBname = 'PedonTest'
-        outputFolder = r'E:\Temp\scratch'
-        sqliteFormat = False
-        allPedons = False
+##        inputFeatures = r'E:\Temp\scratch\scratch.gdb\PedonTest'
+##        DBname = 'PedonTest'
+##        outputFolder = r'E:\Temp\scratch'
+##        sqliteFormat = False
+##        allPedons = False
 
         if sqliteFormat == True:
             prefix = "main."
