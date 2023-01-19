@@ -1778,7 +1778,6 @@ if __name__ == '__main__':
         if allPedons:
             pedonDict = getDictionaryOfAllPedonIDs()
             totalPedons = len(pedonDict)
-            exit()
             #pedonDict = dict(d.items()[len(d)/2:])
 
             AddMsgAndPrint(".\nProcessing " + str(splitThousands(totalPedons)) + " pedons")
@@ -1787,7 +1786,7 @@ if __name__ == '__main__':
                 AddMsgAndPrint(".\nFailed to obtain a list of ALL NASIS Pedon IDs",2)
                 exit()
 
-        # User has chosen to pedons by AOI
+        # User has chosen to extract pedons by AOI
         else:
 
             # Get Bounding box coordinates of AOI
